@@ -14,47 +14,129 @@ namespace Vector3Grabber
     internal static class EntryPoint
     {
         internal static Ped Player = Game.LocalPlayer.Character;
+        internal static List<(Vector3 PlayerVector, float heading)> VectorsRead = new List<(Vector3 PlayerVector, float heading)>();
+        internal static int GlobalIndexForArray = 0;
         
-        static string fullPath = @"Plugins\LSPDFR\ImmersiveAmbientEvents\locations.txt";
+        static string fullPath = @"Plugins\VectorGrabber\locations.txt";
+        private static string readingFilePath = @"Plugins\VectorGrabber\FileToBeRead.txt";
+
+        internal enum direction
+        {
+            LEFT,
+            RIGHT
+        }
+        
         internal static void Main()
         {
             if (!File.Exists(fullPath))
             {
                 File.Create(fullPath);
             }
+
+            if (!File.Exists(readingFilePath))
+            {
+                File.Create(readingFilePath);
+            }
             while (true)
             {
                 GameFiber.Yield();
-                if (Game.IsKeyDown(Keys.Y)) //change key?
+                if (Game.IsKeyDown(Settings.SaveKey)) //change key?
                 {
-                    AppendToFile(getCoordsAndFormat());
-                    Game.DisplayHelp("Coordinates were saved to text file.");
+                    AppendToFile(getCoordsAndFormat(),fullPath);
+                    AppendToFile(GetCoordsAndHeading(),readingFilePath);
+                    Game.DisplayHelp("Coordinates were saved to both text files.");
+                }
+
+                if (Game.IsKeyDown(Settings.NextKey))
+                {
+                    HandleArrow(direction.RIGHT);
+                }
+
+                if (Game.IsKeyDown(Settings.BackKey))
+                {
+                    HandleArrow(direction.LEFT);
                 }
             }
         }
 
-        internal static void AppendToFile(string str)
+        internal static void AppendToFile(string str, string path)
         {
-            using (StreamWriter sw = File.AppendText(fullPath))
+            using (StreamWriter sw = File.AppendText(path))
             {
                 sw.WriteLine(str);
             }
+        }
+
+        internal static void ReadFile()
+        {
+            string[] Vectors = File.ReadAllLines(readingFilePath);
+            foreach (string Vector in Vectors)
+            {
+                string[] indivCoords = Vector.Split(',');
+                Vector3 VectorToBeAdded = new Vector3(float.Parse(indivCoords[0]),float.Parse(indivCoords[1]),float.Parse(indivCoords[2]));
+                VectorsRead.Add((VectorToBeAdded,float.Parse(indivCoords[3])));
+            }
+        }
+
+        internal static void HandleArrow(direction direction)
+        {
+            
+            if (direction == direction.LEFT)
+            {
+                if (GlobalIndexForArray == 0)
+                {
+                    Game.DisplayHelp("No more Vectors.");
+                }
+                else
+                {
+                    GlobalIndexForArray--;
+                }
+            }
+
+            if (direction == direction.RIGHT)
+            {
+                if (GlobalIndexForArray == VectorsRead.Count - 1)
+                {
+                    Game.DisplayHelp("No more Vectors.");
+                }
+                else
+                {
+                    GlobalIndexForArray++;
+                }
+            }
+            World.TeleportLocalPlayer(VectorsRead[GlobalIndexForArray].PlayerVector,false);
+            Player.Heading = VectorsRead[GlobalIndexForArray].heading;
         }
 
         internal static string getCoordsAndFormat()
         {
             string str = "";
             string title = OpenTextInput("Vector3Grabber", "",100);
-            if (title.Equals(""))
+            
+            if (title.Equals(null))
             {
-                str += $"new Vector3({Player.Position.X}f, {Player.Position.Y}f, {Player.Position.Z}f), {Player.Heading}f;";
-                Game.LogTrivial($"string is {str}");
+                title = "";
+            }
+
+            if (Settings.IncludeHeading)
+            {
+                str += $"(new Vector3({Player.Position.X}f, {Player.Position.Y}f, {Player.Position.Z}f), {Player.Heading}f);";
             }
             else
             {
-                str += $"new Vector3({Player.Position.X}f, {Player.Position.Y}f, {Player.Position.Z}f), {Player.Heading}f; // {title}";
-                Game.LogTrivial($"string is {str}");
+                str += $"new Vector3({Player.Position.X}f, {Player.Position.Y}f, {Player.Position.Z}f);";
             }
+            if (!title.Equals(""))
+            {
+                str += $"  // {title}";
+            }
+            Game.LogTrivial($"The string is {str}");
+            return str;
+        }
+
+        internal static string GetCoordsAndHeading()
+        {
+            string str = $"{Player.Position.X},{Player.Position.Y}{Player.Position.Z},{Player.Heading}";
             return str;
         }
         
