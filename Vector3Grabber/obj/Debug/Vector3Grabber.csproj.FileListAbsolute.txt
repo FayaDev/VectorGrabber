@@ -1,0 +1,15 @@
+C:\Users\steve\Desktop\Vector3Grabber\Vector3Grabber\bin\Debug\Vector3Grabber.dll
+C:\Users\steve\Desktop\Vector3Grabber\Vector3Grabber\bin\Debug\Vector3Grabber.pdb
+C:\Users\steve\Desktop\Vector3Grabber\Vector3Grabber\obj\Debug\Vector3Grabber.csproj.AssemblyReference.cache
+C:\Users\steve\Desktop\Vector3Grabber\Vector3Grabber\obj\Debug\Vector3Grabber.csproj.CoreCompileInputs.cache
+C:\Users\steve\Desktop\Vector3Grabber\Vector3Grabber\obj\Debug\Vector3Grabber.dll
+C:\Users\steve\Desktop\Vector3Grabber\Vector3Grabber\obj\Debug\Vector3Grabber.pdb
+C:\Users\rohit\Vector3Grabber\Vector3Grabber\bin\Debug\Vector3Grabber.dll
+C:\Users\rohit\Vector3Grabber\Vector3Grabber\bin\Debug\Vector3Grabber.pdb
+C:\Users\rohit\Vector3Grabber\Vector3Grabber\bin\Debug\RagePluginHook.dll
+C:\Users\rohit\Vector3Grabber\Vector3Grabber\bin\Debug\RagePluginHook.xml
+C:\Users\rohit\Vector3Grabber\Vector3Grabber\obj\Debug\Vector3Grabber.csproj.AssemblyReference.cache
+C:\Users\rohit\Vector3Grabber\Vector3Grabber\obj\Debug\Vector3Grabber.csproj.CoreCompileInputs.cache
+C:\Users\rohit\Vector3Grabber\Vector3Grabber\obj\Debug\Vector3Grabber.csproj.CopyComplete
+C:\Users\rohit\Vector3Grabber\Vector3Grabber\obj\Debug\Vector3Grabber.dll
+C:\Users\rohit\Vector3Grabber\Vector3Grabber\obj\Debug\Vector3Grabber.pdb
