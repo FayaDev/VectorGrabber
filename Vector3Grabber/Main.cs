@@ -40,7 +40,7 @@ namespace Vector3Grabber
             while (true)
             {
                 GameFiber.Yield();
-                if (Game.IsKeyDown(Settings.SaveKey)) //change key?
+                if (Game.IsKeyDown(Settings.SaveKey)) 
                 {
                     AppendToFile(getCoordsAndFormat(),fullPath);
                     AppendToFile(GetCoordsAndHeading(),readingFilePath);
