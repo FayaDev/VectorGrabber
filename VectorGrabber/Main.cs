@@ -118,6 +118,7 @@ namespace VectorGrabber
             World.TeleportLocalPlayer(VectorsRead[GlobalIndexForArray].PlayerVector,false);
             Player.Heading = heading;
             Game.DisplayHelp($"Vector: ({x},{y},{z})" +
+                             $"\nHeader: {heading}" +
                              $"\nLine Number: {GlobalIndexForArray + 1}");
         }
 
