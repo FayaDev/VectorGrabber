@@ -7,7 +7,7 @@ using System.Windows.Forms;
 using Rage;
 using Rage.Native;
 
-[assembly: Rage.Attributes.Plugin("Vector3Grabber", Description = "Helps Dev find locations", Author = "Roheat")]
+[assembly: Rage.Attributes.Plugin("VectorGrabber", Description = "Helps developers find locations for callouts/ambient events", Author = "Roheat")]
 namespace Vector3Grabber
 {
     internal static class EntryPoint
@@ -46,12 +46,12 @@ namespace Vector3Grabber
                     Game.DisplayHelp("Coordinates were saved to both text files.");
                 }
 
-                if (Game.IsKeyDown(Settings.NextKey) && Game.IsKeyDown(Settings.ModifierKeyForTeleporting))
+                if (Game.IsKeyDown(Settings.NextKey) && Game.IsControlKeyDownRightNow)
                 {
                     HandleArrow(direction.RIGHT);
                 }
 
-                if (Game.IsKeyDown(Settings.BackKey)&& Game.IsKeyDown(Settings.ModifierKeyForTeleporting))
+                if (Game.IsKeyDown(Settings.BackKey)&& Game.IsControlKeyDownRightNow)
                 {
                     HandleArrow(direction.LEFT);
                 }
@@ -80,7 +80,7 @@ namespace Vector3Grabber
 
         internal static void AddLatestVectorToFile()
         {
-            string[] Vectors = File.ReadAllLines(readingFilePath);
+            string[] Vectors = File.ReadAllLines(fullPath);
             string Vector = Vectors[Vectors.Length - 1];
             string[] indivCoords = Vector.Split(',');
             Vector3 VectorToBeAdded = new Vector3(float.Parse(indivCoords[0]),float.Parse(indivCoords[1]),float.Parse(indivCoords[2]));
@@ -94,7 +94,7 @@ namespace Vector3Grabber
             {
                 if (GlobalIndexForArray == 0)
                 {
-                    Game.DisplayHelp("No more Vectors.");
+                    Game.LogTrivial($"Vector Grabber:Back Key pressed when index was 0.");
                 }
                 else
                 {
@@ -106,7 +106,7 @@ namespace Vector3Grabber
             {
                 if (GlobalIndexForArray == VectorsRead.Count - 1)
                 {
-                    Game.DisplayHelp("No more Vectors.");
+                    Game.LogTrivial($"Vector Grabber:Next Key pressed when array was at its end.");
                 }
                 else
                 {

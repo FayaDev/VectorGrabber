@@ -11,7 +11,6 @@ namespace Vector3Grabber
         internal static bool IncludeHeading = true;
         internal static Keys NextKey = Keys.Right;
         internal static Keys BackKey = Keys.Left;
-        internal static Keys ModifierKeyForTeleporting = Keys.LControlKey;
 
         internal static InitializationFile iniFile;
 
@@ -25,7 +24,6 @@ namespace Vector3Grabber
                 SaveKey = iniFile.ReadEnum("Keybinds", "Savekey",SaveKey);
                 NextKey = iniFile.ReadEnum("Keybinds", "NextKey", NextKey);
                 BackKey = iniFile.ReadEnum("Keybinds", "BackKey", BackKey);
-                ModifierKeyForTeleporting = iniFile.ReadEnum("Keybinds", "ModifierKeyForModifiers", ModifierKeyForTeleporting);
             }
             catch(System.Exception e)
             {
