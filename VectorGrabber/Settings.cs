@@ -3,7 +3,7 @@ using Rage;
 using System.Windows.Forms;
 
 
-namespace Vector3Grabber
+namespace VectorGrabber
 {
     internal class Settings
     {

@@ -9,7 +9,7 @@ using Rage;
 using Rage.Native;
 
 [assembly: Rage.Attributes.Plugin("VectorGrabber", Description = "Helps developers find locations for callouts/ambient events", Author = "Roheat")]
-namespace Vector3Grabber
+namespace VectorGrabber
 {
     internal static class EntryPoint
     {
