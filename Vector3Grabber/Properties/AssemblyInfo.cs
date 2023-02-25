@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Vector3Grabber")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("VectorGrabber")]
+[assembly: AssemblyDescription("Helps developers find locations for callouts/ambient events")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Vector3Grabber")]
+[assembly: AssemblyProduct("VectorGrabber")]
 [assembly: AssemblyCopyright("Copyright ©  2023")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
