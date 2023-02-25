@@ -8,7 +8,6 @@ namespace Vector3Grabber
     internal class Settings
     {
         internal static Keys SaveKey = Keys.Y;
-        internal static bool IncludeHeading = true;
         internal static Keys NextKey = Keys.Right;
         internal static Keys BackKey = Keys.Left;
 
@@ -20,7 +19,6 @@ namespace Vector3Grabber
             {
                 iniFile = new InitializationFile(@"Plugins/VectorGrabber.ini");
                 iniFile.Create();
-                IncludeHeading = iniFile.ReadBoolean("Customization", "IncludeHeading", IncludeHeading);
                 SaveKey = iniFile.ReadEnum("Keybinds", "Savekey",SaveKey);
                 NextKey = iniFile.ReadEnum("Keybinds", "NextKey", NextKey);
                 BackKey = iniFile.ReadEnum("Keybinds", "BackKey", BackKey);

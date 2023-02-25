@@ -18,7 +18,6 @@ namespace Vector3Grabber
         internal static int GlobalIndexForArray = 0;
         
         static string fullPath = @"Plugins\VectorGrabber\locations.txt";
-        private static string readingFilePath = @"Plugins\VectorGrabber\FileToBeRead.txt";
 
         internal enum direction
         {
@@ -28,26 +27,6 @@ namespace Vector3Grabber
         
         internal static void Main()
         {
-            if (!File.Exists(fullPath) && !File.Exists(readingFilePath))
-            {
-                File.Create(fullPath);
-                File.Create(readingFilePath);
-            }
-            else if (File.Exists(fullPath) && !File.Exists(readingFilePath))
-            {
-                File.Create(readingFilePath);
-                ReadFile();
-            }
-            else if (!File.Exists(fullPath) && File.Exists(readingFilePath))
-            {
-                File.Delete(readingFilePath);
-                File.Create(fullPath);
-                File.Create(readingFilePath);
-            }
-            else
-            {
-                ReadFile();
-            }
 
             Game.DisplayHelp("Inputs may not work as player is not valid. Try switching characters.");
             while (true)
@@ -56,7 +35,6 @@ namespace Vector3Grabber
                 if (Player.IsValid() &&Game.IsKeyDown(Settings.SaveKey) ) 
                 {
                     AppendToFile(getCoordsAndFormat(),fullPath);
-                    AppendToFile(GetCoordsAndHeading(),readingFilePath);
                     ReadFile();
                     Game.DisplayHelp("Coordinates were saved to both text files.");
                 }
@@ -80,7 +58,7 @@ namespace Vector3Grabber
                 sw.WriteLine(str);
             }
         }
-        internal static void ReadFile()
+        /*internal static void ReadFile()
         {
             string[] Vectors = File.ReadAllLines(readingFilePath);
             foreach (string Vector in Vectors)
@@ -90,6 +68,25 @@ namespace Vector3Grabber
                 Vector3 VectorToBeAdded = new Vector3(Convert.ToSingle(indivCoords[0].Trim()),Convert.ToSingle(indivCoords[1].Trim()),Convert.ToSingle(indivCoords[2].Trim()));
                 VectorsRead.Add((VectorToBeAdded,Convert.ToSingle(indivCoords[3])));
                 
+            }
+        }*/
+
+        internal static void ReadFile()
+        {
+            string[] Vectors = File.ReadAllLines(fullPath);
+            foreach (string Vector in Vectors)
+            {
+                string[] VectorSplitByComma = Vector.Split(',');
+                string x = VectorSplitByComma[0].Split('(')[2].Trim();
+                x = x.Substring(0, x.Length - 1);
+                string y = VectorSplitByComma[1].Trim();
+                y = y.Substring(0, y.Length - 1);
+                string z = VectorSplitByComma[2].Split(')')[0].Trim();
+                z = z.Substring(0, z.Length - 1);
+                string heading = VectorSplitByComma[3].Split(')')[0];
+                heading = heading.Substring(0, heading.Length - 1);
+                Vector3 VectorToBeAdded = new Vector3(Convert.ToSingle(x), Convert.ToSingle(y), Convert.ToSingle(z));
+                VectorsRead.Add((VectorToBeAdded,Convert.ToSingle(heading)));
             }
         }
         
@@ -136,15 +133,7 @@ namespace Vector3Grabber
             {
                 title = "";
             }
-
-            if (Settings.IncludeHeading)
-            {
-                str += $"(new Vector3({Player.Position.X}f, {Player.Position.Y}f, {Player.Position.Z}f), {Player.Heading}f);";
-            }
-            else
-            {
-                str += $"new Vector3({Player.Position.X}f, {Player.Position.Y}f, {Player.Position.Z}f);";
-            }
+            str += $"(new Vector3({Player.Position.X}f, {Player.Position.Y}f, {Player.Position.Z}f), {Player.Heading}f);";
             if (!title.Equals(""))
             {
                 str += $"  // {title}";
@@ -152,14 +141,6 @@ namespace Vector3Grabber
             Game.LogTrivial($"The string is {str}");
             return str;
         }
-
-        internal static string GetCoordsAndHeading()
-        {
-            string str = $"{Player.Position.X},{Player.Position.Y},{Player.Position.Z},{Player.Heading}";
-            Game.LogTrivial(str);
-            return str;
-        }
-        
         internal static string OpenTextInput(string windowTitle, string defaultText, int maxLength)
         {
             NativeFunction.Natives.DISABLE_ALL_CONTROL_ACTIONS(2);
