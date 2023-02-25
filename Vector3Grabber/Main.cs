@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
+using System.Globalization;
 using System.Windows.Forms;
 using Rage;
 using Rage.Native;
@@ -27,31 +28,45 @@ namespace Vector3Grabber
         
         internal static void Main()
         {
-            if (!File.Exists(fullPath))
+            if (!File.Exists(fullPath) && !File.Exists(readingFilePath))
             {
                 File.Create(fullPath);
-            }
-
-            if (!File.Exists(readingFilePath))
-            {
                 File.Create(readingFilePath);
             }
+            else if (File.Exists(fullPath) && !File.Exists(readingFilePath))
+            {
+                File.Create(readingFilePath);
+                ReadFile();
+            }
+            else if (!File.Exists(fullPath) && File.Exists(readingFilePath))
+            {
+                File.Delete(readingFilePath);
+                File.Create(fullPath);
+                File.Create(readingFilePath);
+            }
+            else
+            {
+                ReadFile();
+            }
+
+            Game.DisplayHelp("Inputs may not work as player is not valid. Try switching characters.");
             while (true)
             {
                 GameFiber.Yield();
-                if (Game.IsKeyDown(Settings.SaveKey)) 
+                if (Player.IsValid() &&Game.IsKeyDown(Settings.SaveKey) ) 
                 {
                     AppendToFile(getCoordsAndFormat(),fullPath);
                     AppendToFile(GetCoordsAndHeading(),readingFilePath);
+                    ReadFile();
                     Game.DisplayHelp("Coordinates were saved to both text files.");
                 }
 
-                if (Game.IsKeyDown(Settings.NextKey) && Game.IsControlKeyDownRightNow)
+                if (Player.IsValid()&&Game.IsKeyDown(Settings.NextKey) && Game.IsControlKeyDownRightNow)
                 {
                     HandleArrow(direction.RIGHT);
                 }
 
-                if (Game.IsKeyDown(Settings.BackKey)&& Game.IsControlKeyDownRightNow)
+                if (Player.IsValid()&&Game.IsKeyDown(Settings.BackKey)&& Game.IsControlKeyDownRightNow)
                 {
                     HandleArrow(direction.LEFT);
                 }
@@ -64,33 +79,25 @@ namespace Vector3Grabber
             {
                 sw.WriteLine(str);
             }
-            AddLatestVectorToFile();
         }
-
         internal static void ReadFile()
         {
             string[] Vectors = File.ReadAllLines(readingFilePath);
             foreach (string Vector in Vectors)
             {
                 string[] indivCoords = Vector.Split(',');
-                Vector3 VectorToBeAdded = new Vector3(float.Parse(indivCoords[0]),float.Parse(indivCoords[1]),float.Parse(indivCoords[2]));
-                VectorsRead.Add((VectorToBeAdded,float.Parse(indivCoords[3])));
+                Game.LogTrivial($"{indivCoords[0]}   {indivCoords[1]}");
+                Vector3 VectorToBeAdded = new Vector3(Convert.ToSingle(indivCoords[0].Trim()),Convert.ToSingle(indivCoords[1].Trim()),Convert.ToSingle(indivCoords[2].Trim()));
+                VectorsRead.Add((VectorToBeAdded,Convert.ToSingle(indivCoords[3])));
+                
             }
         }
-
-        internal static void AddLatestVectorToFile()
-        {
-            string[] Vectors = File.ReadAllLines(fullPath);
-            string Vector = Vectors[Vectors.Length - 1];
-            string[] indivCoords = Vector.Split(',');
-            Vector3 VectorToBeAdded = new Vector3(float.Parse(indivCoords[0]),float.Parse(indivCoords[1]),float.Parse(indivCoords[2]));
-            VectorsRead.Add((VectorToBeAdded,float.Parse(indivCoords[3])));
-        }
-
-        internal static void HandleArrow(direction direction)
+        
+        internal static void HandleArrow(direction directionGiven)
         {
             
-            if (direction == direction.LEFT)
+            
+            if (directionGiven == direction.LEFT)
             {
                 if (GlobalIndexForArray == 0)
                 {
@@ -102,9 +109,10 @@ namespace Vector3Grabber
                 }
             }
 
-            if (direction == direction.RIGHT)
+            if (directionGiven == direction.RIGHT)
             {
-                if (GlobalIndexForArray == VectorsRead.Count - 1)
+                int lastIndex = VectorsRead.Count - 1;
+                if (GlobalIndexForArray >= lastIndex)
                 {
                     Game.LogTrivial($"Vector Grabber:Next Key pressed when array was at its end.");
                 }
@@ -115,6 +123,8 @@ namespace Vector3Grabber
             }
             World.TeleportLocalPlayer(VectorsRead[GlobalIndexForArray].PlayerVector,false);
             Player.Heading = VectorsRead[GlobalIndexForArray].heading;
+            Game.DisplayHelp($"Vector: ({VectorsRead[GlobalIndexForArray].PlayerVector.X},{VectorsRead[GlobalIndexForArray].PlayerVector.Y},{VectorsRead[GlobalIndexForArray].PlayerVector.Z})" +
+                             $"\nLine Number: {GlobalIndexForArray + 1}");
         }
 
         internal static string getCoordsAndFormat()
@@ -145,7 +155,8 @@ namespace Vector3Grabber
 
         internal static string GetCoordsAndHeading()
         {
-            string str = $"{Player.Position.X},{Player.Position.Y}{Player.Position.Z},{Player.Heading}";
+            string str = $"{Player.Position.X},{Player.Position.Y},{Player.Position.Z},{Player.Heading}";
+            Game.LogTrivial(str);
             return str;
         }
         
