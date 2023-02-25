@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -65,6 +64,7 @@ namespace Vector3Grabber
             {
                 sw.WriteLine(str);
             }
+            AddLatestVectorToFile();
         }
 
         internal static void ReadFile()
@@ -76,6 +76,15 @@ namespace Vector3Grabber
                 Vector3 VectorToBeAdded = new Vector3(float.Parse(indivCoords[0]),float.Parse(indivCoords[1]),float.Parse(indivCoords[2]));
                 VectorsRead.Add((VectorToBeAdded,float.Parse(indivCoords[3])));
             }
+        }
+
+        internal static void AddLatestVectorToFile()
+        {
+            string[] Vectors = File.ReadAllLines(readingFilePath);
+            string Vector = Vectors[Vectors.Length - 1];
+            string[] indivCoords = Vector.Split(',');
+            Vector3 VectorToBeAdded = new Vector3(float.Parse(indivCoords[0]),float.Parse(indivCoords[1]),float.Parse(indivCoords[2]));
+            VectorsRead.Add((VectorToBeAdded,float.Parse(indivCoords[3])));
         }
 
         internal static void HandleArrow(direction direction)
