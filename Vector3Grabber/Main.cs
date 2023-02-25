@@ -152,7 +152,11 @@ namespace Vector3Grabber
             str += $"(new Vector3({Player.Position.X}f, {Player.Position.Y}f, {Player.Position.Z}f), {Player.Heading}f);";
             if (!title.Equals(""))
             {
-                str += $"  // {title}";
+                str += $"  // {title}\n";
+            }
+            else
+            {
+                str += $"\n";
             }
             Game.LogTrivial($"The string is {str}");
             return str;
