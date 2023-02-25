@@ -27,6 +27,14 @@ namespace Vector3Grabber
         
         internal static void Main()
         {
+            if (!File.Exists(fullPath))
+            {
+                File.Create(fullPath);
+            }
+            else
+            {
+                ReadFile();
+            }
 
             Game.DisplayHelp("Inputs may not work as player is not valid. Try switching characters.");
             while (true)
