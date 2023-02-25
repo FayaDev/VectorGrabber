@@ -13,7 +13,7 @@ namespace Vector3Grabber
 {
     internal static class EntryPoint
     {
-        internal static Ped Player = Game.LocalPlayer.Character;
+        internal static Ped Player => Game.LocalPlayer.Character;
         internal static List<(Vector3 PlayerVector, float heading)> VectorsRead = new List<(Vector3 PlayerVector, float heading)>();
         internal static int GlobalIndexForArray = 0;
         
