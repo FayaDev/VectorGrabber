@@ -43,7 +43,7 @@ namespace Vector3Grabber
                 if (Player.IsValid() &&Game.IsKeyDown(Settings.SaveKey) ) 
                 {
                     AppendToFile(getCoordsAndFormat(),fullPath);
-                    ReadFile();
+                    AddVectorAndHeadingToList();
                     Game.DisplayHelp("Coordinates were saved to both text files.");
                 }
 
@@ -57,6 +57,11 @@ namespace Vector3Grabber
                     HandleArrow(direction.LEFT);
                 }
             }
+        }
+
+        internal static void AddVectorAndHeadingToList()
+        {
+            VectorsRead.Add((new Vector3(Player.Position.X,Player.Position.Y,Player.Position.Z),Player.Heading));
         }
 
         internal static void AppendToFile(string str, string path)
