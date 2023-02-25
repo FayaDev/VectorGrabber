@@ -36,7 +36,6 @@ namespace Vector3Grabber
             else if (File.Exists(fullPath) && !File.Exists(readingFilePath))
             {
                 File.Create(readingFilePath);
-                ReadFile();
             }
             else if (!File.Exists(fullPath) && File.Exists(readingFilePath))
             {
