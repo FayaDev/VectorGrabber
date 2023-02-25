@@ -103,6 +103,7 @@ namespace Vector3Grabber
                 else
                 {
                     GlobalIndexForArray--;
+                    TeleportAndDisplay();
                 }
             }
 
@@ -116,8 +117,13 @@ namespace Vector3Grabber
                 else
                 {
                     GlobalIndexForArray++;
+                    TeleportAndDisplay();
                 }
             }
+        }
+
+        internal static void TeleportAndDisplay()
+        {
             World.TeleportLocalPlayer(VectorsRead[GlobalIndexForArray].PlayerVector,false);
             Player.Heading = VectorsRead[GlobalIndexForArray].heading;
             Game.DisplayHelp($"Vector: ({VectorsRead[GlobalIndexForArray].PlayerVector.X},{VectorsRead[GlobalIndexForArray].PlayerVector.Y},{VectorsRead[GlobalIndexForArray].PlayerVector.Z})" +
