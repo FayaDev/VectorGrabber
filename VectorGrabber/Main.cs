@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
-using System.Threading.Tasks;
-using System.Globalization;
-using System.Windows.Forms;
+using System.Text.RegularExpressions;
 using Rage;
 using Rage.Native;
 
@@ -13,7 +10,7 @@ namespace VectorGrabber
 {
     internal static class EntryPoint
     {
-        internal static Ped Player = Game.LocalPlayer.Character;
+        internal static Ped Player => Game.LocalPlayer.Character;
         internal static List<(Vector3 PlayerVector, float heading)> VectorsRead = new List<(Vector3 PlayerVector, float heading)>();
         internal static int GlobalIndexForArray = 0;
         
@@ -87,17 +84,14 @@ namespace VectorGrabber
             string[] Vectors = File.ReadAllLines(readingFilePath);
             foreach (string Vector in Vectors)
             {
-                string[] indivCoords = Vector.Split(',');
-                Vector3 VectorToBeAdded = new Vector3(Convert.ToSingle(indivCoords[0].Trim()),Convert.ToSingle(indivCoords[1].Trim()),Convert.ToSingle(indivCoords[2].Trim()));
-                VectorsRead.Add((VectorToBeAdded,Convert.ToSingle(indivCoords[3])));
-                
+                string[] values = Regex.Replace(Vector, "Vector3|[^0-9,-.]", "").Split(',');;
+                Vector3 VectorToBeAdded = new Vector3(Convert.ToSingle(values[0]), Convert.ToSingle(values[1]), Convert.ToSingle(values[2]));
+                VectorsRead.Add((VectorToBeAdded, Convert.ToSingle(values[3])));
             }
         }
-        
+
         internal static void HandleArrow(direction directionGiven)
         {
-            
-            
             if (directionGiven == direction.LEFT)
             {
                 if (GlobalIndexForArray == 0)
