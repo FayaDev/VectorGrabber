@@ -6,7 +6,7 @@ using Rage;
 using Rage.Native;
 
 [assembly: Rage.Attributes.Plugin("VectorGrabber", Description = "Helps developers find locations for callouts/ambient events", Author = "Roheat")]
-namespace Vector3Grabber
+namespace VectorGrabber
 {
     internal static class EntryPoint
     {
@@ -14,8 +14,8 @@ namespace Vector3Grabber
         internal static List<(Vector3 PlayerVector, float heading)> VectorsRead = new List<(Vector3 PlayerVector, float heading)>();
         internal static int GlobalIndexForArray = 0;
         
-        static string fullPath = @"Plugins\VectorGrabber\locations.txt";
-
+        static string CsharpFilePath = @"Plugins\VectorGrabber\VectorsInCsharpNotation.txt";
+        private static string readingFilePath = @"Plugins\VectorGrabber\FileToBeRead.txt";
         internal enum direction
         {
             LEFT,
@@ -24,23 +24,34 @@ namespace Vector3Grabber
         
         internal static void Main()
         {
-            if (!File.Exists(fullPath))
+            if (!File.Exists(CsharpFilePath) && !File.Exists(readingFilePath))
             {
-                File.Create(fullPath);
+                File.Create(CsharpFilePath);
+                File.Create(readingFilePath);
+            }
+            else if (File.Exists(CsharpFilePath) && !File.Exists(readingFilePath))
+            {
+                File.Create(readingFilePath);
+            }
+            else if (!File.Exists(CsharpFilePath) && File.Exists(readingFilePath))
+            {
+                File.Delete(readingFilePath);
+                File.Create(CsharpFilePath);
+                File.Create(readingFilePath);
             }
             else
             {
                 ReadFile();
             }
-
             Game.DisplayHelp("Inputs may not work as player is not valid. Try switching characters.");
             while (true)
             {
                 GameFiber.Yield();
                 if (Player.IsValid() &&Game.IsKeyDown(Settings.SaveKey) ) 
                 {
-                    AppendToFile(getCoordsAndFormat(),fullPath);
-                    ReadFile();
+                    AppendToFile(getCoordsAndFormat(),CsharpFilePath);
+                    AppendToFile(GetCoordsAndHeading(),readingFilePath);
+                    AddVectorAndHeadingToList();
                     Game.DisplayHelp("Coordinates were saved to both text files.");
                 }
 
@@ -56,6 +67,11 @@ namespace Vector3Grabber
             }
         }
 
+        internal static void AddVectorAndHeadingToList()
+        {
+            VectorsRead.Add((new Vector3(Player.Position.X,Player.Position.Y,Player.Position.Z),Player.Heading));
+        }
+
         internal static void AppendToFile(string str, string path)
         {
             using (StreamWriter sw = File.AppendText(path))
@@ -65,7 +81,7 @@ namespace Vector3Grabber
         }
         internal static void ReadFile()
         {
-            string[] Vectors = File.ReadAllLines(fullPath);
+            string[] Vectors = File.ReadAllLines(readingFilePath);
             foreach (string Vector in Vectors)
             {
                 string[] values = Regex.Replace(Vector, "Vector3|[^0-9,-.]", "").Split(',');;
@@ -81,10 +97,12 @@ namespace Vector3Grabber
                 if (GlobalIndexForArray == 0)
                 {
                     Game.LogTrivial($"Vector Grabber:Back Key pressed when index was 0.");
+                    Game.DisplayNotification("No More Vectors!");
                 }
                 else
                 {
                     GlobalIndexForArray--;
+                    TeleportAndDisplay();
                 }
             }
 
@@ -94,22 +112,32 @@ namespace Vector3Grabber
                 if (GlobalIndexForArray >= lastIndex)
                 {
                     Game.LogTrivial($"Vector Grabber:Next Key pressed when array was at its end.");
+                    Game.DisplayNotification("No More Vectors!");
                 }
                 else
                 {
                     GlobalIndexForArray++;
+                    TeleportAndDisplay();
                 }
             }
+        }
+
+        internal static void TeleportAndDisplay()
+        {
+            float x = VectorsRead[GlobalIndexForArray].PlayerVector.X;
+            float y = VectorsRead[GlobalIndexForArray].PlayerVector.Y;
+            float z = VectorsRead[GlobalIndexForArray].PlayerVector.Z;
+            float heading = VectorsRead[GlobalIndexForArray].heading;
             World.TeleportLocalPlayer(VectorsRead[GlobalIndexForArray].PlayerVector,false);
-            Player.Heading = VectorsRead[GlobalIndexForArray].heading;
-            Game.DisplayHelp($"Vector: ({VectorsRead[GlobalIndexForArray].PlayerVector.X},{VectorsRead[GlobalIndexForArray].PlayerVector.Y},{VectorsRead[GlobalIndexForArray].PlayerVector.Z})" +
+            Player.Heading = heading;
+            Game.DisplayHelp($"Vector: ({x},{y},{z})" +
                              $"\nLine Number: {GlobalIndexForArray + 1}");
         }
 
         internal static string getCoordsAndFormat()
         {
             string str = "";
-            string title = OpenTextInput("Vector3Grabber", "",100);
+            string title = OpenTextInput("VectorGrabber", "",100);
             
             if (title.Equals(null))
             {
@@ -118,9 +146,19 @@ namespace Vector3Grabber
             str += $"(new Vector3({Player.Position.X}f, {Player.Position.Y}f, {Player.Position.Z}f), {Player.Heading}f);";
             if (!title.Equals(""))
             {
-                str += $"  // {title}";
+                str += $"  // {title}\n";
+            }
+            else
+            {
+                str += $"\n";
             }
             Game.LogTrivial($"The string is {str}");
+            return str;
+        }
+        internal static string GetCoordsAndHeading()
+        {
+            string str = $"{Player.Position.X},{Player.Position.Y},{Player.Position.Z},{Player.Heading}";
+            Game.LogTrivial(str);
             return str;
         }
         internal static string OpenTextInput(string windowTitle, string defaultText, int maxLength)
