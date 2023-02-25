@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
-using System.Threading.Tasks;
-using System.Globalization;
-using System.Windows.Forms;
+using System.Text.RegularExpressions;
 using Rage;
 using Rage.Native;
 
@@ -71,24 +68,14 @@ namespace Vector3Grabber
             string[] Vectors = File.ReadAllLines(fullPath);
             foreach (string Vector in Vectors)
             {
-                string[] VectorSplitByComma = Vector.Split(',');
-                string x = VectorSplitByComma[0].Split('(')[2].Trim();
-                x = x.Substring(0, x.Length - 1);
-                string y = VectorSplitByComma[1].Trim();
-                y = y.Substring(0, y.Length - 1);
-                string z = VectorSplitByComma[2].Split(')')[0].Trim();
-                z = z.Substring(0, z.Length - 1);
-                string heading = VectorSplitByComma[3].Split(')')[0];
-                heading = heading.Substring(0, heading.Length - 1);
-                Vector3 VectorToBeAdded = new Vector3(Convert.ToSingle(x), Convert.ToSingle(y), Convert.ToSingle(z));
-                VectorsRead.Add((VectorToBeAdded,Convert.ToSingle(heading)));
+                string[] values = Regex.Replace(Vector, "Vector3|[^0-9,-.]", "").Split(',');;
+                Vector3 VectorToBeAdded = new Vector3(Convert.ToSingle(values[0]), Convert.ToSingle(values[1]), Convert.ToSingle(values[2]));
+                VectorsRead.Add((VectorToBeAdded, Convert.ToSingle(values[3])));
             }
         }
-        
+
         internal static void HandleArrow(direction directionGiven)
         {
-            
-            
             if (directionGiven == direction.LEFT)
             {
                 if (GlobalIndexForArray == 0)
