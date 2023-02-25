@@ -46,12 +46,12 @@ namespace Vector3Grabber
                     Game.DisplayHelp("Coordinates were saved to both text files.");
                 }
 
-                if (Game.IsKeyDown(Settings.NextKey) && Game.IsKeyDown(Settings.ModifierKeyForModifiers))
+                if (Game.IsKeyDown(Settings.NextKey) && Game.IsKeyDown(Settings.ModifierKeyForTeleporting))
                 {
                     HandleArrow(direction.RIGHT);
                 }
 
-                if (Game.IsKeyDown(Settings.BackKey)&& Game.IsKeyDown(Settings.ModifierKeyForModifiers))
+                if (Game.IsKeyDown(Settings.BackKey)&& Game.IsKeyDown(Settings.ModifierKeyForTeleporting))
                 {
                     HandleArrow(direction.LEFT);
                 }
