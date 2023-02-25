@@ -15,7 +15,6 @@ namespace VectorGrabber
         internal static int GlobalIndexForArray = 0;
         
         static string CsharpFilePath = @"Plugins\VectorGrabber\VectorsInCsharpNotation.txt";
-        private static string readingFilePath = @"Plugins\VectorGrabber\FileToBeRead.txt";
         internal enum direction
         {
             LEFT,
@@ -24,20 +23,9 @@ namespace VectorGrabber
         
         internal static void Main()
         {
-            if (!File.Exists(CsharpFilePath) && !File.Exists(readingFilePath))
+            if (!File.Exists(CsharpFilePath))
             {
                 File.Create(CsharpFilePath);
-                File.Create(readingFilePath);
-            }
-            else if (File.Exists(CsharpFilePath) && !File.Exists(readingFilePath))
-            {
-                File.Create(readingFilePath);
-            }
-            else if (!File.Exists(CsharpFilePath) && File.Exists(readingFilePath))
-            {
-                File.Delete(readingFilePath);
-                File.Create(CsharpFilePath);
-                File.Create(readingFilePath);
             }
             else
             {
@@ -50,7 +38,6 @@ namespace VectorGrabber
                 if (Player.IsValid() &&Game.IsKeyDown(Settings.SaveKey) ) 
                 {
                     AppendToFile(getCoordsAndFormat(),CsharpFilePath);
-                    AppendToFile(GetCoordsAndHeading(),readingFilePath);
                     AddVectorAndHeadingToList();
                     Game.DisplayHelp("Coordinates were saved to both text files.");
                 }
@@ -81,7 +68,7 @@ namespace VectorGrabber
         }
         internal static void ReadFile()
         {
-            string[] Vectors = File.ReadAllLines(readingFilePath);
+            string[] Vectors = File.ReadAllLines(CsharpFilePath);
             foreach (string Vector in Vectors)
             {
                 string[] values = Regex.Replace(Vector, "Vector3|[^0-9,-.]", "").Split(',');;
@@ -153,12 +140,6 @@ namespace VectorGrabber
                 str += $"\n";
             }
             Game.LogTrivial($"The string is {str}");
-            return str;
-        }
-        internal static string GetCoordsAndHeading()
-        {
-            string str = $"{Player.Position.X},{Player.Position.Y},{Player.Position.Z},{Player.Heading}";
-            Game.LogTrivial(str);
             return str;
         }
         internal static string OpenTextInput(string windowTitle, string defaultText, int maxLength)
