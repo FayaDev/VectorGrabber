@@ -58,19 +58,6 @@ namespace Vector3Grabber
                 sw.WriteLine(str);
             }
         }
-        /*internal static void ReadFile()
-        {
-            string[] Vectors = File.ReadAllLines(readingFilePath);
-            foreach (string Vector in Vectors)
-            {
-                string[] indivCoords = Vector.Split(',');
-                Game.LogTrivial($"{indivCoords[0]}   {indivCoords[1]}");
-                Vector3 VectorToBeAdded = new Vector3(Convert.ToSingle(indivCoords[0].Trim()),Convert.ToSingle(indivCoords[1].Trim()),Convert.ToSingle(indivCoords[2].Trim()));
-                VectorsRead.Add((VectorToBeAdded,Convert.ToSingle(indivCoords[3])));
-                
-            }
-        }*/
-
         internal static void ReadFile()
         {
             string[] Vectors = File.ReadAllLines(fullPath);
