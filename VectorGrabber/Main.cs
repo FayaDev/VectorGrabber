@@ -71,7 +71,7 @@ namespace VectorGrabber
             string[] Vectors = File.ReadAllLines(CsharpFilePath);
             foreach (string Vector in Vectors)
             {
-                string[] values = Regex.Replace(Vector, "Vector3|[^0-9,-.]", "").Split(',');;
+                string[] values = Regex.Replace(Vector.Trim(), "Vector3|[^0-9,-.]", "").Split(',');
                 Vector3 VectorToBeAdded = new Vector3(Convert.ToSingle(values[0]), Convert.ToSingle(values[1]), Convert.ToSingle(values[2]));
                 VectorsRead.Add((VectorToBeAdded, Convert.ToSingle(values[3])));
             }
@@ -134,11 +134,7 @@ namespace VectorGrabber
             str += $"(new Vector3({Player.Position.X}f, {Player.Position.Y}f, {Player.Position.Z}f), {Player.Heading}f);";
             if (!title.Equals(""))
             {
-                str += $"  // {title}\n";
-            }
-            else
-            {
-                str += $"\n";
+                str += $"  // {title}";
             }
             Game.LogTrivial($"The string is {str}");
             return str;
