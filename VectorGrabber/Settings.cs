@@ -10,7 +10,8 @@ namespace VectorGrabber
         internal static Keys SaveKey = Keys.Y;
         internal static Keys NextKey = Keys.Right;
         internal static Keys BackKey = Keys.Left;
-
+        internal static Keys TeleportKey = Keys.T;
+        
         internal static InitializationFile iniFile;
 
         internal void Initialize()
@@ -22,6 +23,7 @@ namespace VectorGrabber
                 SaveKey = iniFile.ReadEnum("Keybinds", "Savekey",SaveKey);
                 NextKey = iniFile.ReadEnum("Keybinds", "NextKey", NextKey);
                 BackKey = iniFile.ReadEnum("Keybinds", "BackKey", BackKey);
+                TeleportKey = iniFile.ReadEnum("Keybinds", "TeleportKey", TeleportKey);
             }
             catch(System.Exception e)
             {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
 using Rage;
 using Rage.Native;
@@ -46,9 +47,14 @@ namespace VectorGrabber
                     HandleArrow(direction.RIGHT);
                 }
 
-                if (Player.IsValid()&&Game.IsKeyDown(Settings.BackKey)&& Game.IsControlKeyDownRightNow)
+                if (Player.IsValid()&&Game.IsKeyDown(Settings.BackKey) && Game.IsControlKeyDownRightNow)
                 {
                     HandleArrow(direction.LEFT);
+                }
+
+                if (Player.IsValid() && Game.IsKeyDown(Settings.TeleportKey) && Game.IsControlKeyDownRightNow)
+                {
+                    TeleportToSpecificCoordinate();
                 }
             }
         }
@@ -146,6 +152,43 @@ namespace VectorGrabber
             NativeFunction.Natives.ENABLE_ALL_CONTROL_ACTIONS(2);
             return NativeFunction.Natives.GET_ONSCREEN_KEYBOARD_RESULT<string>() ?? "";
         }
+        internal static bool isInputValid(string input)
+        {
+            foreach (char c in input)
+            {
+                if (!char.IsDigit(c))
+                {
+                    Game.DisplayNotification("Invalid input");
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        internal static void TeleportToSpecificCoordinate()
+        {
+            string input = OpenTextInput("VectorGrabber", "", 10);
+            if (input.Equals(""))
+            {
+                Game.DisplayNotification("No input given.");
+            }
+            else
+            {
+                if (isInputValid(input))
+                {
+                    int index = (Int32.Parse(input)) - 1;
+                    if (index >= 0 && index < VectorsRead.Count)
+                    {
+                        World.TeleportLocalPlayer(VectorsRead[index].PlayerVector, false);
+                        Player.Heading = VectorsRead[index].heading;
+                        Game.DisplayNotification($"Player teleported to line number: {input}");
+                    }
+                }
+            }
+        }
+
+        
     }
     
 }
