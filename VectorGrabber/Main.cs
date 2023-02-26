@@ -42,19 +42,26 @@ namespace VectorGrabber
                     Game.DisplayHelp("Coordinates were saved to text file.");
                 }
 
-                if (Player.IsValid()&&Game.IsKeyDown(Settings.NextKey) && Game.IsControlKeyDownRightNow)
+                if (Player.IsValid()&&Game.IsKeyDown(Settings.NextKey) && Game.IsKeyDown(Settings.ModifierKey))
                 {
                     HandleArrow(direction.RIGHT);
                 }
 
-                if (Player.IsValid()&&Game.IsKeyDown(Settings.BackKey) && Game.IsControlKeyDownRightNow)
+                if (Player.IsValid()&&Game.IsKeyDown(Settings.BackKey) && Game.IsKeyDown(Settings.ModifierKey))
                 {
                     HandleArrow(direction.LEFT);
                 }
 
-                if (Player.IsValid() && Game.IsKeyDown(Settings.TeleportKey) && Game.IsControlKeyDownRightNow)
+                if (Player.IsValid() && Game.IsKeyDown(Settings.TeleportKey) && Game.IsKeyDown(Settings.ModifierKey))
                 {
                     TeleportToSpecificCoordinate();
+                }
+
+                if (Player.IsValid() && Game.IsKeyDown(Settings.RereadFile) && Game.IsKeyDown(Settings.ModifierKey))
+                {
+                    VectorsRead.Clear();
+                    ReadFile();
+                    Game.DisplayHelp("Text file was reread.");
                 }
             }
         }
@@ -190,5 +197,4 @@ namespace VectorGrabber
 
         
     }
-    
 }
