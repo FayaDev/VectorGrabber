@@ -126,11 +126,6 @@ namespace VectorGrabber
         {
             string str = "";
             string title = OpenTextInput("VectorGrabber", "",100);
-            
-            if (title.Equals(null))
-            {
-                title = "";
-            }
             str += $"(new Vector3({Player.Position.X}f, {Player.Position.Y}f, {Player.Position.Z}f), {Player.Heading}f);";
             if (!title.Equals(""))
             {
