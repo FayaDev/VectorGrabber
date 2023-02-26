@@ -31,7 +31,6 @@ namespace VectorGrabber
             {
                 ReadFile();
             }
-            Game.DisplayHelp("Inputs may not work as player is not valid. Try switching characters.");
             while (true)
             {
                 GameFiber.Yield();
@@ -39,7 +38,7 @@ namespace VectorGrabber
                 {
                     AppendToFile(getCoordsAndFormat(),CsharpFilePath);
                     AddVectorAndHeadingToList();
-                    Game.DisplayHelp("Coordinates were saved to both text files.");
+                    Game.DisplayHelp("Coordinates were saved to text file.");
                 }
 
                 if (Player.IsValid()&&Game.IsKeyDown(Settings.NextKey) && Game.IsControlKeyDownRightNow)
