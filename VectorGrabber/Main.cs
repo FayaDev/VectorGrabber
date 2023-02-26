@@ -80,13 +80,22 @@ namespace VectorGrabber
         }
         internal static void ReadFile()
         {
-            string[] Vectors = File.ReadAllLines(CsharpFilePath);
-            foreach (string Vector in Vectors)
+            try
             {
-                string[] values = Regex.Replace(Vector.Trim(), "Vector3|[^0-9,-.]", "").Split(',');
-                Vector3 VectorToBeAdded = new Vector3(Convert.ToSingle(values[0]), Convert.ToSingle(values[1]), Convert.ToSingle(values[2]));
-                VectorsRead.Add((VectorToBeAdded, Convert.ToSingle(values[3])));
+                string[] Vectors = File.ReadAllLines(CsharpFilePath);
+                foreach (string Vector in Vectors)
+                {
+                    string[] values = Regex.Replace(Vector.Trim(), "Vector3|[^0-9,-.]", "").Split(',');
+                    Vector3 VectorToBeAdded = new Vector3(Convert.ToSingle(values[0]), Convert.ToSingle(values[1]), Convert.ToSingle(values[2]));
+                    VectorsRead.Add((VectorToBeAdded, Convert.ToSingle(values[3])));
+                }
             }
+            catch (Exception e)
+            {
+                Game.DisplayHelp("Error occurred while reading the file. Blame yourself. git gud kid. jk");
+                Game.LogTrivial($"Error occurred while reading the file: {e.Message}");
+            }
+            
         }
 
         internal static void HandleArrow(direction directionGiven)
