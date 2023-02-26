@@ -150,7 +150,7 @@ namespace VectorGrabber
             }
 
             NativeFunction.Natives.ENABLE_ALL_CONTROL_ACTIONS(2);
-            return NativeFunction.Natives.GET_ONSCREEN_KEYBOARD_RESULT<string>();
+            return NativeFunction.Natives.GET_ONSCREEN_KEYBOARD_RESULT<string>() ?? "";
         }
     }
     
