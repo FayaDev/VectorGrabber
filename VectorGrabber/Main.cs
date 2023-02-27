@@ -43,29 +43,29 @@ namespace VectorGrabber
                     Game.DisplayHelp("Coordinates were saved to text file.");
                 }
 
-                if (Player.IsValid()&&Game.IsKeyDown(Settings.NextKey) && Game.IsKeyDown(Settings.ModifierKey))
+                if (Player.IsValid()&&Game.IsKeyDown(Settings.NextKey) && Game.IsControlKeyDownRightNow)
                 {
                     HandleArrow(direction.RIGHT);
                 }
 
-                if (Player.IsValid()&&Game.IsKeyDown(Settings.BackKey) && Game.IsKeyDown(Settings.ModifierKey))
+                if (Player.IsValid()&&Game.IsKeyDown(Settings.BackKey) && Game.IsControlKeyDownRightNow)
                 {
                     HandleArrow(direction.LEFT);
                 }
 
-                if (Player.IsValid() && Game.IsKeyDown(Settings.TeleportKey) && Game.IsKeyDown(Settings.ModifierKey))
+                if (Player.IsValid() && Game.IsKeyDown(Settings.TeleportKey) && Game.IsControlKeyDownRightNow)
                 {
                     TeleportToSpecificCoordinate();
                 }
 
-                if (Player.IsValid() && Game.IsKeyDown(Settings.RereadFile) && Game.IsKeyDown(Settings.ModifierKey))
+                if (Player.IsValid() && Game.IsKeyDown(Settings.RereadFile) && Game.IsControlKeyDownRightNow)
                 {
                     VectorsRead.Clear();
                     ReadFile();
                     Game.DisplayHelp("Text file was reread.");
                 }
 
-                if (Player.IsValid() && Game.IsKeyDown(Settings.ClipboardKey) && Game.IsKeyDown(Settings.ModifierKey))
+                if (Player.IsValid() && Game.IsKeyDown(Settings.ClipboardKey) && Game.IsControlKeyDownRightNow)
                 {
                     CopyCurrCoordToClipboard();
                 }
