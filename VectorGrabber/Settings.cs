@@ -13,6 +13,7 @@ namespace VectorGrabber
         internal static Keys TeleportKey = Keys.T;
         internal static Keys ModifierKey = Keys.Control;
         internal static Keys RereadFile = Keys.R;
+        internal static Keys ClipboardKey = Keys.C;
         internal static InitializationFile iniFile;
 
         internal void Initialize()
@@ -27,6 +28,7 @@ namespace VectorGrabber
                 TeleportKey = iniFile.ReadEnum("Keybinds", "TeleportKey", TeleportKey);
                 ModifierKey = iniFile.ReadEnum("Keybinds", "ModifierKey", ModifierKey);
                 RereadFile = iniFile.ReadEnum("Keybinds", "RereadFile", RereadFile);
+                ClipboardKey = iniFile.ReadEnum("Keybinds", "ClipboardKey", ClipboardKey);
             }
             catch(System.Exception e)
             {

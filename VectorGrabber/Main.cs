@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Windows.Forms;
 using Rage;
 using Rage.Native;
 
@@ -63,6 +64,11 @@ namespace VectorGrabber
                     ReadFile();
                     Game.DisplayHelp("Text file was reread.");
                 }
+
+                if (Player.IsValid() && Game.IsKeyDown(Settings.ClipboardKey) && Game.IsKeyDown(Settings.ModifierKey))
+                {
+                    CopyCurrCoordToClipboard();
+                }
             }
         }
 
@@ -71,6 +77,10 @@ namespace VectorGrabber
             VectorsRead.Add((new Vector3(Player.Position.X,Player.Position.Y,Player.Position.Z),Player.Heading));
         }
 
+        internal static void CopyCurrCoordToClipboard()
+        {
+            Clipboard.SetText(getCoordsAndFormat());
+        }
         internal static void AppendToFile(string str, string path)
         {
             using (StreamWriter sw = File.AppendText(path))
