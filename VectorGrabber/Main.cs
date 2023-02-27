@@ -79,7 +79,7 @@ namespace VectorGrabber
 
         internal static void CopyCurrCoordToClipboard()
         {
-            Clipboard.SetText(getCoordsAndFormat());
+            Game.SetClipboardText(getCoordsAndFormat());
         }
         internal static void AppendToFile(string str, string path)
         {
