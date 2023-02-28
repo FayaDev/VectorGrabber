@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace VectorGrabber
 {
-    internal class Settings
+    internal static class Settings
     {
         internal static Keys SaveKey = Keys.Y;
         internal static Keys NextKey = Keys.Right;
@@ -15,7 +15,7 @@ namespace VectorGrabber
         internal static Keys ClipboardKey = Keys.C;
         internal static InitializationFile iniFile;
 
-        internal void Initialize()
+        internal static void Initialize()
         {
             try
             {

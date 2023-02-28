@@ -25,6 +25,8 @@ namespace VectorGrabber
         
         internal static void Main()
         {
+            VersionChecker.CheckForUpdates();
+            Settings.Initialize();
             if (!File.Exists(CsharpFilePath))
             {
                 File.Create(CsharpFilePath);
