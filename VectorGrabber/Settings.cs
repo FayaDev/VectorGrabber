@@ -25,7 +25,7 @@ namespace VectorGrabber
                 NextKey = iniFile.ReadEnum("Keybinds", "NextKey", NextKey);
                 BackKey = iniFile.ReadEnum("Keybinds", "BackKey", BackKey);
                 TeleportKey = iniFile.ReadEnum("Keybinds", "TeleportKey", TeleportKey);
-                RereadFile = iniFile.ReadEnum("Keybinds", "RereadFile", RereadFile);
+                //RereadFile = iniFile.ReadEnum("Keybinds", "RereadFile", RereadFile);
                 ClipboardKey = iniFile.ReadEnum("Keybinds", "ClipboardKey", ClipboardKey);
             }
             catch(System.Exception e)

@@ -59,14 +59,14 @@ namespace VectorGrabber
                 {
                     TeleportToSpecificCoordinate();
                 }
-
+                /*
                 if (Player.IsValid() && Game.IsKeyDown(Settings.RereadFile) && Game.IsControlKeyDownRightNow)
                 {
                     VectorsRead.Clear();
                     ReadFile();
                     Game.DisplayHelp("Text file was reread.");
                 }
-
+                */
                 if (Player.IsValid() && Game.IsKeyDown(Settings.ClipboardKey) && Game.IsControlKeyDownRightNow)
                 {
                     CopyCurrCoordToClipboard();
