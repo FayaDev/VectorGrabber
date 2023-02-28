@@ -5,15 +5,17 @@ using System.Windows.Forms;
 
 namespace VectorGrabber
 {
-    internal class Settings
+    internal static class Settings
     {
         internal static Keys SaveKey = Keys.Y;
         internal static Keys NextKey = Keys.Right;
         internal static Keys BackKey = Keys.Left;
-
+        internal static Keys TeleportKey = Keys.T;
+        internal static Keys RereadFile = Keys.R;
+        internal static Keys ClipboardKey = Keys.C;
         internal static InitializationFile iniFile;
 
-        internal void Initialize()
+        internal static void Initialize()
         {
             try
             {
@@ -22,6 +24,9 @@ namespace VectorGrabber
                 SaveKey = iniFile.ReadEnum("Keybinds", "Savekey",SaveKey);
                 NextKey = iniFile.ReadEnum("Keybinds", "NextKey", NextKey);
                 BackKey = iniFile.ReadEnum("Keybinds", "BackKey", BackKey);
+                TeleportKey = iniFile.ReadEnum("Keybinds", "TeleportKey", TeleportKey);
+                //RereadFile = iniFile.ReadEnum("Keybinds", "RereadFile", RereadFile);
+                ClipboardKey = iniFile.ReadEnum("Keybinds", "ClipboardKey", ClipboardKey);
             }
             catch(System.Exception e)
             {

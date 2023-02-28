@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
+using System.Windows.Forms;
 using Rage;
 using Rage.Native;
 
@@ -23,6 +25,8 @@ namespace VectorGrabber
         
         internal static void Main()
         {
+            VersionChecker.CheckForUpdates();
+            Settings.Initialize();
             if (!File.Exists(CsharpFilePath))
             {
                 File.Create(CsharpFilePath);
@@ -46,9 +50,26 @@ namespace VectorGrabber
                     HandleArrow(direction.RIGHT);
                 }
 
-                if (Player.IsValid()&&Game.IsKeyDown(Settings.BackKey)&& Game.IsControlKeyDownRightNow)
+                if (Player.IsValid()&&Game.IsKeyDown(Settings.BackKey) && Game.IsControlKeyDownRightNow)
                 {
                     HandleArrow(direction.LEFT);
+                }
+
+                if (Player.IsValid() && Game.IsKeyDown(Settings.TeleportKey) && Game.IsControlKeyDownRightNow)
+                {
+                    TeleportToSpecificCoordinate();
+                }
+                /*
+                if (Player.IsValid() && Game.IsKeyDown(Settings.RereadFile) && Game.IsControlKeyDownRightNow)
+                {
+                    VectorsRead.Clear();
+                    ReadFile();
+                    Game.DisplayHelp("Text file was reread.");
+                }
+                */
+                if (Player.IsValid() && Game.IsKeyDown(Settings.ClipboardKey) && Game.IsControlKeyDownRightNow)
+                {
+                    CopyCurrCoordToClipboard();
                 }
             }
         }
@@ -58,6 +79,10 @@ namespace VectorGrabber
             VectorsRead.Add((new Vector3(Player.Position.X,Player.Position.Y,Player.Position.Z),Player.Heading));
         }
 
+        internal static void CopyCurrCoordToClipboard()
+        {
+            Game.SetClipboardText(getCoordsAndFormat());
+        }
         internal static void AppendToFile(string str, string path)
         {
             using (StreamWriter sw = File.AppendText(path))
@@ -67,13 +92,22 @@ namespace VectorGrabber
         }
         internal static void ReadFile()
         {
-            string[] Vectors = File.ReadAllLines(CsharpFilePath);
-            foreach (string Vector in Vectors)
+            try
             {
-                string[] values = Regex.Replace(Vector.Trim(), "Vector3|[^0-9,-.]", "").Split(',');
-                Vector3 VectorToBeAdded = new Vector3(Convert.ToSingle(values[0]), Convert.ToSingle(values[1]), Convert.ToSingle(values[2]));
-                VectorsRead.Add((VectorToBeAdded, Convert.ToSingle(values[3])));
+                string[] Vectors = File.ReadAllLines(CsharpFilePath);
+                foreach (string Vector in Vectors)
+                {
+                    string[] values = Regex.Replace(Vector.Trim(), "Vector3|[^0-9,-.]", "").Split(',');
+                    Vector3 VectorToBeAdded = new Vector3(Convert.ToSingle(values[0]), Convert.ToSingle(values[1]), Convert.ToSingle(values[2]));
+                    VectorsRead.Add((VectorToBeAdded, Convert.ToSingle(values[3])));
+                }
             }
+            catch (Exception e)
+            {
+                Game.DisplayHelp("Error occurred while reading the file. Blame yourself. git gud kid. jk");
+                Game.LogTrivial($"Error occurred while reading the file: {e.Message}");
+            }
+            
         }
 
         internal static void HandleArrow(direction directionGiven)
@@ -146,6 +180,42 @@ namespace VectorGrabber
             NativeFunction.Natives.ENABLE_ALL_CONTROL_ACTIONS(2);
             return NativeFunction.Natives.GET_ONSCREEN_KEYBOARD_RESULT<string>() ?? "";
         }
+        internal static bool isInputValid(string input)
+        {
+            foreach (char c in input)
+            {
+                if (!char.IsDigit(c))
+                {
+                    Game.DisplayNotification("Invalid input");
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        internal static void TeleportToSpecificCoordinate()
+        {
+            string input = OpenTextInput("VectorGrabber", "", 10);
+            if (input.Equals(""))
+            {
+                Game.DisplayNotification("No input given.");
+            }
+            else
+            {
+                if (isInputValid(input))
+                {
+                    int index = (Int32.Parse(input)) - 1;
+                    if (index >= 0 && index < VectorsRead.Count)
+                    {
+                        World.TeleportLocalPlayer(VectorsRead[index].PlayerVector, false);
+                        Player.Heading = VectorsRead[index].heading;
+                        Game.DisplayNotification($"Player teleported to line number: {input}");
+                    }
+                }
+            }
+        }
+
+        
     }
-    
 }
