@@ -17,6 +17,7 @@ namespace VectorGrabber
         internal static int GlobalIndexForArray = 0;
         
         static string CsharpFilePath = @"Plugins\VectorGrabber\VectorsInCsharpNotation.txt";
+        static string CsharpFileDirectory = @"Plugins\VectorGrabber\";
         internal enum direction
         {
             LEFT,
@@ -27,6 +28,10 @@ namespace VectorGrabber
         {
             VersionChecker.CheckForUpdates();
             Settings.Initialize();
+            if (Directory.Exists(CsharpFileDirectory))
+            {
+                Directory.CreateDirectory(CsharpFileDirectory);
+            }
             if (!File.Exists(CsharpFilePath))
             {
                 File.Create(CsharpFilePath);
