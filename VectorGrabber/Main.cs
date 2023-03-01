@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using Rage;
 using Rage.Native;
+using RAGENativeUI.Elements;
 
 [assembly: Rage.Attributes.Plugin("VectorGrabber", Description = "Helps developers find locations for callouts/ambient events", Author = "Roheat")]
 namespace VectorGrabber
@@ -13,7 +14,7 @@ namespace VectorGrabber
     internal static class EntryPoint
     {
         internal static Ped Player => Game.LocalPlayer.Character;
-        internal static List<(Vector3 PlayerVector, float heading)> VectorsRead = new List<(Vector3 PlayerVector, float heading)>();
+        internal static List<SavedLocation> VectorsRead = new List<SavedLocation>();
         internal static int GlobalIndexForArray = 0;
         
         static string CsharpFilePath = @"Plugins\VectorGrabber\VectorsInCsharpNotation.txt";
@@ -43,10 +44,11 @@ namespace VectorGrabber
             while (true)
             {
                 GameFiber.Yield();
-                if (Player.IsValid() &&Game.IsKeyDown(Settings.SaveKey) ) 
+                if (Player.IsValid() &&Game.IsKeyDown(Settings.SaveKey) )
                 {
-                    AppendToFile(getCoordsAndFormat(),CsharpFilePath);
-                    AddVectorAndHeadingToList();
+                    string locationTitle;
+                    AppendToFile(getCoordsAndFormat(out locationTitle),CsharpFilePath);
+                    AddVectorAndHeadingToList(locationTitle);
                     Game.DisplayHelp("Coordinates were saved to text file.");
                 }
 
@@ -79,14 +81,17 @@ namespace VectorGrabber
             }
         }
 
-        internal static void AddVectorAndHeadingToList()
+        internal static void AddVectorAndHeadingToList(string title)
         {
-            VectorsRead.Add((new Vector3(Player.Position.X,Player.Position.Y,Player.Position.Z),Player.Heading));
+            SavedLocation s =
+                new SavedLocation(Player.Position.X, Player.Position.Y, Player.Position.Z, Player.Heading,title);
+            VectorsRead.Add(s);
+           // Locations.LocationMenu.AddItem(new UIMenuItem("Title"));
         }
 
         internal static void CopyCurrCoordToClipboard()
         {
-            Game.SetClipboardText(getCoordsAndFormat());
+            Game.SetClipboardText(getCoordsAndFormat(out _));
         }
         internal static void AppendToFile(string str, string path)
         {
@@ -103,8 +108,8 @@ namespace VectorGrabber
                 foreach (string Vector in Vectors)
                 {
                     string[] values = Regex.Replace(Vector.Trim(), "Vector3|[^0-9,-.]", "").Split(',');
-                    Vector3 VectorToBeAdded = new Vector3(Convert.ToSingle(values[0]), Convert.ToSingle(values[1]), Convert.ToSingle(values[2]));
-                    VectorsRead.Add((VectorToBeAdded, Convert.ToSingle(values[3])));
+                    SavedLocation s =  new SavedLocation(Convert.ToSingle(values[0]), Convert.ToSingle(values[1]), Convert.ToSingle(values[2]),Convert.ToSingle(values[3]),"");
+                    VectorsRead.Add(s);
                 }
             }
             catch (Exception e)
@@ -149,21 +154,34 @@ namespace VectorGrabber
 
         internal static void TeleportAndDisplay()
         {
-            float x = VectorsRead[GlobalIndexForArray].PlayerVector.X;
-            float y = VectorsRead[GlobalIndexForArray].PlayerVector.Y;
-            float z = VectorsRead[GlobalIndexForArray].PlayerVector.Z;
+            float x = VectorsRead[GlobalIndexForArray].x;
+            float y = VectorsRead[GlobalIndexForArray].y;
+            float z = VectorsRead[GlobalIndexForArray].z;
             float heading = VectorsRead[GlobalIndexForArray].heading;
-            World.TeleportLocalPlayer(VectorsRead[GlobalIndexForArray].PlayerVector,false);
+            World.TeleportLocalPlayer(new Vector3(x,y,z),false);
             Player.Heading = heading;
             Game.DisplayHelp($"Vector: ({x},{y},{z})" +
                              $"\nHeader: {heading}" +
                              $"\nLine Number: {GlobalIndexForArray + 1}");
         }
+        
+        internal static void TeleportBasedOnIndexAndDisplay(int index)
+        {
+            float x = VectorsRead[index].x;
+            float y = VectorsRead[index].y;
+            float z = VectorsRead[index].z;
+            float heading = VectorsRead[index].heading;
+            World.TeleportLocalPlayer(new Vector3(x,y,z),false);
+            Player.Heading = heading;
+            Game.DisplayHelp($"Vector: ({x},{y},{z})" +
+                             $"\nHeader: {heading}" +
+                             $"\nLine Number: {index + 1}");
+        }
 
-        internal static string getCoordsAndFormat()
+        internal static string getCoordsAndFormat(out string title)
         {
             string str = "";
-            string title = OpenTextInput("VectorGrabber", "",100);
+            title = OpenTextInput("VectorGrabber", "",100);
             str += $"(new Vector3({Player.Position.X}f, {Player.Position.Y}f, {Player.Position.Z}f), {Player.Heading}f);";
             if (!title.Equals(""))
             {
@@ -213,8 +231,12 @@ namespace VectorGrabber
                     int index = (Int32.Parse(input)) - 1;
                     if (index >= 0 && index < VectorsRead.Count)
                     {
-                        World.TeleportLocalPlayer(VectorsRead[index].PlayerVector, false);
-                        Player.Heading = VectorsRead[index].heading;
+                        float x = VectorsRead[index].x;
+                        float y = VectorsRead[index].y;
+                        float z = VectorsRead[index].z;
+                        float heading = VectorsRead[index].heading;
+                        World.TeleportLocalPlayer(new Vector3(x,y,z), false);
+                        Player.Heading = heading;
                         Game.DisplayNotification($"Player teleported to line number: {input}");
                     }
                 }
