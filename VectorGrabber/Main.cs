@@ -27,6 +27,7 @@ namespace VectorGrabber
         
         internal static void Main()
         {
+            Menu.CreateMainMenu();
             VersionChecker.CheckForUpdates();
             Settings.Initialize();
             if (Directory.Exists(CsharpFileDirectory))
@@ -105,10 +106,21 @@ namespace VectorGrabber
             try
             {
                 string[] Vectors = File.ReadAllLines(CsharpFilePath);
-                foreach (string Vector in Vectors)
+                string[] titleSeps = new string[] { "//" };
+                for(int i = 0; i < Vectors.Length; i++)
                 {
-                    string[] values = Regex.Replace(Vector.Trim(), "Vector3|[^0-9,-.]", "").Split(',');
-                    SavedLocation s =  new SavedLocation(Convert.ToSingle(values[0]), Convert.ToSingle(values[1]), Convert.ToSingle(values[2]),Convert.ToSingle(values[3]),"");
+                    string[] values = Regex.Replace(Vectors[i].Trim(), "Vector3|[^0-9,-.]", "").Split(',');
+                    string[] titleSplit = Vectors[i].Split(titleSeps, StringSplitOptions.None);
+                    string title;
+                    if (titleSplit.Length == 1)
+                    {
+                        title = $"Location at Line Number: {i + 1}";
+                    }
+                    else
+                    {
+                        title = $"{titleSplit[1]}";
+                    }
+                    SavedLocation s =  new SavedLocation(Convert.ToSingle(values[0]), Convert.ToSingle(values[1]), Convert.ToSingle(values[2]),Convert.ToSingle(values[3]),title);
                     VectorsRead.Add(s);
                 }
             }

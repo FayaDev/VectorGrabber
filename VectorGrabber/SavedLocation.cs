@@ -2,11 +2,11 @@ namespace VectorGrabber
 {
     public struct SavedLocation
     {
-        public float x { get; set; }
-        public float y { get; set; }
-        public float z { get; set; }
-        public float heading { get; set; }
-        public string title { get; set; }
+        public float x;
+        public float y;
+        public float z;
+        public float heading;
+        public string title;
         
         
         public SavedLocation(float x, float y, float z, float heading, string title)

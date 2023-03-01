@@ -20,9 +20,12 @@ namespace VectorGrabber
             pool = new MenuPool();
 
             mainMenu = new UIMenu("VectorGrabber", "Main Menu");
+            mainMenu.AllowCameraMovement = true;
+            mainMenu.MouseControlsEnabled = false;
             
             pool.Add(mainMenu);
-
+            Locations.setupLocationMenu();
+            
             GameFiber.StartNew(ProcessMenus);
 
 
@@ -40,7 +43,7 @@ namespace VectorGrabber
 
                 pool.ProcessMenus();
 
-                if (Game.IsKeyDown(Keys.Decimal) && !UIMenu.IsAnyMenuVisible && !TabView.IsAnyPauseMenuVisible)
+                if (Game.IsKeyDown(Keys.B) && !UIMenu.IsAnyMenuVisible && !TabView.IsAnyPauseMenuVisible)
                 {
                     mainMenu.Visible = true;
                 }

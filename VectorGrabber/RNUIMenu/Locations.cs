@@ -15,16 +15,20 @@ namespace VectorGrabber
         internal static void setupLocationMenu()
         {
             Menu.mainMenu.AddItem(ShowAllLocations);
+            AddItems();
             Menu.pool.Add(LocationMenu);
             LocationMenu.ParentMenu = Menu.mainMenu;
             LocationMenu.OnItemSelect += OnLocationSelect;
+            LocationMenu.MouseControlsEnabled = false;
+            LocationMenu.AllowCameraMovement = true;
         }
 
         internal static void AddItems()
         {
             foreach (SavedLocation s in EntryPoint.VectorsRead)
             {
-                LocationMenu.AddItem(new UIMenuItem($"{s.title}")); //TODO: Add vector and heading to description
+                LocationMenu.AddItem(new UIMenuItem($"{s.title}",$"x: {s.x} | y: {s.y} | z: {s.z} | heading: {s.heading}")); 
+                
             }
         }
 
