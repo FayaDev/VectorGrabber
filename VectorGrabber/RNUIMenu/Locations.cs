@@ -27,7 +27,7 @@ namespace VectorGrabber
         {
             foreach (SavedLocation s in EntryPoint.VectorsRead)
             {
-                LocationMenu.AddItem(new UIMenuItem($"{s.title}",$"x: {s.x} | y: {s.y} | z: {s.z} | heading: {s.heading}")); 
+                LocationMenu.AddItem(new UIMenuItem($"{s.Title}",$"x: {s.X} | y: {s.Y} | z: {s.Z} | heading: {s.Heading}")); 
                 
             }
         }

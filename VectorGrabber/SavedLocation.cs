@@ -2,20 +2,20 @@ namespace VectorGrabber
 {
     public struct SavedLocation
     {
-        public float x;
-        public float y;
-        public float z;
-        public float heading;
-        public string title;
+        public float X;
+        public float Y;
+        public float Z;
+        public float Heading;
+        public string Title;
         
         
         public SavedLocation(float x, float y, float z, float heading, string title)
         {
-            this.x = x;
-            this.y = y;
-            this.z = z;
-            this.heading = heading;
-            this.title = title;
+            X = x;
+            Y = y;
+            Z = z;
+            Heading = heading;
+            Title = title;
         }
         
     }

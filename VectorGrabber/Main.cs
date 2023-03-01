@@ -166,10 +166,10 @@ namespace VectorGrabber
 
         internal static void TeleportAndDisplay()
         {
-            float x = VectorsRead[GlobalIndexForArray].x;
-            float y = VectorsRead[GlobalIndexForArray].y;
-            float z = VectorsRead[GlobalIndexForArray].z;
-            float heading = VectorsRead[GlobalIndexForArray].heading;
+            float x = VectorsRead[GlobalIndexForArray].X;
+            float y = VectorsRead[GlobalIndexForArray].Y;
+            float z = VectorsRead[GlobalIndexForArray].Z;
+            float heading = VectorsRead[GlobalIndexForArray].Heading;
             World.TeleportLocalPlayer(new Vector3(x,y,z),false);
             Player.Heading = heading;
             Game.DisplayHelp($"Vector: ({x},{y},{z})" +
@@ -179,10 +179,10 @@ namespace VectorGrabber
         
         internal static void TeleportBasedOnIndexAndDisplay(int index)
         {
-            float x = VectorsRead[index].x;
-            float y = VectorsRead[index].y;
-            float z = VectorsRead[index].z;
-            float heading = VectorsRead[index].heading;
+            float x = VectorsRead[index].X;
+            float y = VectorsRead[index].Y;
+            float z = VectorsRead[index].Z;
+            float heading = VectorsRead[index].Heading;
             World.TeleportLocalPlayer(new Vector3(x,y,z),false);
             Player.Heading = heading;
             Game.DisplayHelp($"Vector: ({x},{y},{z})" +
@@ -243,10 +243,10 @@ namespace VectorGrabber
                     int index = (Int32.Parse(input)) - 1;
                     if (index >= 0 && index < VectorsRead.Count)
                     {
-                        float x = VectorsRead[index].x;
-                        float y = VectorsRead[index].y;
-                        float z = VectorsRead[index].z;
-                        float heading = VectorsRead[index].heading;
+                        float x = VectorsRead[index].X;
+                        float y = VectorsRead[index].Y;
+                        float z = VectorsRead[index].Z;
+                        float heading = VectorsRead[index].Heading;
                         World.TeleportLocalPlayer(new Vector3(x,y,z), false);
                         Player.Heading = heading;
                         Game.DisplayNotification($"Player teleported to line number: {input}");
