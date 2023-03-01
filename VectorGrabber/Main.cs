@@ -27,7 +27,7 @@ namespace VectorGrabber
         
         internal static void Main()
         {
-            Menu.CreateMainMenu();
+            GameFiber.StartNew(Menu.CreateMainMenu);
             VersionChecker.CheckForUpdates();
             Settings.Initialize();
             if (Directory.Exists(CsharpFileDirectory))
