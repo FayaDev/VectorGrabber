@@ -90,7 +90,7 @@ namespace VectorGrabber
         {
             if (title.Equals(""))
             {
-                title = $"Location at Line Number: {VectorsRead.Count}";
+                title = $"Location at Line Number: {VectorsRead.Count + 1}";
             }
             SavedLocation s =
                 new SavedLocation(Player.Position.X, Player.Position.Y, Player.Position.Z, Player.Heading,title);
