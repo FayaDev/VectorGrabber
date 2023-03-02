@@ -67,14 +67,10 @@ namespace VectorGrabber
                 {
                     TeleportToSpecificCoordinate();
                 }
-                /*
                 if (Player.IsValid() && Game.IsKeyDown(Settings.RereadFile) && Game.IsControlKeyDownRightNow)
                 {
-                    VectorsRead.Clear();
-                    ReadFile();
-                    Game.DisplayHelp("Text file was reread.");
+                   RereadFile();
                 }
-                */
                 if (Player.IsValid() && Game.IsKeyDown(Settings.ClipboardKey) && Game.IsControlKeyDownRightNow)
                 {
                     CopyCurrCoordToClipboard();
@@ -82,12 +78,24 @@ namespace VectorGrabber
             }
         }
 
+        internal static void RereadFile()
+        {
+            VectorsRead.Clear();
+            Locations.LocationMenu.Clear();
+            ReadFile();
+            Game.DisplayHelp("Text file was reread.");
+        }
+
         internal static void AddVectorAndHeadingToList(string title)
         {
+            if (title.Equals(""))
+            {
+                title = $"Location at Line Number: {VectorsRead.Count}";
+            }
             SavedLocation s =
                 new SavedLocation(Player.Position.X, Player.Position.Y, Player.Position.Z, Player.Heading,title);
             VectorsRead.Add(s);
-           // Locations.LocationMenu.AddItem(new UIMenuItem("Title"));
+            Locations.AddItem(s);
         }
 
         internal static void CopyCurrCoordToClipboard()
@@ -118,11 +126,12 @@ namespace VectorGrabber
                     }
                     else
                     {
-                        title = $"{titleSplit[1]}";
+                        title = $"{titleSplit[1].Trim()}";
                     }
                     SavedLocation s =  new SavedLocation(Convert.ToSingle(values[0]), Convert.ToSingle(values[1]), Convert.ToSingle(values[2]),Convert.ToSingle(values[3]),title);
                     VectorsRead.Add(s);
                 }
+                Locations.AddItems();
             }
             catch (Exception e)
             {

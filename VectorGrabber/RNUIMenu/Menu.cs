@@ -12,16 +12,20 @@ namespace VectorGrabber
     {
         internal static MenuPool pool;
         internal static UIMenu mainMenu;
-        
+        internal static UIMenuItem RereadFile = new UIMenuItem("Reread file", "Rereads file and updates menu"); 
         
         
         internal static void CreateMainMenu()
         {
             pool = new MenuPool();
-
             mainMenu = new UIMenu("VectorGrabber", "Main Menu");
+            mainMenu.AddItem(RereadFile);
+            
+            
             mainMenu.AllowCameraMovement = true;
             mainMenu.MouseControlsEnabled = false;
+
+            mainMenu.OnItemSelect += mainMenuItemSelect;
             
             pool.Add(mainMenu);
             Locations.setupLocationMenu();
@@ -30,7 +34,14 @@ namespace VectorGrabber
 
 
         }
-        
+
+        internal static void mainMenuItemSelect(UIMenu sender, UIMenuItem selectedItem, int index)
+        {
+            if (selectedItem.Equals(RereadFile))
+            {
+                EntryPoint.RereadFile();
+            }
+        }
         
         private static void ProcessMenus()
         {
