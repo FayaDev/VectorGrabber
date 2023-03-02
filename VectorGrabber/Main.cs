@@ -104,7 +104,8 @@ namespace VectorGrabber
         }
         internal static void AppendToFile(string str, string path)
         {
-            using (StreamWriter sw = File.AppendText(path))
+            using (FileStream fs = new FileStream(path,FileMode.Append, FileAccess.Write))
+            using (StreamWriter sw = new StreamWriter(fs))
             {
                 sw.WriteLine(str);
             }
