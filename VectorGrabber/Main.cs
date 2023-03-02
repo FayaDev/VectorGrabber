@@ -53,12 +53,12 @@ namespace VectorGrabber
                     Game.DisplayHelp("Coordinates were saved to text file.");
                 }
 
-                if (Player.IsValid()&&Game.IsKeyDown(Settings.NextKey) && Game.IsControlKeyDownRightNow)
+                if (Player.IsValid()&&Game.IsKeyDown(Settings.TeleportNextKey) && Game.IsControlKeyDownRightNow)
                 {
                     HandleArrow(direction.RIGHT);
                 }
 
-                if (Player.IsValid()&&Game.IsKeyDown(Settings.BackKey) && Game.IsControlKeyDownRightNow)
+                if (Player.IsValid()&&Game.IsKeyDown(Settings.TeleportBackKey) && Game.IsControlKeyDownRightNow)
                 {
                     HandleArrow(direction.LEFT);
                 }

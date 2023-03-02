@@ -54,7 +54,7 @@ namespace VectorGrabber
 
                 pool.ProcessMenus();
 
-                if (Game.IsKeyDown(Keys.B) && !UIMenu.IsAnyMenuVisible && !TabView.IsAnyPauseMenuVisible)
+                if (Game.IsKeyDown(Settings.MenuKey) && Game.IsControlKeyDownRightNow && !UIMenu.IsAnyMenuVisible && !TabView.IsAnyPauseMenuVisible)
                 {
                     mainMenu.Visible = true;
                 }

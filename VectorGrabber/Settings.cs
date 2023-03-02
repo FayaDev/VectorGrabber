@@ -8,11 +8,12 @@ namespace VectorGrabber
     internal static class Settings
     {
         internal static Keys SaveKey = Keys.Y;
-        internal static Keys NextKey = Keys.Right;
-        internal static Keys BackKey = Keys.Left;
+        internal static Keys TeleportNextKey = Keys.Right;
+        internal static Keys TeleportBackKey = Keys.Left;
         internal static Keys TeleportKey = Keys.T;
         internal static Keys RereadFile = Keys.R;
         internal static Keys ClipboardKey = Keys.C;
+        internal static Keys MenuKey = Keys.M;
         internal static InitializationFile iniFile;
 
         internal static void Initialize()
@@ -22,10 +23,11 @@ namespace VectorGrabber
                 iniFile = new InitializationFile(@"Plugins/VectorGrabber.ini");
                 iniFile.Create();
                 SaveKey = iniFile.ReadEnum("Keybinds", "Savekey",SaveKey);
-                NextKey = iniFile.ReadEnum("Keybinds", "NextKey", NextKey);
-                BackKey = iniFile.ReadEnum("Keybinds", "BackKey", BackKey);
+                TeleportNextKey = iniFile.ReadEnum("Keybinds", "NextKey", TeleportNextKey);
+                TeleportBackKey = iniFile.ReadEnum("Keybinds", "BackKey", TeleportBackKey);
                 TeleportKey = iniFile.ReadEnum("Keybinds", "TeleportKey", TeleportKey);
-                //RereadFile = iniFile.ReadEnum("Keybinds", "RereadFile", RereadFile);
+                MenuKey = iniFile.ReadEnum("Keybinds", "MenuKey", MenuKey);
+                RereadFile = iniFile.ReadEnum("Keybinds", "RereadFile", RereadFile);
                 ClipboardKey = iniFile.ReadEnum("Keybinds", "ClipboardKey", ClipboardKey);
             }
             catch(System.Exception e)
