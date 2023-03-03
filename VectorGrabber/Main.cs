@@ -15,6 +15,7 @@ namespace VectorGrabber
     {
         internal static Ped Player => Game.LocalPlayer.Character;
         internal static List<SavedLocation> VectorsRead = new List<SavedLocation>();
+        internal static List<Blip> Blips = new List<Blip>();
         internal static int GlobalIndexForArray = 0;
         
         static string CsharpFilePath = @"Plugins\VectorGrabber\VectorsInCsharpNotation.txt";
@@ -82,6 +83,7 @@ namespace VectorGrabber
         {
             VectorsRead.Clear();
             Locations.LocationMenu.Clear();
+            Locations.DeleteBlips();
             ReadFile();
             Game.DisplayHelp("Text file was reread.");
         }
@@ -96,6 +98,7 @@ namespace VectorGrabber
                 new SavedLocation(Player.Position.X, Player.Position.Y, Player.Position.Z, Player.Heading,title);
             VectorsRead.Add(s);
             Locations.AddItem(s);
+            Locations.AddBlip(s);
         }
 
         internal static void CopyCurrCoordToClipboard()
