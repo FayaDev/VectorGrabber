@@ -30,7 +30,7 @@ namespace VectorGrabber
             GameFiber.StartNew(Menu.CreateMainMenu);
             VersionChecker.CheckForUpdates();
             Settings.Initialize();
-            if (Directory.Exists(CsharpFileDirectory))
+            if (!Directory.Exists(CsharpFileDirectory))
             {
                 Directory.CreateDirectory(CsharpFileDirectory);
             }
