@@ -51,7 +51,7 @@ namespace VectorGrabber
                     string locationTitle;
                     AppendToFile(getCoordsAndFormat(out locationTitle),CsharpFilePath);
                     AddVectorAndHeadingToList(locationTitle);
-                    Game.DisplayHelp("Coordinates were saved to text file.");
+                    Game.DisplayNotification("Coordinates were saved to text file.");
                 }
 
                 if (Player.IsValid()&& Game.IsKeyDown(Settings.TeleportNextKey) && Game.IsKeyDown(Settings.ModifierKey))
@@ -79,12 +79,18 @@ namespace VectorGrabber
             }
         }
 
+        internal static void OnUnload(bool Exit)
+        {
+            Menu.DeleteBlips();
+            Game.LogTrivial("Vector Grabber Unloaded.");
+        }
+
         internal static void AddLocation()
         {
             string locationTitle;
             EntryPoint.AppendToFile(EntryPoint.getCoordsAndFormat(out locationTitle),EntryPoint.CsharpFilePath);
             EntryPoint.AddVectorAndHeadingToList(locationTitle);
-            Game.DisplayHelp("Coordinates were saved to text file.");
+            Game.DisplayNotification("Coordinates were saved to text file.");
         }
         
         internal static void RereadFile()
@@ -93,7 +99,7 @@ namespace VectorGrabber
             Locations.LocationMenu.Clear();
             Menu.DeleteBlips();
             ReadFile();
-            Game.DisplayHelp("Text file was reread.");
+            Game.DisplayNotification("Text file was reread.");
         }
 
         internal static void AddVectorAndHeadingToList(string title)
@@ -147,7 +153,7 @@ namespace VectorGrabber
             }
             catch (Exception e)
             {
-                Game.DisplayHelp("Error occurred while reading the file. Blame yourself. git gud kid. jk");
+                Game.DisplayNotification("Error occurred while reading the file. Blame yourself. git gud kid. jk");
                 Game.LogTrivial($"Error occurred while reading the file: {e.Message}");
             }
             
@@ -193,7 +199,7 @@ namespace VectorGrabber
             float heading = VectorsRead[GlobalIndexForArray].Heading;
             World.TeleportLocalPlayer(new Vector3(x,y,z),false);
             Player.Heading = heading;
-            Game.DisplayHelp($"Vector: ({x},{y},{z})" +
+            Game.DisplayNotification($"Vector: ({x},{y},{z})" +
                              $"\nHeader: {heading}" +
                              $"\nLine Number: {GlobalIndexForArray + 1}");
         }
@@ -206,7 +212,7 @@ namespace VectorGrabber
             float heading = VectorsRead[index].Heading;
             World.TeleportLocalPlayer(new Vector3(x,y,z),false);
             Player.Heading = heading;
-            Game.DisplayHelp($"Vector: ({x},{y},{z})" +
+            Game.DisplayNotification($"Vector: ({x},{y},{z})" +
                              $"\nHeader: {heading}" +
                              $"\nLine Number: {index + 1}");
         }
