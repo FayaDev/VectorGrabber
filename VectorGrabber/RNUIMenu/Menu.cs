@@ -62,10 +62,12 @@ namespace VectorGrabber
             if (IsChecked)
             {
                 AddBlips();
+                Settings.EnableVectorBlips = true;
             }
             else
             {
                 DeleteBlips();
+                Settings.EnableVectorBlips = false;
             }
         }
         

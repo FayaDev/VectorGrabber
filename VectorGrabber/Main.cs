@@ -82,6 +82,7 @@ namespace VectorGrabber
         internal static void OnUnload(bool Exit)
         {
             Menu.DeleteBlips();
+            Settings.UpdateINI();
             Game.LogTrivial("Vector Grabber Unloaded.");
         }
 

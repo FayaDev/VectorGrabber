@@ -42,5 +42,10 @@ namespace VectorGrabber
             }
         }
 
+        internal static void UpdateINI()
+        {
+            iniFile.Write("Customization","EnableVectorBlips",EnableVectorBlips);
+        }
+
     }
 };
