@@ -46,7 +46,7 @@ namespace VectorGrabber
             while (true)
             {
                 GameFiber.Yield();
-                if (Player.IsValid() &&Game.IsKeyDown(Settings.SaveKey) )
+                if (Player.IsValid() &&Game.IsKeyDown(Settings.SaveKey) && Game.IsKeyDown(Settings.ModifierKey))
                 {
                     string locationTitle;
                     AppendToFile(getCoordsAndFormat(out locationTitle),CsharpFilePath);
@@ -54,25 +54,25 @@ namespace VectorGrabber
                     Game.DisplayHelp("Coordinates were saved to text file.");
                 }
 
-                if (Player.IsValid()&&Game.IsKeyDown(Settings.TeleportNextKey) && Game.IsControlKeyDownRightNow)
+                if (Player.IsValid()&& Game.IsKeyDown(Settings.TeleportNextKey) && Game.IsKeyDown(Settings.ModifierKey))
                 {
                     HandleArrow(direction.RIGHT);
                 }
 
-                if (Player.IsValid()&&Game.IsKeyDown(Settings.TeleportBackKey) && Game.IsControlKeyDownRightNow)
+                if (Player.IsValid()&&Game.IsKeyDown(Settings.TeleportBackKey) && Game.IsKeyDown(Settings.ModifierKey))
                 {
                     HandleArrow(direction.LEFT);
                 }
 
-                if (Player.IsValid() && Game.IsKeyDown(Settings.TeleportKey) && Game.IsControlKeyDownRightNow)
+                if (Player.IsValid() && Game.IsKeyDown(Settings.TeleportKey) && Game.IsKeyDown(Settings.ModifierKey))
                 {
                     TeleportToSpecificCoordinate();
                 }
-                if (Player.IsValid() && Game.IsKeyDown(Settings.RereadFile) && Game.IsControlKeyDownRightNow)
+                if (Player.IsValid() && Game.IsKeyDown(Settings.RereadFile) && Game.IsKeyDown(Settings.ModifierKey))
                 {
                    RereadFile();
                 }
-                if (Player.IsValid() && Game.IsKeyDown(Settings.ClipboardKey) && Game.IsControlKeyDownRightNow)
+                if (Player.IsValid() && Game.IsKeyDown(Settings.ClipboardKey) && Game.IsKeyDown(Settings.ModifierKey))
                 {
                     CopyCurrCoordToClipboard();
                 }
@@ -265,6 +265,19 @@ namespace VectorGrabber
                         Game.DisplayNotification($"Player teleported to line number: {input}");
                     }
                 }
+            }
+        }
+        
+        
+        internal static bool CheckClipboardModifierKey()
+        {
+            if (Settings.ModifierKey == Keys.None)
+            {
+                return true;
+            }
+            else
+            {
+                return Game.IsKeyDownRightNow(Settings.ModifierKey);
             }
         }
 

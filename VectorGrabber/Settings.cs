@@ -14,6 +14,7 @@ namespace VectorGrabber
         internal static Keys RereadFile = Keys.R;
         internal static Keys ClipboardKey = Keys.C;
         internal static Keys MenuKey = Keys.M;
+        internal static Keys ModifierKey = Keys.LControlKey;
         internal static bool EnableVectorBlips = true;
         internal static InitializationFile iniFile;
 
@@ -30,6 +31,7 @@ namespace VectorGrabber
                 MenuKey = iniFile.ReadEnum("Keybinds", "MenuKey", MenuKey);
                 RereadFile = iniFile.ReadEnum("Keybinds", "RereadFile", RereadFile);
                 ClipboardKey = iniFile.ReadEnum("Keybinds", "ClipboardKey", ClipboardKey);
+                ModifierKey = iniFile.ReadEnum("Keybinds", "ModifierKey", ModifierKey);
                 EnableVectorBlips = iniFile.ReadBoolean("Customization", "EnableVectorBlips", EnableVectorBlips);
             }
             catch(System.Exception e)
