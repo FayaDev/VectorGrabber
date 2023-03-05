@@ -18,8 +18,8 @@ namespace VectorGrabber
         internal static List<Blip> Blips = new List<Blip>();
         internal static int GlobalIndexForArray = 0;
         
-        static string CsharpFilePath = @"Plugins\VectorGrabber\VectorsInCsharpNotation.txt";
-        static string CsharpFileDirectory = @"Plugins\VectorGrabber\";
+        internal static string CsharpFilePath = @"Plugins\VectorGrabber\VectorsInCsharpNotation.txt";
+        internal static string CsharpFileDirectory = @"Plugins\VectorGrabber\";
         internal enum direction
         {
             LEFT,
@@ -79,11 +79,19 @@ namespace VectorGrabber
             }
         }
 
+        internal static void AddLocation()
+        {
+            string locationTitle;
+            EntryPoint.AppendToFile(EntryPoint.getCoordsAndFormat(out locationTitle),EntryPoint.CsharpFilePath);
+            EntryPoint.AddVectorAndHeadingToList(locationTitle);
+            Game.DisplayHelp("Coordinates were saved to text file.");
+        }
+        
         internal static void RereadFile()
         {
             VectorsRead.Clear();
             Locations.LocationMenu.Clear();
-            Locations.DeleteBlips();
+            Menu.DeleteBlips();
             ReadFile();
             Game.DisplayHelp("Text file was reread.");
         }
@@ -98,7 +106,7 @@ namespace VectorGrabber
                 new SavedLocation(Player.Position.X, Player.Position.Y, Player.Position.Z, Player.Heading,title);
             VectorsRead.Add(s);
             Locations.AddItem(s);
-            Locations.AddBlip(s);
+            Menu.AddBlip(s);
         }
 
         internal static void CopyCurrCoordToClipboard()
