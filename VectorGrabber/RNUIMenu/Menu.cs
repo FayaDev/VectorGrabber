@@ -24,8 +24,8 @@ namespace VectorGrabber
         {
             pool = new MenuPool();
             mainMenu = new UIMenu("VectorGrabber", "Main Menu");
-            mainMenu.AddItem(RereadFile);
             mainMenu.AddItem(EnableBlips);
+            mainMenu.AddItem(RereadFile);
             mainMenu.AddItem(CopyClipboard);
             mainMenu.AddItem(AddLocation);
             
