@@ -45,15 +45,15 @@ namespace VectorGrabber
         {
             if (selectedItem.Equals(RereadFile))
             {
-                EntryPoint.RereadFile();
+                SavedLocationList.RereadFile();
             }
             else if (selectedItem.Equals(CopyClipboard))
             {
-                EntryPoint.CopyCurrCoordToClipboard();
+                SavedLocationList.CopyCurrCoordToClipboard();
             }
             else if (selectedItem.Equals(AddLocation))
             {
-                EntryPoint.AddLocation();
+                SavedLocationList.AddLocation();
             }
         }
         
@@ -73,12 +73,12 @@ namespace VectorGrabber
         
         internal static void AddBlips()
         {
-            foreach (SavedLocation s in EntryPoint.VectorsRead)
+            foreach (SavedLocation s in SavedLocationList.VectorsRead)
             {
                 Blip newBlip = new Blip(new Vector3(s.X, s.Y, s.Z));
                 newBlip.Color = Color.Green; 
                 newBlip.Name = s.Title;
-                EntryPoint.Blips.Add(newBlip);
+                SavedLocationList.Blips.Add(newBlip);
             }
         }
         internal static void AddBlip(SavedLocation s)
@@ -89,11 +89,11 @@ namespace VectorGrabber
             Blip newBlip = new Blip(new Vector3(s.X, s.Y, s.Z));
             newBlip.Color = Color.Green; 
             newBlip.Name = s.Title;
-            EntryPoint.Blips.Add(newBlip);
+            SavedLocationList.Blips.Add(newBlip);
         }
         internal static void DeleteBlips()
         {
-            foreach (Blip blip in EntryPoint.Blips)
+            foreach (Blip blip in SavedLocationList.Blips)
             {
                 if (blip.Exists())
                 {

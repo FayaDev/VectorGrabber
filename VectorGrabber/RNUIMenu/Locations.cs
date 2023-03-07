@@ -29,7 +29,7 @@ namespace VectorGrabber
 
         internal static void AddItems()
         {
-            foreach (SavedLocation s in EntryPoint.VectorsRead)
+            foreach (SavedLocation s in SavedLocationList.VectorsRead)
             {
                 LocationMenu.AddItem(new UIMenuItem($"{s.Title}",$"x: {s.X} | y: {s.Y} | z: {s.Z} | heading: {s.Heading}")); 
                 
@@ -50,7 +50,7 @@ namespace VectorGrabber
 
         internal static void OnLocationSelect(UIMenu sender, UIMenuItem selectedItem, int index)
         {
-            EntryPoint.TeleportBasedOnIndexAndDisplay(index);
+            TeleportHelper.TeleportBasedOnIndexAndDisplay(index,EntryPoint.Player);
         }
     }
 }

@@ -57,12 +57,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HelperMethods.cs" />
     <Compile Include="Main.cs" />
+    <Compile Include="PluginChecker.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RNUIMenu\Locations.cs" />
     <Compile Include="RNUIMenu\Menu.cs" />
     <Compile Include="SavedLocation.cs" />
+    <Compile Include="FileHelper.cs" />
     <Compile Include="Settings.cs" />
+    <Compile Include="TeleportHelper.cs" />
     <Compile Include="VersionChecker.cs" />
   </ItemGroup>
   <ItemGroup>
