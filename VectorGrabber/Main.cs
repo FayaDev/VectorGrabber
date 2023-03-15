@@ -46,7 +46,7 @@ namespace VectorGrabber
             while (true)
             {
                 GameFiber.Yield();
-                if (Player.IsValid() &&Game.IsKeyDown(Settings.SaveKey) && Game.IsKeyDown(Settings.ModifierKey))
+                if (Player.IsValid() &&Game.IsKeyDown(Settings.SaveKey) && CheckModifierKey())
                 {
                     string locationTitle;
                     AppendToFile(getCoordsAndFormat(out locationTitle),CsharpFilePath);
@@ -54,25 +54,25 @@ namespace VectorGrabber
                     Game.DisplayNotification("Coordinates were saved to text file.");
                 }
 
-                if (Player.IsValid()&& Game.IsKeyDown(Settings.TeleportNextKey) && Game.IsKeyDown(Settings.ModifierKey))
+                if (Player.IsValid()&& Game.IsKeyDown(Settings.TeleportNextKey) && CheckModifierKey())
                 {
                     HandleArrow(direction.RIGHT);
                 }
 
-                if (Player.IsValid()&&Game.IsKeyDown(Settings.TeleportBackKey) && Game.IsKeyDown(Settings.ModifierKey))
+                if (Player.IsValid()&&Game.IsKeyDown(Settings.TeleportBackKey) && CheckModifierKey())
                 {
                     HandleArrow(direction.LEFT);
                 }
 
-                if (Player.IsValid() && Game.IsKeyDown(Settings.TeleportKey) && Game.IsKeyDown(Settings.ModifierKey))
+                if (Player.IsValid() && Game.IsKeyDown(Settings.TeleportKey) && CheckModifierKey())
                 {
                     TeleportToSpecificCoordinate();
                 }
-                if (Player.IsValid() && Game.IsKeyDown(Settings.RereadFile) && Game.IsKeyDown(Settings.ModifierKey))
+                if (Player.IsValid() && Game.IsKeyDown(Settings.RereadFile) && CheckModifierKey())
                 {
                    RereadFile();
                 }
-                if (Player.IsValid() && Game.IsKeyDown(Settings.ClipboardKey) && Game.IsKeyDown(Settings.ModifierKey))
+                if (Player.IsValid() && Game.IsKeyDown(Settings.ClipboardKey) && CheckModifierKey())
                 {
                     CopyCurrCoordToClipboard();
                 }
@@ -284,7 +284,7 @@ namespace VectorGrabber
         }
         
         
-        internal static bool CheckClipboardModifierKey()
+        internal static bool CheckModifierKey()
         {
             if (Settings.ModifierKey == Keys.None)
             {
