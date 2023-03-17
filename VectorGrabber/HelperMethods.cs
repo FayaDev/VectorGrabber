@@ -33,7 +33,7 @@ namespace VectorGrabber
             return true;
         }
         
-        internal static bool CheckClipboardModifierKey() => Settings.ModifierKey == Keys.None ? true : Game.IsKeyDownRightNow(Settings.ModifierKey);
+        internal static bool CheckModifierKey() => Settings.ModifierKey == Keys.None ? true : Game.IsKeyDownRightNow(Settings.ModifierKey);
         
         internal static string getCoordsAndFormat(out string title, Ped Player)
         {

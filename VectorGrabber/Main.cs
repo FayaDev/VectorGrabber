@@ -38,7 +38,7 @@ namespace VectorGrabber
             while (true)
             {
                 GameFiber.Yield();
-                if (Player.IsValid() &&Game.IsKeyDown(Settings.SaveKey) && Game.IsKeyDown(Settings.ModifierKey))
+                if (Player.IsValid() &&Game.IsKeyDown(Settings.SaveKey) && HelperMethods.CheckModifierKey())
                 {
                     string locationTitle;
                     SavedLocationList.AppendToFile(HelperMethods.getCoordsAndFormat(out locationTitle,Player),CsharpFilePath);
@@ -46,27 +46,28 @@ namespace VectorGrabber
                     Game.DisplayNotification("Coordinates were saved to text file.");
                 }
 
-                if (Player.IsValid()&& Game.IsKeyDown(Settings.TeleportNextKey) && Game.IsKeyDown(Settings.ModifierKey))
+                if (Player.IsValid()&& Game.IsKeyDown(Settings.TeleportNextKey) && HelperMethods.CheckModifierKey())
                 {
                     TeleportHelper.HandleArrow(TeleportHelper.direction.RIGHT);
                 }
 
-                if (Player.IsValid()&&Game.IsKeyDown(Settings.TeleportBackKey) && Game.IsKeyDown(Settings.ModifierKey))
+                if (Player.IsValid()&&Game.IsKeyDown(Settings.TeleportBackKey) && HelperMethods.CheckModifierKey())
                 {
                     TeleportHelper.HandleArrow(TeleportHelper.direction.LEFT);
                 }
 
-                if (Player.IsValid() && Game.IsKeyDown(Settings.TeleportKey) && Game.IsKeyDown(Settings.ModifierKey))
+                if (Player.IsValid() && Game.IsKeyDown(Settings.TeleportKey) && HelperMethods.CheckModifierKey())
                 {
                     TeleportHelper.TeleportToSpecificCoordinate(Player);
                 }
-                if (Player.IsValid() && Game.IsKeyDown(Settings.RereadFile) && Game.IsKeyDown(Settings.ModifierKey))
+                if (Player.IsValid() && Game.IsKeyDown(Settings.RereadFile) && HelperMethods.CheckModifierKey())
                 {
                    SavedLocationList.RereadFile();
                 }
-                if (Player.IsValid() && Game.IsKeyDown(Settings.ClipboardKey) && Game.IsKeyDown(Settings.ModifierKey))
+                if (Player.IsValid() && Game.IsKeyDown(Settings.ClipboardKey) && HelperMethods.CheckModifierKey())
                 {
                     SavedLocationList.CopyCurrCoordToClipboard();
+                    
                 }
             }
         }
