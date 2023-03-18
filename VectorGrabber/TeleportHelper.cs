@@ -14,10 +14,10 @@ namespace VectorGrabber
 
         internal static void TeleportAndDisplay(Ped Player)
         {
-            float x = SavedLocationList.VectorsRead[GlobalIndexForArray].X;
-            float y = SavedLocationList.VectorsRead[GlobalIndexForArray].Y;
-            float z = SavedLocationList.VectorsRead[GlobalIndexForArray].Z;
-            float heading = SavedLocationList.VectorsRead[GlobalIndexForArray].Heading;
+            float x = FileHelper.VectorsRead[GlobalIndexForArray].X;
+            float y = FileHelper.VectorsRead[GlobalIndexForArray].Y;
+            float z = FileHelper.VectorsRead[GlobalIndexForArray].Z;
+            float heading = FileHelper.VectorsRead[GlobalIndexForArray].Heading;
             World.TeleportLocalPlayer(new Vector3(x,y,z),false);
             Player.Heading = heading;
             Game.DisplayNotification($"Vector: ({x},{y},{z})" +
@@ -27,10 +27,10 @@ namespace VectorGrabber
         
         internal static void TeleportBasedOnIndexAndDisplay(int index, Ped Player)
         {
-            float x = SavedLocationList.VectorsRead[index].X;
-            float y = SavedLocationList.VectorsRead[index].Y;
-            float z = SavedLocationList.VectorsRead[index].Z;
-            float heading = SavedLocationList.VectorsRead[index].Heading;
+            float x = FileHelper.VectorsRead[index].X;
+            float y = FileHelper.VectorsRead[index].Y;
+            float z = FileHelper.VectorsRead[index].Z;
+            float heading = FileHelper.VectorsRead[index].Heading;
             World.TeleportLocalPlayer(new Vector3(x,y,z),false);
             Player.Heading = heading;
             Game.DisplayNotification($"Vector: ({x},{y},{z})" +
@@ -50,12 +50,12 @@ namespace VectorGrabber
                 if (HelperMethods.isInputValid(input))
                 {
                     int index = (Int32.Parse(input)) - 1;
-                    if (index >= 0 && index < SavedLocationList.VectorsRead.Count)
+                    if (index >= 0 && index < FileHelper.VectorsRead.Count)
                     {
-                        float x = SavedLocationList.VectorsRead[index].X;
-                        float y = SavedLocationList.VectorsRead[index].Y;
-                        float z = SavedLocationList.VectorsRead[index].Z;
-                        float heading = SavedLocationList.VectorsRead[index].Heading;
+                        float x = FileHelper.VectorsRead[index].X;
+                        float y = FileHelper.VectorsRead[index].Y;
+                        float z = FileHelper.VectorsRead[index].Z;
+                        float heading = FileHelper.VectorsRead[index].Heading;
                         World.TeleportLocalPlayer(new Vector3(x,y,z), false);
                         Player.Heading = heading;
                         Game.DisplayNotification($"Player teleported to line number: {input}");
@@ -82,7 +82,7 @@ namespace VectorGrabber
 
             if (directionGiven == direction.RIGHT)
             {
-                int lastIndex = SavedLocationList.VectorsRead.Count - 1;
+                int lastIndex = FileHelper.VectorsRead.Count - 1;
                 if (GlobalIndexForArray >= lastIndex)
                 {
                     Game.LogTrivial($"Vector Grabber:Next Key pressed when array was at its end.");

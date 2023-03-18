@@ -33,7 +33,7 @@ namespace VectorGrabber
             }
             else
             {
-                SavedLocationList.ReadFile();
+                FileHelper.ReadFile();
             }
             while (true)
             {
@@ -41,8 +41,8 @@ namespace VectorGrabber
                 if (Player.IsValid() &&Game.IsKeyDown(Settings.SaveKey) && HelperMethods.CheckModifierKey())
                 {
                     string locationTitle;
-                    SavedLocationList.AppendToFile(HelperMethods.getCoordsAndFormat(out locationTitle,Player),CsharpFilePath);
-                    SavedLocationList.AddVectorAndHeadingToList(locationTitle,Player);
+                    FileHelper.AppendToFile(HelperMethods.getCoordsAndFormat(out locationTitle,Player),CsharpFilePath);
+                    FileHelper.AddVectorAndHeadingToList(locationTitle,Player);
                     Game.DisplayNotification("Coordinates were saved to text file.");
                 }
 
@@ -62,11 +62,11 @@ namespace VectorGrabber
                 }
                 if (Player.IsValid() && Game.IsKeyDown(Settings.RereadFile) && HelperMethods.CheckModifierKey())
                 {
-                   SavedLocationList.RereadFile();
+                   FileHelper.RereadFile();
                 }
                 if (Player.IsValid() && Game.IsKeyDown(Settings.ClipboardKey) && HelperMethods.CheckModifierKey())
                 {
-                    SavedLocationList.CopyCurrCoordToClipboard();
+                    FileHelper.CopyCurrCoordToClipboard();
                     
                 }
             }

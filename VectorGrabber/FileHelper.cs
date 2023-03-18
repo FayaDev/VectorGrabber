@@ -1,12 +1,15 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.Remoting.Channels;
 using System.Text.RegularExpressions;
+using System.Windows.Forms;
 using Rage;
+using RAGENativeUI.PauseMenu;
 
 namespace VectorGrabber
 {
-    public class SavedLocationList
+    public class FileHelper
     {
         internal static List<SavedLocation> VectorsRead = new List<SavedLocation>();
         internal static List<Blip> Blips = new List<Blip>();
@@ -71,6 +74,48 @@ namespace VectorGrabber
             ReadFile();
             Game.DisplayNotification("Text file was reread.");
         }
+
+        internal static void ClearFile()
+        {
+            if (File.Exists(CsharpFilePath))
+            {
+                MakeCopyOfFile();
+                File.Delete(CsharpFilePath);
+            }
+            File.Create(CsharpFilePath);
+        }
+
+        internal static void MakeCopyOfFile(string fileName = "")
+        {
+            string defaultCopyFileName = $@"{CsharpFileDirectory}\FileSave_{DateTime.Now.ToString()}";
+            if (fileName.Equals("") || File.Exists($@"{CsharpFileDirectory}\{fileName}") || !ValidFileName(fileName))
+            {
+                Game.DisplayHelp("File name already exists/Invalid File Name/No File Name inputted. Saving as default title.");
+                File.Copy(CsharpFilePath, defaultCopyFileName);
+            }
+            else
+            {
+                File.Copy(CsharpFilePath,$@"{CsharpFileDirectory}\{fileName}");
+            }
+        }
+        internal static bool ValidFileName(string filename)
+        {
+            // Tharwat 27.05.2015 < My first Public Method in C# >    
+            // A method to check if the entered file name is valid to use. 
+            // The method should return true / false as an output
+            bool valid = true;
+            List<string> Pattern = new List<string> { "^", "<", ">", ";", "|", "'", "/", ",", "\\", ":", "=", "?", "\"", "*" };
+            for (int i = 0; i < Pattern.Count; i++)
+            {
+                if (filename.Contains(Pattern[i]))
+                {
+                    valid = false;
+                    break;
+                }
+            }
+            return valid;
+        }
+        
 
         internal static void AddVectorAndHeadingToList(string title, Ped Player)
         {
