@@ -77,46 +77,14 @@ namespace VectorGrabber
 
         internal static void ClearFile()
         {
-            if (File.Exists(CsharpFilePath))
-            {
-                MakeCopyOfFile();
-                File.Delete(CsharpFilePath);
-            }
+            string defaultCopyFilePath = $@"{CsharpFileDirectory}FileSave-{DateTime.Now.Millisecond}.txt";
+            Game.LogTrivial(defaultCopyFilePath);
+            string text  = File.ReadAllText(CsharpFilePath);
+            File.WriteAllText(defaultCopyFilePath, text);
+            File.Delete(CsharpFilePath);
             File.Create(CsharpFilePath);
         }
-
-        internal static void MakeCopyOfFile(string fileName = "")
-        {
-            string defaultCopyFileName = $@"{CsharpFileDirectory}\FileSave_{DateTime.Now.ToString()}";
-            if (fileName.Equals("") || File.Exists($@"{CsharpFileDirectory}\{fileName}") || !ValidFileName(fileName))
-            {
-                Game.DisplayHelp("File name already exists/Invalid File Name/No File Name inputted. Saving as default title.");
-                File.Copy(CsharpFilePath, defaultCopyFileName);
-            }
-            else
-            {
-                File.Copy(CsharpFilePath,$@"{CsharpFileDirectory}\{fileName}");
-            }
-        }
-        internal static bool ValidFileName(string filename)
-        {
-            // Tharwat 27.05.2015 < My first Public Method in C# >    
-            // A method to check if the entered file name is valid to use. 
-            // The method should return true / false as an output
-            bool valid = true;
-            List<string> Pattern = new List<string> { "^", "<", ">", ";", "|", "'", "/", ",", "\\", ":", "=", "?", "\"", "*" };
-            for (int i = 0; i < Pattern.Count; i++)
-            {
-                if (filename.Contains(Pattern[i]))
-                {
-                    valid = false;
-                    break;
-                }
-            }
-            return valid;
-        }
         
-
         internal static void AddVectorAndHeadingToList(string title, Ped Player)
         {
             if (title.Equals(""))

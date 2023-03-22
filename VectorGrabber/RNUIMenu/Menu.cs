@@ -65,8 +65,7 @@ namespace VectorGrabber
             }
             else if (selectedItem.Equals(MakeCopyOfFile))
             {
-                string fileName = HelperMethods.OpenTextInput("Vector Grabber","",50);
-                FileHelper.MakeCopyOfFile(fileName);
+                FileHelper.ClearFile();
             }
         }
         
@@ -126,7 +125,7 @@ namespace VectorGrabber
 
                 pool.ProcessMenus();
 
-                if (Game.IsKeyDown(Settings.MenuKey) && Game.IsControlKeyDownRightNow && !UIMenu.IsAnyMenuVisible && !TabView.IsAnyPauseMenuVisible)
+                if (Game.IsKeyDown(Settings.MenuKey) && HelperMethods.CheckModifierKey() && !UIMenu.IsAnyMenuVisible && !TabView.IsAnyPauseMenuVisible)
                 {
                     mainMenu.Visible = true;
                 }
