@@ -1,6 +1,7 @@
 using System.Windows.Forms;
 using Rage;
 using Rage.Native;
+using RAGENativeUI;
 
 namespace VectorGrabber
 {
@@ -38,7 +39,8 @@ namespace VectorGrabber
         internal static string getCoordsAndFormat(out string title, Ped Player)
         {
             string str = "";
-            title = OpenTextInput("VectorGrabber", "",100);
+            Localization.SetText("Title","Enter title for save location");
+            title = OpenTextInput("Title", "",100);
             str += $"(new Vector3({Player.Position.X}f, {Player.Position.Y}f, {Player.Position.Z}f), {Player.Heading}f);";
             if (!title.Equals(""))
             {

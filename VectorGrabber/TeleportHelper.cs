@@ -1,5 +1,6 @@
 using System;
 using Rage;
+using RAGENativeUI;
 
 namespace VectorGrabber
 {
@@ -40,7 +41,8 @@ namespace VectorGrabber
         
         internal static void TeleportToSpecificCoordinate(Ped Player)
         {
-            string input = HelperMethods.OpenTextInput("VectorGrabber", "", 10);
+            Localization.SetText("Title","Enter Line Number that you want to be teleported to");
+            string input = HelperMethods.OpenTextInput("Title", "", 10);
             if (input.Equals(""))
             {
                 Game.DisplayNotification("No input given.");
