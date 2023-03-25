@@ -40,6 +40,7 @@ namespace VectorGrabber
             EnableBlips.CheckboxEvent += OnBlipCheckboxEvent;
             pool.Add(mainMenu);
             Locations.setupLocationMenu();
+            DeleteLocations.setupDeleteLocationMenu();
             GameFiber.StartNew(ProcessMenus);
 
 
