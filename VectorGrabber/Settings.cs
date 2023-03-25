@@ -16,6 +16,8 @@ namespace VectorGrabber
         internal static Keys MenuKey = Keys.M;
         internal static Keys ModifierKey = Keys.LControlKey;
         internal static bool EnableVectorBlips = true;
+        internal static bool TeleportNotification = false;
+        
         internal static InitializationFile iniFile;
 
         internal static void Initialize()
@@ -33,6 +35,7 @@ namespace VectorGrabber
                 ClipboardKey = iniFile.ReadEnum("Keybinds", "ClipboardKey", ClipboardKey);
                 ModifierKey = iniFile.ReadEnum("Keybinds", "ModifierKey", ModifierKey);
                 EnableVectorBlips = iniFile.ReadBoolean("Customization", "EnableVectorBlips", EnableVectorBlips);
+                TeleportNotification = iniFile.ReadBoolean("Customization", "TeleportNotification", TeleportNotification);
             }
             catch(System.Exception e)
             {
