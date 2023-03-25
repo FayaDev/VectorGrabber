@@ -39,8 +39,8 @@ namespace VectorGrabber
         internal static string getCoordsAndFormat(out string title, Ped Player)
         {
             string str = "";
-            Localization.SetText("Title","Enter title for save location");
-            title = OpenTextInput("Title", "",100);
+            Localization.SetText("TITLE","Enter title for save location");
+            title = OpenTextInput("TITLE", "",100);
             str += $"(new Vector3({Player.Position.X}f, {Player.Position.Y}f, {Player.Position.Z}f), {Player.Heading}f);";
             if (!title.Equals(""))
             {

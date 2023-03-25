@@ -21,7 +21,7 @@ namespace VectorGrabber
             string locationTitle;
             AppendToFile(HelperMethods.getCoordsAndFormat(out locationTitle,EntryPoint.Player),EntryPoint.CsharpFilePath);
             AddVectorAndHeadingToList(locationTitle,EntryPoint.Player);
-            Game.DisplayNotification("Coordinates were saved to text file.");
+            Game.DisplayNotification("~g~Coordinates were saved to text file.");
         }
         
         
@@ -42,6 +42,11 @@ namespace VectorGrabber
                 string[] titleSeps = new string[] { "//" };
                 for(int i = 0; i < Vectors.Length; i++)
                 {
+                    if (Vectors[i].Equals(""))
+                    {
+                        Game.LogTrivial($"Line Number {i+1} was invalid. Skipping line.");
+                        continue;
+                    }
                     string[] values = Regex.Replace(Vectors[i].Trim(), "Vector3|[^0-9,-.]", "").Split(',');
                     string[] titleSplit = Vectors[i].Split(titleSeps, StringSplitOptions.None);
                     string title;
@@ -53,14 +58,25 @@ namespace VectorGrabber
                     {
                         title = $"{titleSplit[1].Trim()}";
                     }
-                    SavedLocation s =  new SavedLocation(Convert.ToSingle(values[0]), Convert.ToSingle(values[1]), Convert.ToSingle(values[2]),Convert.ToSingle(values[3]),title);
-                    VectorsRead.Add(s);
+
+                    if (values.Length != 4)
+                    {
+                        Game.LogTrivial($"Line Number {i+1} was invalid. Skipping line.");
+                        continue;
+                    }
+                    else
+                    {
+                        SavedLocation s = new SavedLocation(Convert.ToSingle(values[0]), Convert.ToSingle(values[1]),
+                            Convert.ToSingle(values[2]), Convert.ToSingle(values[3]), title);
+                        VectorsRead.Add(s);
+                    }
                 }
                 Locations.AddItems();
+                DeleteLocations.AddItems();
             }
             catch (Exception e)
             {
-                Game.DisplayNotification("Error occurred while reading the file. Blame yourself. git gud kid. jk");
+                Game.DisplayNotification("~r~Error occurred while reading the file. ~w~Blame yourself. ~g~git gud kid. jk");
                 Game.LogTrivial($"Error occurred while reading the file: {e.Message}");
             }
             
@@ -70,9 +86,10 @@ namespace VectorGrabber
         {
             VectorsRead.Clear();
             Locations.LocationMenu.Clear();
+            DeleteLocations.DeleteLocationMenu.Clear();
             Menu.DeleteBlips();
             ReadFile();
-            Game.DisplayNotification("Text file was reread.");
+            Game.DisplayNotification("~g~Text file was reread.");
         }
 
         internal static void ClearFile()
@@ -83,6 +100,7 @@ namespace VectorGrabber
             File.WriteAllText(defaultCopyFilePath, text);
             File.Delete(CsharpFilePath);
             File.Create(CsharpFilePath);
+            Game.DisplayNotification("~g~Text file was cleared. Save file was created.");
         }
         
         internal static void AddVectorAndHeadingToList(string title, Ped Player)
@@ -98,9 +116,24 @@ namespace VectorGrabber
             Menu.AddBlip(s);
         }
 
+        internal static void UpdateTextFile()
+        {
+            Menu.ToggleAccessToLocations();
+            File.Delete(CsharpFilePath);
+            List<string> NewVectors = new List<string>();
+            for (int i = 0; i < VectorsRead.Count; i++)
+            {
+                SavedLocation s = VectorsRead[i];
+                NewVectors.Add($"(new Vector3({s.X}f, {s.Y}f, {s.Z}f), {s.Heading}f); // {s.Title}");
+            }
+            File.WriteAllLines(CsharpFilePath,NewVectors);
+            Menu.ToggleAccessToLocations();
+        }
+
         internal static void CopyCurrCoordToClipboard()
         {
             Game.SetClipboardText(HelperMethods.getCoordsAndFormat(out _,EntryPoint.Player));
+            Game.DisplayNotification("~g~Coordinates were copied to computer clipboard.");
         }
     }
 }

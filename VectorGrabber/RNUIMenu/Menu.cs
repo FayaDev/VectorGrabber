@@ -40,6 +40,7 @@ namespace VectorGrabber
             EnableBlips.CheckboxEvent += OnBlipCheckboxEvent;
             pool.Add(mainMenu);
             Locations.setupLocationMenu();
+            DeleteLocations.setupDeleteLocationMenu();
             GameFiber.StartNew(ProcessMenus);
 
 
@@ -82,7 +83,21 @@ namespace VectorGrabber
                 Settings.EnableVectorBlips = false;
             }
         }
-        
+
+        internal static void ToggleAccessToLocations()
+        {
+            if (DeleteLocations.LocationsThatCanBeDeleted.Enabled && Locations.ShowAllLocations.Enabled)
+            {
+                DeleteLocations.LocationsThatCanBeDeleted.Enabled = false;
+                Locations.ShowAllLocations.Enabled = false;
+            }
+            else
+            {
+                DeleteLocations.LocationsThatCanBeDeleted.Enabled = true;
+                Locations.ShowAllLocations.Enabled = true;
+            }
+            
+        }
         internal static void AddBlips()
         {
             foreach (SavedLocation s in FileHelper.VectorsRead)

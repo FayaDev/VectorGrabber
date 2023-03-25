@@ -21,9 +21,12 @@ namespace VectorGrabber
             float heading = FileHelper.VectorsRead[GlobalIndexForArray].Heading;
             World.TeleportLocalPlayer(new Vector3(x,y,z),false);
             Player.Heading = heading;
-            Game.DisplayNotification($"Vector: ({x},{y},{z})" +
-                                     $"\nHeader: {heading}" +
-                                     $"\nLine Number: {GlobalIndexForArray + 1}");
+            if (Settings.TeleportNotification)
+            {
+                Game.DisplayNotification($"Vector: ({x},{y},{z})" +
+                                         $"\nHeader: {heading}" +
+                                         $"\nLine Number: {GlobalIndexForArray + 1}");
+            }
         }
         
         internal static void TeleportBasedOnIndexAndDisplay(int index, Ped Player)
@@ -34,15 +37,18 @@ namespace VectorGrabber
             float heading = FileHelper.VectorsRead[index].Heading;
             World.TeleportLocalPlayer(new Vector3(x,y,z),false);
             Player.Heading = heading;
-            Game.DisplayNotification($"Vector: ({x},{y},{z})" +
-                                     $"\nHeader: {heading}" +
-                                     $"\nLine Number: {index + 1}");
+            if (Settings.TeleportNotification)
+            {
+                Game.DisplayNotification($"Vector: ({x},{y},{z})" +
+                                         $"\nHeader: {heading}" +
+                                         $"\nLine Number: {index + 1}");
+            }
         }
         
         internal static void TeleportToSpecificCoordinate(Ped Player)
         {
-            Localization.SetText("Title","Enter Line Number that you want to be teleported to");
-            string input = HelperMethods.OpenTextInput("Title", "", 10);
+            Localization.SetText("TITLE","Enter Line Number that you want to be teleported to");
+            string input = HelperMethods.OpenTextInput("TITLE", "", 10);
             if (input.Equals(""))
             {
                 Game.DisplayNotification("No input given.");
@@ -60,7 +66,7 @@ namespace VectorGrabber
                         float heading = FileHelper.VectorsRead[index].Heading;
                         World.TeleportLocalPlayer(new Vector3(x,y,z), false);
                         Player.Heading = heading;
-                        Game.DisplayNotification($"Player teleported to line number: {input}");
+                        Game.DisplayNotification($"~g~Player teleported to line number: {input}");
                     }
                 }
             }
@@ -73,7 +79,7 @@ namespace VectorGrabber
                 if (GlobalIndexForArray == 0)
                 {
                     Game.LogTrivial($"Vector Grabber:Back Key pressed when index was 0.");
-                    Game.DisplayNotification("No More Vectors!");
+                    Game.DisplayNotification("~y~No More Vectors!");
                 }
                 else
                 {
@@ -88,7 +94,7 @@ namespace VectorGrabber
                 if (GlobalIndexForArray >= lastIndex)
                 {
                     Game.LogTrivial($"Vector Grabber:Next Key pressed when array was at its end.");
-                    Game.DisplayNotification("No More Vectors!");
+                    Game.DisplayNotification("~y~No More Vectors!");
                 }
                 else
                 {
