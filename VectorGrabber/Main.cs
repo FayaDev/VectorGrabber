@@ -60,10 +60,12 @@ namespace VectorGrabber
                 {
                     TeleportHelper.TeleportToSpecificCoordinate(Player);
                 }
+
                 if (Player.IsValid() && Game.IsKeyDown(Settings.RereadFile) && HelperMethods.CheckModifierKey())
                 {
                    FileHelper.RereadFile();
                 }
+
                 if (Player.IsValid() && Game.IsKeyDown(Settings.ClipboardKey) && HelperMethods.CheckModifierKey())
                 {
                     FileHelper.CopyCurrCoordToClipboard();
