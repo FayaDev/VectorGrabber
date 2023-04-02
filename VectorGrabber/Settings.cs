@@ -15,6 +15,7 @@ namespace VectorGrabber
         internal static Keys ClipboardKey = Keys.C;
         internal static Keys MenuKey = Keys.M;
         internal static Keys ModifierKey = Keys.LControlKey;
+        internal static string CustomNotation = "(new Vector3({0}f, {1}f, {2}f), {3}f);"; //has to include the 3 values  
         internal static bool EnableVectorBlips = true;
         internal static bool TeleportNotification = false;
         
@@ -36,6 +37,7 @@ namespace VectorGrabber
                 ModifierKey = iniFile.ReadEnum("Keybinds", "ModifierKey", ModifierKey);
                 EnableVectorBlips = iniFile.ReadBoolean("Customization", "EnableVectorBlips", EnableVectorBlips);
                 TeleportNotification = iniFile.ReadBoolean("Customization", "TeleportNotification", TeleportNotification);
+                CustomNotation = iniFile.ReadString("Customization", "CustomNotation", CustomNotation);
             }
             catch(System.Exception e)
             {

@@ -15,7 +15,8 @@ namespace VectorGrabber
         internal static MenuPool pool;
         internal static UIMenu mainMenu;
         internal static UIMenuItem ClearFile = new UIMenuItem("Clear File", "Clears files of all vectors");
-        internal static UIMenuItem MakeCopyOfFile = new UIMenuItem("Copy File", "Saves copy of file");
+        internal static UIMenuItem UpdateTextFile = new UIMenuItem("~y~Update Text File",
+            "Updates text file. Should be used after making a lot of deletions");
         internal static UIMenuItem RereadFile = new UIMenuItem("Reread file", "Rereads file and updates menu"); 
         internal static UIMenuCheckboxItem EnableBlips = new UIMenuCheckboxItem("Enable Blips", Settings.EnableVectorBlips,"Enables blips for all saved vectors");
         internal static UIMenuItem CopyClipboard = new UIMenuItem("Copy Coordinates",
@@ -32,7 +33,7 @@ namespace VectorGrabber
             mainMenu.AddItem(ClearFile);
             mainMenu.AddItem(CopyClipboard);
             mainMenu.AddItem(AddLocation);
-            
+
             mainMenu.AllowCameraMovement = true;
             mainMenu.MouseControlsEnabled = false;
             
@@ -41,6 +42,7 @@ namespace VectorGrabber
             pool.Add(mainMenu);
             Locations.setupLocationMenu();
             DeleteLocations.setupDeleteLocationMenu();
+            mainMenu.AddItem(UpdateTextFile);
             GameFiber.StartNew(ProcessMenus);
 
 
@@ -64,9 +66,9 @@ namespace VectorGrabber
             {
                 FileHelper.ClearFile();
             }
-            else if (selectedItem.Equals(MakeCopyOfFile))
+            else if (selectedItem.Equals(UpdateTextFile))
             {
-                FileHelper.ClearFile();
+                FileHelper.UpdateTextFile();
             }
         }
         

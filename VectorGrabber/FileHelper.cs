@@ -38,6 +38,7 @@ namespace VectorGrabber
         {
             try
             {
+                ValidateCustomNotation();
                 string[] Vectors = File.ReadAllLines(CsharpFilePath);
                 string[] titleSeps = new string[] { "//" };
                 for(int i = 0; i < Vectors.Length; i++)
@@ -66,9 +67,17 @@ namespace VectorGrabber
                     }
                     else
                     {
-                        SavedLocation s = new SavedLocation(Convert.ToSingle(values[0]), Convert.ToSingle(values[1]),
-                            Convert.ToSingle(values[2]), Convert.ToSingle(values[3]), title);
-                        VectorsRead.Add(s);
+                        try
+                        {
+                            SavedLocation s = new SavedLocation(Convert.ToSingle(values[0]),
+                                Convert.ToSingle(values[1]),
+                                Convert.ToSingle(values[2]), Convert.ToSingle(values[3]), title);
+                            VectorsRead.Add(s);
+                        }
+                        catch (Exception e)
+                        {
+                            Game.LogTrivial($"Line does not contain 3 numbers: {e.Message}");
+                        }
                     }
                 }
                 Locations.AddItems();
@@ -98,7 +107,9 @@ namespace VectorGrabber
             Game.LogTrivial(defaultCopyFilePath);
             string text  = File.ReadAllText(CsharpFilePath);
             File.WriteAllText(defaultCopyFilePath, text);
-            File.Delete(CsharpFilePath);
+            if(File.Exists(CsharpFilePath)) {
+                File.Delete(CsharpFilePath);
+            }
             File.Create(CsharpFilePath);
             Game.DisplayNotification("~g~Text file was cleared. Save file was created.");
         }
@@ -113,23 +124,43 @@ namespace VectorGrabber
                 new SavedLocation(Player.Position.X, Player.Position.Y, Player.Position.Z, Player.Heading,title);
             VectorsRead.Add(s);
             Locations.AddItem(s);
+            DeleteLocations.AddItem(s);
             Menu.AddBlip(s);
         }
 
+        internal static void DeleteFile()
+        {
+            File.Delete(CsharpFilePath);
+        }
         internal static void UpdateTextFile()
         {
             Menu.ToggleAccessToLocations();
-            File.Delete(CsharpFilePath);
-            List<string> NewVectors = new List<string>();
-            for (int i = 0; i < VectorsRead.Count; i++)
+            DeleteFile();
+            foreach (SavedLocation s in VectorsRead)
             {
-                SavedLocation s = VectorsRead[i];
-                NewVectors.Add($"(new Vector3({s.X}f, {s.Y}f, {s.Z}f), {s.Heading}f); // {s.Title}");
+                string str = HelperMethods.getCoordsAndFormat(s);
+                AppendToFile(str,CsharpFilePath);
             }
-            File.WriteAllLines(CsharpFilePath,NewVectors);
             Menu.ToggleAccessToLocations();
         }
 
+        internal static void ValidateCustomNotation()
+        {
+            string[] stringCheck = { "{0}","{1}","{2}","{3}"};
+            string customNotation = Settings.CustomNotation;
+            string defaultNotation = "(new Vector3({0}f, {1}f, {2}f), {3}f);";
+            foreach(string check in stringCheck)
+            {
+                if (!customNotation.Contains(check))
+                {
+                    Settings.CustomNotation = defaultNotation;
+                    Game.DisplayNotification("~r~The notation in the ini is invalid.~y~ It must contain the 3 {} with numbers going from 0-3 inside of them. Follow default notation for help.");
+                    Game.DisplayNotification("~y~Defaulting to original notation");
+                    break;
+                }
+            }
+        }
+        
         internal static void CopyCurrCoordToClipboard()
         {
             Game.SetClipboardText(HelperMethods.getCoordsAndFormat(out _,EntryPoint.Player));

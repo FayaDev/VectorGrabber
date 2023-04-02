@@ -1,3 +1,4 @@
+using System;
 using System.Windows.Forms;
 using Rage;
 using Rage.Native;
@@ -41,12 +42,24 @@ namespace VectorGrabber
             string str = "";
             Localization.SetText("TITLE","Enter title for save location");
             title = OpenTextInput("TITLE", "",100);
-            str += $"(new Vector3({Player.Position.X}f, {Player.Position.Y}f, {Player.Position.Z}f), {Player.Heading}f);";
+            //str += $"(new Vector3({Player.Position.X}f, {Player.Position.Y}f, {Player.Position.Z}f), {Player.Heading}f);";
+            str += String.Format(Settings.CustomNotation, Player.Position.X,Player.Position.Y,Player.Position.Z, Player.Heading);
             if (!title.Equals(""))
             {
                 str += $"  // {title}";
             }
             Game.LogTrivial($"The string is {str}");
+            return str;
+        }
+        internal static string getCoordsAndFormat(SavedLocation s)
+        {
+            string str = "";
+            //str += $"(new Vector3({Player.Position.X}f, {Player.Position.Y}f, {Player.Position.Z}f), {Player.Heading}f);";
+            str += String.Format(Settings.CustomNotation, s.X,s.Y,s.Z, s.Heading);
+            if (!s.Title.Equals(""))
+            {
+                str += $"  // {s.Title}";
+            }
             return str;
         }
     }
