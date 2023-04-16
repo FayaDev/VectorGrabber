@@ -27,14 +27,18 @@ namespace VectorGrabber
             {
                 Directory.CreateDirectory(CsharpFileDirectory);
             }
-            if (!File.Exists(CsharpFilePath))
+            using (FileStream fs = new FileStream(CsharpFilePath,FileMode.OpenOrCreate, FileAccess.ReadWrite))
             {
-                File.Create(CsharpFilePath);
+                if (!File.Exists(CsharpFilePath))
+                {
+                    File.Create(CsharpFilePath);
+                }
+                else
+                {
+                    FileHelper.ReadFile();
+                }
             }
-            else
-            {
-                FileHelper.ReadFile();
-            }
+
             while (true)
             {
                 GameFiber.Yield();

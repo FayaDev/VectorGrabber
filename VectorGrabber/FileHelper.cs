@@ -60,24 +60,16 @@ namespace VectorGrabber
                         title = $"{titleSplit[1].Trim()}";
                     }
 
-                    if (values.Length != 4)
+                    try
                     {
-                        Game.LogTrivial($"Line Number {i+1} was invalid. Skipping line.");
-                        continue;
+                        SavedLocation s = new SavedLocation(Convert.ToSingle(values[0]),
+                            Convert.ToSingle(values[1]),
+                            Convert.ToSingle(values[2]), Convert.ToSingle(values[3]), title);
+                        VectorsRead.Add(s);
                     }
-                    else
+                    catch (Exception e)
                     {
-                        try
-                        {
-                            SavedLocation s = new SavedLocation(Convert.ToSingle(values[0]),
-                                Convert.ToSingle(values[1]),
-                                Convert.ToSingle(values[2]), Convert.ToSingle(values[3]), title);
-                            VectorsRead.Add(s);
-                        }
-                        catch (Exception e)
-                        {
-                            Game.LogTrivial($"Line does not contain 3 numbers: {e.Message}");
-                        }
+                        Game.LogTrivial($"Line does not contain 4 numbers: {e.Message}");
                     }
                 }
                 Locations.AddItems();
@@ -112,6 +104,14 @@ namespace VectorGrabber
             }
             File.Create(CsharpFilePath);
             Game.DisplayNotification("~g~Text file was cleared. Save file was created.");
+        }
+
+        internal static void CopyFile()
+        {
+            string defaultCopyFilePath = $@"{CsharpFileDirectory}FileCopy-{DateTime.Now.Millisecond}.txt";
+            string text  = File.ReadAllText(CsharpFilePath);
+            File.WriteAllText(defaultCopyFilePath, text);
+            Game.DisplayNotification("~g~Text file was copied.");
         }
         
         internal static void AddVectorAndHeadingToList(string title, Ped Player)

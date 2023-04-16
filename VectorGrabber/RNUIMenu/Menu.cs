@@ -23,13 +23,16 @@ namespace VectorGrabber
             "Copies current player's coordinate to user's computer clipboard");
         internal static UIMenuItem AddLocation =
             new UIMenuItem("Add Location", "Adds current location to saved locations");
-        
+
+        internal static UIMenuItem MakeCopyOfFile = new UIMenuItem("Make Copy", "Makes copy of text file");
+
         internal static void CreateMainMenu()
         {
             pool = new MenuPool();
             mainMenu = new UIMenu("VectorGrabber", "Main Menu");
             mainMenu.AddItem(EnableBlips);
             mainMenu.AddItem(RereadFile);
+            mainMenu.AddItem(MakeCopyOfFile);
             mainMenu.AddItem(ClearFile);
             mainMenu.AddItem(CopyClipboard);
             mainMenu.AddItem(AddLocation);
@@ -69,6 +72,10 @@ namespace VectorGrabber
             else if (selectedItem.Equals(UpdateTextFile))
             {
                 FileHelper.UpdateTextFile();
+            }
+            else if (selectedItem.Equals(MakeCopyOfFile))
+            {
+                FileHelper.CopyFile();
             }
         }
         
