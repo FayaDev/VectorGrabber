@@ -117,8 +117,8 @@ namespace VectorGrabber
                 Blip newBlip = new Blip(new Vector3(s.X, s.Y, s.Z));
                 newBlip.Color = Color.Green; 
                 newBlip.Name = s.Title;
-                FileHelper.Blips.Add(newBlip);
 
+                FileHelper.Blips.Add(newBlip);
                 blipList.Add((newBlip, new Vector3(s.X, s.Y, s.Z)));
             }
         }
@@ -131,8 +131,8 @@ namespace VectorGrabber
             Blip newBlip = new Blip(new Vector3(s.X, s.Y, s.Z));
             newBlip.Color = Color.Green; 
             newBlip.Name = s.Title;
-            FileHelper.Blips.Add(newBlip);
 
+            FileHelper.Blips.Add(newBlip);
             blipList.Add((newBlip, new Vector3(s.X, s.Y, s.Z)));
         }
 
