@@ -37,21 +37,6 @@ namespace VectorGrabber
             {
                 GameFiber.Yield();
 
-
-
-                ////////TEMP
-
-                if (Game.IsKeyDownRightNow(Keys.LShiftKey) && Game.IsKeyDown(Keys.L))
-                {
-                    foreach (Blip blip in World.GetAllBlips())
-                    {
-                        if (blip.Exists()) { blip.Delete(); }
-                    }
-                }
-
-                ////////TEMP
-
-
                 if (Player.IsValid() && Game.IsKeyDown(Settings.SaveKey) && HelperMethods.CheckModifierKey())
                 {
                     string locationTitle;
