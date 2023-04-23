@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -48,29 +49,36 @@ namespace VectorGrabber
 
         internal static void mainMenuItemSelect(UIMenu sender, UIMenuItem selectedItem, int index)
         {
-            if (selectedItem.Equals(RereadFile))
+            try
             {
-                FileHelper.RereadFile();
+                if (selectedItem.Equals(RereadFile))
+                {
+                    FileHelper.RereadFile();
+                }
+                else if (selectedItem.Equals(CopyClipboard))
+                {
+                    FileHelper.CopyCurrCoordToClipboard();
+                }
+                else if (selectedItem.Equals(AddLocation))
+                {
+                    FileHelper.AddLocation();
+                }
+                else if (selectedItem.Equals(ClearFile))
+                {
+                    FileHelper.ClearFile();
+                }
+                else if (selectedItem.Equals(UpdateTextFile))
+                {
+                    FileHelper.UpdateTextFile();
+                }
+                else if (selectedItem.Equals(MakeCopyOfFile))
+                {
+                    FileHelper.CopyFile();
+                }
             }
-            else if (selectedItem.Equals(CopyClipboard))
+            catch (Exception ex)
             {
-                FileHelper.CopyCurrCoordToClipboard();
-            }
-            else if (selectedItem.Equals(AddLocation))
-            {
-                FileHelper.AddLocation();
-            }
-            else if (selectedItem.Equals(ClearFile))
-            {
-                FileHelper.ClearFile();
-            }
-            else if (selectedItem.Equals(UpdateTextFile))
-            {
-                FileHelper.UpdateTextFile();
-            }
-            else if (selectedItem.Equals(MakeCopyOfFile))
-            {
-                FileHelper.CopyFile();
+                Game.LogTrivial(ex.ToString());
             }
         }
         
