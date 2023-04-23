@@ -73,7 +73,6 @@ namespace VectorGrabber
                 if (Player.IsValid() && Game.IsKeyDown(Settings.ClipboardKey) && HelperMethods.CheckModifierKey())
                 {
                     FileHelper.CopyCurrCoordToClipboard();
-                    
                 }
             }
         }
@@ -84,6 +83,5 @@ namespace VectorGrabber
             Settings.UpdateINI();
             Game.LogTrivial("Vector Grabber Unloaded.");
         }
-        
     }
 }

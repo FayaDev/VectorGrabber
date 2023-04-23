@@ -21,6 +21,7 @@ namespace VectorGrabber
             NativeFunction.Natives.ENABLE_ALL_CONTROL_ACTIONS(2);
             return NativeFunction.Natives.GET_ONSCREEN_KEYBOARD_RESULT<string>() ?? "";
         }
+
         internal static bool isInputValid(string input)
         {
             foreach (char c in input)
@@ -51,6 +52,7 @@ namespace VectorGrabber
             Game.LogTrivial($"The string is {str}");
             return str;
         }
+
         internal static string getCoordsAndFormat(SavedLocation s)
         {
             string str = "";
@@ -63,5 +65,4 @@ namespace VectorGrabber
             return str;
         }
     }
-    
 }

@@ -15,7 +15,6 @@ namespace VectorGrabber
         internal static UIMenu DeleteLocationMenu = new UIMenu("Locations", "Select Option");
         internal static UIMenuItem LocationsThatCanBeDeleted = new UIMenuItem("~r~Delete location", "Delete any of your saved locations");
 
-        
         internal static void setupDeleteLocationMenu()
         {
             Menu.mainMenu.AddItem(LocationsThatCanBeDeleted);
@@ -23,7 +22,6 @@ namespace VectorGrabber
             DeleteLocationMenu.ParentMenu = Menu.mainMenu;
             Menu.pool.Add(DeleteLocationMenu);
                 
-            
             DeleteLocationMenu.OnItemSelect += OnDeleteLocationSelect;
             DeleteLocationMenu.MouseControlsEnabled = false;
             DeleteLocationMenu.AllowCameraMovement = true;
@@ -34,7 +32,6 @@ namespace VectorGrabber
             foreach (SavedLocation s in FileHelper.VectorsRead)
             {
                 DeleteLocationMenu.AddItem(new UIMenuItem($"{s.Title}",$"x: {s.X} | y: {s.Y} | z: {s.Z} | heading: {s.Heading}")); 
-                
             }
 
             if (Settings.EnableVectorBlips)
@@ -60,6 +57,7 @@ namespace VectorGrabber
                 DeleteLocationMenu.RemoveItemAt(index);
                 Locations.LocationMenu.RemoveItemAt(index);
             }
+
             FileHelper.VectorsRead.Remove(FileHelper.VectorsRead[index]);
         }
     }

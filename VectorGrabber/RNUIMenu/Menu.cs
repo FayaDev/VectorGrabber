@@ -7,7 +7,6 @@ using RAGENativeUI;
 using RAGENativeUI.Elements;
 using RAGENativeUI.PauseMenu;
 
-
 namespace VectorGrabber
 {
     internal class Menu
@@ -47,8 +46,6 @@ namespace VectorGrabber
             DeleteLocations.setupDeleteLocationMenu();
             mainMenu.AddItem(UpdateTextFile);
             GameFiber.StartNew(ProcessMenus);
-
-
         }
 
         internal static void mainMenuItemSelect(UIMenu sender, UIMenuItem selectedItem, int index)
@@ -105,8 +102,8 @@ namespace VectorGrabber
                 DeleteLocations.LocationsThatCanBeDeleted.Enabled = true;
                 Locations.ShowAllLocations.Enabled = true;
             }
-            
         }
+
         internal static void AddBlips()
         {
             foreach (SavedLocation s in FileHelper.VectorsRead)
@@ -117,6 +114,7 @@ namespace VectorGrabber
                 FileHelper.Blips.Add(newBlip);
             }
         }
+
         internal static void AddBlip(SavedLocation s)
         {
             float x = s.X;
@@ -127,6 +125,7 @@ namespace VectorGrabber
             newBlip.Name = s.Title;
             FileHelper.Blips.Add(newBlip);
         }
+
         internal static void DeleteBlips()
         {
             foreach (Blip blip in FileHelper.Blips)
@@ -156,7 +155,4 @@ namespace VectorGrabber
             }
         }
     }
-    
-    
-    
 }   
