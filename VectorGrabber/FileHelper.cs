@@ -29,7 +29,7 @@ namespace VectorGrabber
         
         internal static void AppendToFile(string str, string path)
         {
-            using (FileStream fs = new FileStream(path,FileMode.Append, FileAccess.Write))
+            using (FileStream fs = new FileStream(path,FileMode.Append, FileAccess.Write, FileShare.ReadWrite))
             using (StreamWriter sw = new StreamWriter(fs))
             {
                 sw.WriteLine(str);
@@ -41,9 +41,23 @@ namespace VectorGrabber
             try
             {
                 ValidateCustomNotation();
-                string[] Vectors = File.ReadAllLines(CsharpFilePath);
+                List<string> Vectors = new List<string>();
+
+                using (FileStream fileStream = new FileStream(CsharpFilePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+                {
+                    // Read the file content
+                    using (StreamReader reader = new StreamReader(fileStream))
+                    {
+                        // Loop through the lines and split each line into an array
+                        while (!reader.EndOfStream)
+                        {
+                            Vectors.Add(reader.ReadLine());
+                        }
+                    }
+                }
+
                 string[] titleSeps = new string[] { "//" };
-                for(int i = 0; i < Vectors.Length; i++)
+                for(int i = 0; i < Vectors.Count; i++)
                 {
                     if (Vectors[i].Equals(""))
                     {
@@ -80,7 +94,7 @@ namespace VectorGrabber
             catch (Exception e)
             {
                 Game.DisplayNotification("~r~Error occurred while reading the file. ~w~Blame yourself. ~g~git gud kid. jk");
-                Game.LogTrivial($"Error occurred while reading the file: {e.Message}");
+                Game.LogTrivial($"Error occurred while reading the file: {e}");
             }
             
         }
