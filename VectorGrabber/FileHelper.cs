@@ -19,7 +19,7 @@ namespace VectorGrabber
         internal static void AddLocation()
         {
             string locationTitle;
-            AppendToFile(HelperMethods.getCoordsAndFormat(out locationTitle,EntryPoint.Player),EntryPoint.CsharpFilePath);
+            AppendToFile(HelperMethods.getCoordsAndFormat(out locationTitle,EntryPoint.Player), CsharpFilePath);
             AddVectorAndHeadingToList(locationTitle,EntryPoint.Player);
             Game.DisplayNotification("~g~Coordinates were saved to text file.");
         }

@@ -44,12 +44,12 @@ namespace VectorGrabber
                     Game.DisplayNotification("Coordinates were saved to text file.");
                 }
 
-                if (Player.IsValid()&& Game.IsKeyDown(Settings.TeleportNextKey) && HelperMethods.CheckModifierKey())
+                if (Player.IsValid() && Game.IsKeyDown(Settings.TeleportNextKey) && HelperMethods.CheckModifierKey())
                 {
                     TeleportHelper.HandleArrow(TeleportHelper.direction.RIGHT);
                 }
 
-                if (Player.IsValid()&&Game.IsKeyDown(Settings.TeleportBackKey) && HelperMethods.CheckModifierKey())
+                if (Player.IsValid() && Game.IsKeyDown(Settings.TeleportBackKey) && HelperMethods.CheckModifierKey())
                 {
                     TeleportHelper.HandleArrow(TeleportHelper.direction.LEFT);
                 }
