@@ -63,15 +63,8 @@ namespace VectorGrabber
                 FileHelper.VectorsRead.Remove(FileHelper.VectorsRead[index]);
                 FileHelper.blipList.RemoveAt(index);
 
-                foreach (Blip blip in FileHelper.Blips)
-                {
-                    if (FileHelper.blipList.Contains((blip, FileHelper.blipList[index].Item2)))
-                    {
-                        if (blip.Exists()) { blip.Delete(); }
-                        Menu.DeleteBlips();
-                        Menu.AddBlips();
-                    }
-                }
+                Menu.DeleteBlips();
+                Menu.AddBlips();
             }
             catch (Exception ex)
             {
