@@ -68,6 +68,8 @@ namespace VectorGrabber
                     if (FileHelper.blipList.Contains((blip, FileHelper.blipList[index].Item2)))
                     {
                         if (blip.Exists()) { blip.Delete(); }
+                        Menu.DeleteBlips();
+                        Menu.AddBlips();
                     }
                 }
             }
