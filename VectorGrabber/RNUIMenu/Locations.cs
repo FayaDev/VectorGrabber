@@ -32,7 +32,6 @@ namespace VectorGrabber
             foreach (SavedLocation s in FileHelper.VectorsRead)
             {
                 LocationMenu.AddItem(new UIMenuItem($"{s.Title}",$"x: {s.X} | y: {s.Y} | z: {s.Z} | heading: {s.Heading}")); 
-                
             }
 
             if (Settings.EnableVectorBlips)
@@ -45,8 +44,6 @@ namespace VectorGrabber
         {
             LocationMenu.AddItem(new UIMenuItem($"{s.Title}",$"x: {s.X} | y: {s.Y} | z: {s.Z} | heading: {s.Heading}"));
         }
-
-        
 
         internal static void OnLocationSelect(UIMenu sender, UIMenuItem selectedItem, int index)
         {

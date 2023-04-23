@@ -8,7 +8,6 @@ namespace VectorGrabber
         public float Heading;
         public string Title;
         
-        
         public SavedLocation(float x, float y, float z, float heading, string title)
         {
             X = x;
@@ -17,6 +16,5 @@ namespace VectorGrabber
             Heading = heading;
             Title = title;
         }
-        
     }
 }

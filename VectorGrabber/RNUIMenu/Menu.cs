@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Windows.Forms;
@@ -6,7 +8,7 @@ using Rage.Native;
 using RAGENativeUI;
 using RAGENativeUI.Elements;
 using RAGENativeUI.PauseMenu;
-
+using static VectorGrabber.FileHelper;
 
 namespace VectorGrabber
 {
@@ -30,12 +32,8 @@ namespace VectorGrabber
         {
             pool = new MenuPool();
             mainMenu = new UIMenu("VectorGrabber", "Main Menu");
-            mainMenu.AddItem(EnableBlips);
-            mainMenu.AddItem(RereadFile);
-            mainMenu.AddItem(MakeCopyOfFile);
-            mainMenu.AddItem(ClearFile);
-            mainMenu.AddItem(CopyClipboard);
-            mainMenu.AddItem(AddLocation);
+
+            mainMenu.AddItems(EnableBlips, RereadFile, MakeCopyOfFile, ClearFile, CopyClipboard, AddLocation);
 
             mainMenu.AllowCameraMovement = true;
             mainMenu.MouseControlsEnabled = false;
@@ -47,35 +45,40 @@ namespace VectorGrabber
             DeleteLocations.setupDeleteLocationMenu();
             mainMenu.AddItem(UpdateTextFile);
             GameFiber.StartNew(ProcessMenus);
-
-
         }
 
         internal static void mainMenuItemSelect(UIMenu sender, UIMenuItem selectedItem, int index)
         {
-            if (selectedItem.Equals(RereadFile))
+            try
             {
-                FileHelper.RereadFile();
+                if (selectedItem.Equals(RereadFile))
+                {
+                    FileHelper.RereadFile();
+                }
+                else if (selectedItem.Equals(CopyClipboard))
+                {
+                    FileHelper.CopyCurrCoordToClipboard();
+                }
+                else if (selectedItem.Equals(AddLocation))
+                {
+                    FileHelper.AddLocation();
+                }
+                else if (selectedItem.Equals(ClearFile))
+                {
+                    FileHelper.ClearFile();
+                }
+                else if (selectedItem.Equals(UpdateTextFile))
+                {
+                    FileHelper.UpdateTextFile();
+                }
+                else if (selectedItem.Equals(MakeCopyOfFile))
+                {
+                    FileHelper.CopyFile();
+                }
             }
-            else if (selectedItem.Equals(CopyClipboard))
+            catch (Exception ex)
             {
-                FileHelper.CopyCurrCoordToClipboard();
-            }
-            else if (selectedItem.Equals(AddLocation))
-            {
-                FileHelper.AddLocation();
-            }
-            else if (selectedItem.Equals(ClearFile))
-            {
-                FileHelper.ClearFile();
-            }
-            else if (selectedItem.Equals(UpdateTextFile))
-            {
-                FileHelper.UpdateTextFile();
-            }
-            else if (selectedItem.Equals(MakeCopyOfFile))
-            {
-                FileHelper.CopyFile();
+                Game.LogTrivial(ex.ToString());
             }
         }
         
@@ -105,8 +108,8 @@ namespace VectorGrabber
                 DeleteLocations.LocationsThatCanBeDeleted.Enabled = true;
                 Locations.ShowAllLocations.Enabled = true;
             }
-            
         }
+
         internal static void AddBlips()
         {
             foreach (SavedLocation s in FileHelper.VectorsRead)
@@ -114,9 +117,12 @@ namespace VectorGrabber
                 Blip newBlip = new Blip(new Vector3(s.X, s.Y, s.Z));
                 newBlip.Color = Color.Green; 
                 newBlip.Name = s.Title;
+
                 FileHelper.Blips.Add(newBlip);
+                blipList.Add((newBlip, new Vector3(s.X, s.Y, s.Z)));
             }
         }
+
         internal static void AddBlip(SavedLocation s)
         {
             float x = s.X;
@@ -125,8 +131,11 @@ namespace VectorGrabber
             Blip newBlip = new Blip(new Vector3(s.X, s.Y, s.Z));
             newBlip.Color = Color.Green; 
             newBlip.Name = s.Title;
+
             FileHelper.Blips.Add(newBlip);
+            blipList.Add((newBlip, new Vector3(s.X, s.Y, s.Z)));
         }
+
         internal static void DeleteBlips()
         {
             foreach (Blip blip in FileHelper.Blips)
@@ -156,7 +165,4 @@ namespace VectorGrabber
             }
         }
     }
-    
-    
-    
 }   

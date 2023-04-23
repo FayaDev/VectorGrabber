@@ -2,7 +2,6 @@ using System.Runtime.CompilerServices;
 using Rage;
 using System.Windows.Forms;
 
-
 namespace VectorGrabber
 {
     internal static class Settings
@@ -49,8 +48,14 @@ namespace VectorGrabber
 
         internal static void UpdateINI()
         {
-            iniFile.Write("Customization","EnableVectorBlips",EnableVectorBlips);
+            try
+            {
+                iniFile.Write("Customization", "EnableVectorBlips", EnableVectorBlips);
+            }
+            catch (System.Exception ex)
+            {
+                Game.LogTrivial(ex.ToString());
+            }
         }
-
     }
 };

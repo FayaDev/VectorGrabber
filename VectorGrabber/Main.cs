@@ -7,42 +7,37 @@ using System.Windows.Forms;
 using Rage;
 using Rage.Native;
 using RAGENativeUI.Elements;
+using static VectorGrabber.FileHelper;
 
-[assembly: Rage.Attributes.Plugin("VectorGrabber", Description = "Helps developers find locations for callouts/ambient events", Author = "Roheat")]
+[assembly: Rage.Attributes.Plugin("VectorGrabber", Description = "Helps developers find locations for callouts/ambient events", Author = "Roheat", PrefersSingleInstance = true)]
 namespace VectorGrabber
 {
     internal static class EntryPoint
     {
         internal static Ped Player => Game.LocalPlayer.Character;
 
-        internal static string CsharpFilePath = @"Plugins\VectorGrabber\VectorsInCsharpNotation.txt";
-        internal static string CsharpFileDirectory = @"Plugins\VectorGrabber\";
-        
         internal static void Main()
         {
             GameFiber.StartNew(Menu.CreateMainMenu);
             VersionChecker.CheckForUpdates();
             Settings.Initialize();
-            if (!Directory.Exists(CsharpFileDirectory))
-            {
-                Directory.CreateDirectory(CsharpFileDirectory);
-            }
-            using (FileStream fs = new FileStream(CsharpFilePath,FileMode.OpenOrCreate, FileAccess.ReadWrite))
+
+            if (!Directory.Exists(CsharpFileDirectory)) { Directory.CreateDirectory(CsharpFileDirectory); }
+
+            using (FileStream fs = new FileStream(CsharpFilePath,FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.ReadWrite))
             {
                 if (!File.Exists(CsharpFilePath))
                 {
                     File.Create(CsharpFilePath);
                 }
-                else
-                {
-                    FileHelper.ReadFile();
-                }
+                else FileHelper.ReadFile();
             }
 
             while (true)
             {
                 GameFiber.Yield();
-                if (Player.IsValid() &&Game.IsKeyDown(Settings.SaveKey) && HelperMethods.CheckModifierKey())
+
+                if (Player.IsValid() && Game.IsKeyDown(Settings.SaveKey) && HelperMethods.CheckModifierKey())
                 {
                     string locationTitle;
                     FileHelper.AppendToFile(HelperMethods.getCoordsAndFormat(out locationTitle,Player),CsharpFilePath);
@@ -50,12 +45,12 @@ namespace VectorGrabber
                     Game.DisplayNotification("Coordinates were saved to text file.");
                 }
 
-                if (Player.IsValid()&& Game.IsKeyDown(Settings.TeleportNextKey) && HelperMethods.CheckModifierKey())
+                if (Player.IsValid() && Game.IsKeyDown(Settings.TeleportNextKey) && HelperMethods.CheckModifierKey())
                 {
                     TeleportHelper.HandleArrow(TeleportHelper.direction.RIGHT);
                 }
 
-                if (Player.IsValid()&&Game.IsKeyDown(Settings.TeleportBackKey) && HelperMethods.CheckModifierKey())
+                if (Player.IsValid() && Game.IsKeyDown(Settings.TeleportBackKey) && HelperMethods.CheckModifierKey())
                 {
                     TeleportHelper.HandleArrow(TeleportHelper.direction.LEFT);
                 }
@@ -73,7 +68,6 @@ namespace VectorGrabber
                 if (Player.IsValid() && Game.IsKeyDown(Settings.ClipboardKey) && HelperMethods.CheckModifierKey())
                 {
                     FileHelper.CopyCurrCoordToClipboard();
-                    
                 }
             }
         }
@@ -84,6 +78,5 @@ namespace VectorGrabber
             Settings.UpdateINI();
             Game.LogTrivial("Vector Grabber Unloaded.");
         }
-        
     }
 }

@@ -13,13 +13,15 @@ namespace VectorGrabber
     {
         internal static List<SavedLocation> VectorsRead = new List<SavedLocation>();
         internal static List<Blip> Blips = new List<Blip>();
+        internal static List<(Blip, Vector3)> blipList = new List<(Blip, Vector3)>();
+
         internal static string CsharpFilePath = @"Plugins\VectorGrabber\VectorsInCsharpNotation.txt";
         internal static string CsharpFileDirectory = @"Plugins\VectorGrabber\";
         
         internal static void AddLocation()
         {
             string locationTitle;
-            AppendToFile(HelperMethods.getCoordsAndFormat(out locationTitle,EntryPoint.Player),EntryPoint.CsharpFilePath);
+            AppendToFile(HelperMethods.getCoordsAndFormat(out locationTitle,EntryPoint.Player), CsharpFilePath);
             AddVectorAndHeadingToList(locationTitle,EntryPoint.Player);
             Game.DisplayNotification("~g~Coordinates were saved to text file.");
         }
@@ -27,7 +29,7 @@ namespace VectorGrabber
         
         internal static void AppendToFile(string str, string path)
         {
-            using (FileStream fs = new FileStream(path,FileMode.Append, FileAccess.Write))
+            using (FileStream fs = new FileStream(path,FileMode.Append, FileAccess.Write, FileShare.ReadWrite))
             using (StreamWriter sw = new StreamWriter(fs))
             {
                 sw.WriteLine(str);
@@ -39,9 +41,23 @@ namespace VectorGrabber
             try
             {
                 ValidateCustomNotation();
-                string[] Vectors = File.ReadAllLines(CsharpFilePath);
+                List<string> Vectors = new List<string>();
+
+                using (FileStream fileStream = new FileStream(CsharpFilePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+                {
+                    // Read the file content
+                    using (StreamReader reader = new StreamReader(fileStream))
+                    {
+                        // Loop through the lines and split each line into an array
+                        while (!reader.EndOfStream)
+                        {
+                            Vectors.Add(reader.ReadLine());
+                        }
+                    }
+                }
+
                 string[] titleSeps = new string[] { "//" };
-                for(int i = 0; i < Vectors.Length; i++)
+                for(int i = 0; i < Vectors.Count; i++)
                 {
                     if (Vectors[i].Equals(""))
                     {
@@ -78,7 +94,7 @@ namespace VectorGrabber
             catch (Exception e)
             {
                 Game.DisplayNotification("~r~Error occurred while reading the file. ~w~Blame yourself. ~g~git gud kid. jk");
-                Game.LogTrivial($"Error occurred while reading the file: {e.Message}");
+                Game.LogTrivial($"Error occurred while reading the file: {e}");
             }
             
         }
