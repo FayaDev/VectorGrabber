@@ -15,9 +15,6 @@ namespace VectorGrabber
     {
         internal static Ped Player => Game.LocalPlayer.Character;
 
-        internal static string CsharpFilePath = @"Plugins\VectorGrabber\VectorsInCsharpNotation.txt";
-        internal static string CsharpFileDirectory = @"Plugins\VectorGrabber\";
-        
         internal static void Main()
         {
             GameFiber.StartNew(Menu.CreateMainMenu);
@@ -38,7 +35,8 @@ namespace VectorGrabber
             while (true)
             {
                 GameFiber.Yield();
-                if (Player.IsValid() &&Game.IsKeyDown(Settings.SaveKey) && HelperMethods.CheckModifierKey())
+
+                if (Player.IsValid() && Game.IsKeyDown(Settings.SaveKey) && HelperMethods.CheckModifierKey())
                 {
                     string locationTitle;
                     FileHelper.AppendToFile(HelperMethods.getCoordsAndFormat(out locationTitle,Player),CsharpFilePath);
