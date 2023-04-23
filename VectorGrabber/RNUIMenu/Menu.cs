@@ -29,12 +29,8 @@ namespace VectorGrabber
         {
             pool = new MenuPool();
             mainMenu = new UIMenu("VectorGrabber", "Main Menu");
-            mainMenu.AddItem(EnableBlips);
-            mainMenu.AddItem(RereadFile);
-            mainMenu.AddItem(MakeCopyOfFile);
-            mainMenu.AddItem(ClearFile);
-            mainMenu.AddItem(CopyClipboard);
-            mainMenu.AddItem(AddLocation);
+
+            mainMenu.AddItems(EnableBlips, RereadFile, MakeCopyOfFile, ClearFile, CopyClipboard, AddLocation);
 
             mainMenu.AllowCameraMovement = true;
             mainMenu.MouseControlsEnabled = false;
