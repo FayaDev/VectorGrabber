@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using Rage;
 using Rage.Native;
 using RAGENativeUI.Elements;
+using static VectorGrabber.FileHelper;
 
 [assembly: Rage.Attributes.Plugin("VectorGrabber", Description = "Helps developers find locations for callouts/ambient events", Author = "Roheat", PrefersSingleInstance = true)]
 namespace VectorGrabber
@@ -35,6 +36,21 @@ namespace VectorGrabber
             while (true)
             {
                 GameFiber.Yield();
+
+
+
+                ////////TEMP
+
+                if (Game.IsKeyDownRightNow(Keys.LShiftKey) && Game.IsKeyDown(Keys.L))
+                {
+                    foreach (Blip blip in World.GetAllBlips())
+                    {
+                        if (blip.Exists()) { blip.Delete(); }
+                    }
+                }
+
+                ////////TEMP
+
 
                 if (Player.IsValid() && Game.IsKeyDown(Settings.SaveKey) && HelperMethods.CheckModifierKey())
                 {

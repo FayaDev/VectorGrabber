@@ -48,7 +48,14 @@ namespace VectorGrabber
 
         internal static void UpdateINI()
         {
-            iniFile.Write("Customization","EnableVectorBlips",EnableVectorBlips);
+            try
+            {
+                iniFile.Write("Customization", "EnableVectorBlips", EnableVectorBlips);
+            }
+            catch (System.Exception ex)
+            {
+                Game.LogTrivial(ex.ToString());
+            }
         }
     }
 };

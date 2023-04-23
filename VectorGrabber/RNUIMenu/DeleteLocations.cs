@@ -14,7 +14,7 @@ namespace VectorGrabber
     {
         internal static UIMenu DeleteLocationMenu = new UIMenu("Locations", "Select Option");
         internal static UIMenuItem LocationsThatCanBeDeleted = new UIMenuItem("~r~Delete location", "Delete any of your saved locations");
-
+        
         internal static void setupDeleteLocationMenu()
         {
             Menu.mainMenu.AddItem(LocationsThatCanBeDeleted);
@@ -47,18 +47,34 @@ namespace VectorGrabber
 
         internal static void OnDeleteLocationSelect(UIMenu sender, UIMenuItem selectedItem, int index)
         {
-            if (DeleteLocationMenu.MenuItems.Count == 1)
+            try
             {
-                DeleteLocationMenu.Clear();
-                Locations.LocationMenu.Clear();
-            }
-            else
-            {
-                DeleteLocationMenu.RemoveItemAt(index);
-                Locations.LocationMenu.RemoveItemAt(index);
-            }
+                if (DeleteLocationMenu.MenuItems.Count == 1)
+                {
+                    DeleteLocationMenu.Clear();
+                    Locations.LocationMenu.Clear();
+                }
+                else
+                {
+                    DeleteLocationMenu.RemoveItemAt(index);
+                    Locations.LocationMenu.RemoveItemAt(index);
+                }
 
-            FileHelper.VectorsRead.Remove(FileHelper.VectorsRead[index]);
+                FileHelper.VectorsRead.Remove(FileHelper.VectorsRead[index]);
+                FileHelper.blipList.RemoveAt(index);
+
+                foreach (Blip blip in FileHelper.Blips)
+                {
+                    if (FileHelper.blipList.Contains((blip, FileHelper.blipList[index].Item2)))
+                    {
+                        if (blip.Exists()) { blip.Delete(); }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Game.LogTrivial(ex.ToString());
+            }
         }
     }
 }

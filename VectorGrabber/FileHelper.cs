@@ -13,6 +13,8 @@ namespace VectorGrabber
     {
         internal static List<SavedLocation> VectorsRead = new List<SavedLocation>();
         internal static List<Blip> Blips = new List<Blip>();
+        internal static List<(Blip, Vector3)> blipList = new List<(Blip, Vector3)>();
+
         internal static string CsharpFilePath = @"Plugins\VectorGrabber\VectorsInCsharpNotation.txt";
         internal static string CsharpFileDirectory = @"Plugins\VectorGrabber\";
         

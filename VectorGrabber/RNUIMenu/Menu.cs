@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Windows.Forms;
@@ -6,6 +7,7 @@ using Rage.Native;
 using RAGENativeUI;
 using RAGENativeUI.Elements;
 using RAGENativeUI.PauseMenu;
+using static VectorGrabber.FileHelper;
 
 namespace VectorGrabber
 {
@@ -108,6 +110,8 @@ namespace VectorGrabber
                 newBlip.Color = Color.Green; 
                 newBlip.Name = s.Title;
                 FileHelper.Blips.Add(newBlip);
+
+                blipList.Add((newBlip, new Vector3(s.X, s.Y, s.Z)));
             }
         }
 
@@ -120,6 +124,8 @@ namespace VectorGrabber
             newBlip.Color = Color.Green; 
             newBlip.Name = s.Title;
             FileHelper.Blips.Add(newBlip);
+
+            blipList.Add((newBlip, new Vector3(s.X, s.Y, s.Z)));
         }
 
         internal static void DeleteBlips()
