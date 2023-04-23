@@ -23,20 +23,16 @@ namespace VectorGrabber
             GameFiber.StartNew(Menu.CreateMainMenu);
             VersionChecker.CheckForUpdates();
             Settings.Initialize();
-            if (!Directory.Exists(CsharpFileDirectory))
-            {
-                Directory.CreateDirectory(CsharpFileDirectory);
-            }
+
+            if (!Directory.Exists(CsharpFileDirectory)) { Directory.CreateDirectory(CsharpFileDirectory); }
+
             using (FileStream fs = new FileStream(CsharpFilePath,FileMode.OpenOrCreate, FileAccess.ReadWrite))
             {
                 if (!File.Exists(CsharpFilePath))
                 {
                     File.Create(CsharpFilePath);
                 }
-                else
-                {
-                    FileHelper.ReadFile();
-                }
+                else FileHelper.ReadFile();
             }
 
             while (true)
