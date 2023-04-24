@@ -26,13 +26,13 @@ namespace VectorGrabber
             }
             catch (WebException)
             {
-                Game.DisplayNotification(
-                    "Vector Grabber By Roheat\nPlease make sure you are connected to proper WIFI Network.");
+                HelperMethods.Notify(
+                    "~y~Warning", "Please make sure you are connected to proper WIFI Network.");
             }
             finally
             {
-                Game.DisplayNotification(
-                    $"Vector Grabber By Roheat\nVersion is {(webSuccess ? pluginUpToDate ? "~g~Up To Date" : "~r~Out Of Date" : "~o~Version Check Failed")}");
+                HelperMethods.Notify(
+                    $"~y~{CurrentVersion}~s~ by Roheat", $"Version is {(webSuccess ? pluginUpToDate ? "~g~Up To Date" : "~r~Out Of Date" : "~o~Version Check Failed")}");
                 if (!pluginUpToDate)
                 {
                     Game.LogTrivial(

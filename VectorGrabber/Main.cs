@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text.RegularExpressions;
-using System.Windows.Forms;
+﻿using System.IO;
 using Rage;
-using Rage.Native;
-using RAGENativeUI.Elements;
 using static VectorGrabber.FileHelper;
 
 [assembly: Rage.Attributes.Plugin("VectorGrabber", Description = "Helps developers find locations for callouts/ambient events", Author = "Roheat", PrefersSingleInstance = true)]
@@ -22,13 +15,13 @@ namespace VectorGrabber
             VersionChecker.CheckForUpdates();
             Settings.Initialize();
 
-            if (!Directory.Exists(CsharpFileDirectory)) { Directory.CreateDirectory(CsharpFileDirectory); }
+            if (!Directory.Exists(CSharpFileDirectory)) { Directory.CreateDirectory(CSharpFileDirectory); }
 
-            using (FileStream fs = new FileStream(CsharpFilePath,FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.ReadWrite))
+            using (FileStream fs = new FileStream(CSharpFilePath, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.ReadWrite))
             {
-                if (!File.Exists(CsharpFilePath))
+                if (!File.Exists(CSharpFilePath))
                 {
-                    File.Create(CsharpFilePath);
+                    File.Create(CSharpFilePath);
                 }
                 else FileHelper.ReadFile();
             }
@@ -37,37 +30,39 @@ namespace VectorGrabber
             {
                 GameFiber.Yield();
 
-                if (Player.IsValid() && Game.IsKeyDown(Settings.SaveKey) && HelperMethods.CheckModifierKey())
+                if (Player.IsValid() && HelperMethods.CheckModifierKey())
                 {
-                    string locationTitle;
-                    FileHelper.AppendToFile(HelperMethods.getCoordsAndFormat(out locationTitle,Player),CsharpFilePath);
-                    FileHelper.AddVectorAndHeadingToList(locationTitle,Player);
-                    Game.DisplayNotification("Coordinates were saved to text file.");
-                }
+                    if (Game.IsKeyDown(Settings.SaveKey))
+                    {
+                        FileHelper.AppendToFile(HelperMethods.GetCoordsAndFormat(out string locationTitle, Player), CSharpFilePath);
+                        FileHelper.AddVectorAndHeadingToList(locationTitle, Player);
+                        Game.DisplayNotification("Coordinates were saved to text file.");
+                    }
 
-                if (Player.IsValid() && Game.IsKeyDown(Settings.TeleportNextKey) && HelperMethods.CheckModifierKey())
-                {
-                    TeleportHelper.HandleArrow(TeleportHelper.direction.RIGHT);
-                }
+                    if (Game.IsKeyDown(Settings.TeleportNextKey))
+                    {
+                        TeleportHelper.HandleArrow(TeleportHelper.Direction.RIGHT);
+                    }
 
-                if (Player.IsValid() && Game.IsKeyDown(Settings.TeleportBackKey) && HelperMethods.CheckModifierKey())
-                {
-                    TeleportHelper.HandleArrow(TeleportHelper.direction.LEFT);
-                }
+                    if (Game.IsKeyDown(Settings.TeleportBackKey))
+                    {
+                        TeleportHelper.HandleArrow(TeleportHelper.Direction.LEFT);
+                    }
 
-                if (Player.IsValid() && Game.IsKeyDown(Settings.TeleportKey) && HelperMethods.CheckModifierKey())
-                {
-                    TeleportHelper.TeleportToSpecificCoordinate(Player);
-                }
+                    if (Game.IsKeyDown(Settings.TeleportKey))
+                    {
+                        TeleportHelper.TeleportToSpecificCoordinate(Player);
+                    }
 
-                if (Player.IsValid() && Game.IsKeyDown(Settings.RereadFile) && HelperMethods.CheckModifierKey())
-                {
-                   FileHelper.RereadFile();
-                }
+                    if (Game.IsKeyDown(Settings.RereadFile))
+                    {
+                        FileHelper.RereadFile();
+                    }
 
-                if (Player.IsValid() && Game.IsKeyDown(Settings.ClipboardKey) && HelperMethods.CheckModifierKey())
-                {
-                    FileHelper.CopyCurrCoordToClipboard();
+                    if (Game.IsKeyDown(Settings.ClipboardKey))
+                    {
+                        FileHelper.CopyCurrCoordToClipboard();
+                    }
                 }
             }
         }
@@ -76,6 +71,7 @@ namespace VectorGrabber
         {
             Menu.DeleteBlips();
             Settings.UpdateINI();
+            HelperMethods.Notify("~y~Unloaded", "Vector Grabber was unloaded.");
             Game.LogTrivial("Vector Grabber Unloaded.");
         }
     }

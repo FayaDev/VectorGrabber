@@ -38,16 +38,16 @@ namespace VectorGrabber
             mainMenu.AllowCameraMovement = true;
             mainMenu.MouseControlsEnabled = false;
             
-            mainMenu.OnItemSelect += mainMenuItemSelect;
+            mainMenu.OnItemSelect += MainMenuItemSelect;
             EnableBlips.CheckboxEvent += OnBlipCheckboxEvent;
             pool.Add(mainMenu);
             Locations.setupLocationMenu();
-            DeleteLocations.setupDeleteLocationMenu();
+            DeleteLocations.SetupDeleteLocationMenu();
             mainMenu.AddItem(UpdateTextFile);
             GameFiber.StartNew(ProcessMenus);
         }
 
-        internal static void mainMenuItemSelect(UIMenu sender, UIMenuItem selectedItem, int index)
+        internal static void MainMenuItemSelect(UIMenu sender, UIMenuItem selectedItem, int index)
         {
             try
             {
@@ -125,9 +125,6 @@ namespace VectorGrabber
 
         internal static void AddBlip(SavedLocation s)
         {
-            float x = s.X;
-            float y = s.Y;
-            float z = s.Z;
             Blip newBlip = new Blip(new Vector3(s.X, s.Y, s.Z));
             newBlip.Color = Color.Green; 
             newBlip.Name = s.Title;
@@ -149,7 +146,7 @@ namespace VectorGrabber
         
         private static void ProcessMenus()
         {
-            // draw the menu banners (only needed if UIMenu.SetBannerType(Rage.Texture) is used)
+            // Draw the menu banners (only needed if UIMenu.SetBannerType(Rage.Texture) is used)
             // Game.RawFrameRender += (s, e) => pool.DrawBanners(e.Graphics);
 
             while (true)

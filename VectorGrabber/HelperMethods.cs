@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Windows.Forms;
 using Rage;
 using Rage.Native;
@@ -8,6 +9,11 @@ namespace VectorGrabber
 {
     public class HelperMethods
     {
+        internal static void Notify(string subtitle, string description)
+        {
+            Game.DisplayNotification("commonmenu", "shop_tick_icon", "Vector Grabber", subtitle, description);
+        }
+
         internal static string OpenTextInput(string windowTitle, string defaultText, int maxLength)
         {
             NativeFunction.Natives.DISABLE_ALL_CONTROL_ACTIONS(2);
@@ -22,7 +28,7 @@ namespace VectorGrabber
             return NativeFunction.Natives.GET_ONSCREEN_KEYBOARD_RESULT<string>() ?? "";
         }
 
-        internal static bool isInputValid(string input)
+        internal static bool IsInputValid(string input)
         {
             foreach (char c in input)
             {
@@ -38,7 +44,7 @@ namespace VectorGrabber
         
         internal static bool CheckModifierKey() => Settings.ModifierKey == Keys.None ? true : Game.IsKeyDownRightNow(Settings.ModifierKey);
         
-        internal static string getCoordsAndFormat(out string title, Ped Player)
+        internal static string GetCoordsAndFormat(out string title, Ped Player)
         {
             string str = "";
             Localization.SetText("TITLE","Enter title for save location");
@@ -53,7 +59,7 @@ namespace VectorGrabber
             return str;
         }
 
-        internal static string getCoordsAndFormat(SavedLocation s)
+        internal static string GetCoordsAndFormat(SavedLocation s)
         {
             string str = "";
             //str += $"(new Vector3({Player.Position.X}f, {Player.Position.Y}f, {Player.Position.Z}f), {Player.Heading}f);";
@@ -63,6 +69,22 @@ namespace VectorGrabber
                 str += $"  // {s.Title}";
             }
             return str;
+        }
+        
+        /// <summary>
+        /// Check if a certain plugin is installed
+        /// </summary>
+        /// <param name="fileName">The name of the file you want to check (e.g. "RAGENativeUI.dll")</param>
+        internal static bool IsPluginInstalled(string fileName)
+        {
+            if (File.Exists(fileName))
+            {
+                Game.LogTrivial($"File {fileName} is not installed in user's directory");
+                return false;
+            }
+
+            Game.LogTrivial($"File {fileName} installed in user's directory");
+            return true;
         }
     }
 }

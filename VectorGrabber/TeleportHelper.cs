@@ -7,7 +7,8 @@ namespace VectorGrabber
     public class TeleportHelper
     {
         internal static int GlobalIndexForArray = 0;
-        internal enum direction
+
+        internal enum Direction
         {
             LEFT,
             RIGHT
@@ -55,7 +56,7 @@ namespace VectorGrabber
             }
             else
             {
-                if (HelperMethods.isInputValid(input))
+                if (HelperMethods.IsInputValid(input))
                 {
                     int index = (Int32.Parse(input)) - 1;
                     if (index >= 0 && index < FileHelper.VectorsRead.Count)
@@ -72,9 +73,9 @@ namespace VectorGrabber
             }
         }
         
-        internal static void HandleArrow(direction directionGiven)
+        internal static void HandleArrow(Direction directionGiven)
         {
-            if (directionGiven == direction.LEFT)
+            if (directionGiven == Direction.LEFT)
             {
                 if (GlobalIndexForArray == 0)
                 {
@@ -88,7 +89,7 @@ namespace VectorGrabber
                 }
             }
 
-            if (directionGiven == direction.RIGHT)
+            if (directionGiven == Direction.RIGHT)
             {
                 int lastIndex = FileHelper.VectorsRead.Count - 1;
                 if (GlobalIndexForArray >= lastIndex)

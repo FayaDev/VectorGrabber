@@ -3,3 +3,6 @@
 /packages/
 /Vector3Grabber/bin
 /Vector3Grabber/obj
+/VectorGrabber/obj/Debug
+/VectorGrabber/obj/Release
+/VectorGrabber/bin/Debug
