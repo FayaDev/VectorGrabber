@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("VectorGrabber")]
 [assembly: AssemblyDescription("Helps developers find locations for callouts/ambient events")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Roheat")]
 [assembly: AssemblyProduct("VectorGrabber")]
 [assembly: AssemblyCopyright("Copyright ©  2023")]
 [assembly: AssemblyTrademark("")]
