@@ -39,9 +39,8 @@ namespace VectorGrabber
 
                 if (Player.IsValid() && Game.IsKeyDown(Settings.SaveKey) && HelperMethods.CheckModifierKey())
                 {
-                    string locationTitle;
-                    FileHelper.AppendToFile(HelperMethods.getCoordsAndFormat(out locationTitle,Player),CsharpFilePath);
-                    FileHelper.AddVectorAndHeadingToList(locationTitle,Player);
+                    FileHelper.AppendToFile(HelperMethods.GetCoordsAndFormat(out string locationTitle,Player),CsharpFilePath);
+                    FileHelper.AddVectorAndHeadingToList(locationTitle, Player);
                     Game.DisplayNotification("Coordinates were saved to text file.");
                 }
 
