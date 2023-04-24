@@ -113,9 +113,9 @@ namespace VectorGrabber
             Game.LogTrivial(defaultCopyFilePath);
             string text  = File.ReadAllText(CSharpFilePath);
             File.WriteAllText(defaultCopyFilePath, text);
-            if(File.Exists(CsharpFilePath)) {
-                File.Delete(CsharpFilePath);
-            }
+
+            if (File.Exists(CSharpFilePath)) { File.Delete(CSharpFilePath); }
+
             File.Create(CSharpFilePath);
             Game.DisplayNotification("~g~Text file was cleared. Save file was created.");
         }
