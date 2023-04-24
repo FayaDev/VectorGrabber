@@ -125,9 +125,6 @@ namespace VectorGrabber
 
         internal static void AddBlip(SavedLocation s)
         {
-            float x = s.X;
-            float y = s.Y;
-            float z = s.Z;
             Blip newBlip = new Blip(new Vector3(s.X, s.Y, s.Z));
             newBlip.Color = Color.Green; 
             newBlip.Name = s.Title;
