@@ -149,7 +149,7 @@ namespace VectorGrabber
         
         private static void ProcessMenus()
         {
-            // draw the menu banners (only needed if UIMenu.SetBannerType(Rage.Texture) is used)
+            // Draw the menu banners (only needed if UIMenu.SetBannerType(Rage.Texture) is used)
             // Game.RawFrameRender += (s, e) => pool.DrawBanners(e.Graphics);
 
             while (true)

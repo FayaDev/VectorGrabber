@@ -15,12 +15,12 @@ namespace VectorGrabber
         internal static List<Blip> Blips = new List<Blip>();
         internal static List<(Blip, Vector3)> blipList = new List<(Blip, Vector3)>();
 
-        internal static string CsharpFilePath = @"Plugins\VectorGrabber\VectorsInCsharpNotation.txt";
-        internal static string CsharpFileDirectory = @"Plugins\VectorGrabber\";
+        internal static string CSharpFilePath = @"Plugins\VectorGrabber\VectorsInCsharpNotation.txt";
+        internal static string CSharpFileDirectory = @"Plugins\VectorGrabber\";
         
         internal static void AddLocation()
         {
-            AppendToFile(HelperMethods.GetCoordsAndFormat(out string locationTitle, EntryPoint.Player), CsharpFilePath);
+            AppendToFile(HelperMethods.GetCoordsAndFormat(out string locationTitle, EntryPoint.Player), CSharpFilePath);
             AddVectorAndHeadingToList(locationTitle, EntryPoint.Player);
             Game.DisplayNotification("~g~Coordinates were saved to text file.");
         }
@@ -41,7 +41,7 @@ namespace VectorGrabber
                 ValidateCustomNotation();
                 List<string> Vectors = new List<string>();
 
-                using (FileStream fileStream = new FileStream(CsharpFilePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+                using (FileStream fileStream = new FileStream(CSharpFilePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
                 {
                     // Read the file content
                     using (StreamReader reader = new StreamReader(fileStream))
@@ -86,6 +86,7 @@ namespace VectorGrabber
                         Game.LogTrivial($"Line does not contain 4 numbers: {e.Message}");
                     }
                 }
+
                 Locations.AddItems();
                 DeleteLocations.AddItems();
             }
@@ -108,21 +109,21 @@ namespace VectorGrabber
 
         internal static void ClearFile()
         {
-            string defaultCopyFilePath = $@"{CsharpFileDirectory}FileSave-{DateTime.Now.Millisecond}.txt";
+            string defaultCopyFilePath = $@"{CSharpFileDirectory}FileSave-{DateTime.Now.Millisecond}.txt";
             Game.LogTrivial(defaultCopyFilePath);
-            string text  = File.ReadAllText(CsharpFilePath);
+            string text  = File.ReadAllText(CSharpFilePath);
             File.WriteAllText(defaultCopyFilePath, text);
             if(File.Exists(CsharpFilePath)) {
                 File.Delete(CsharpFilePath);
             }
-            File.Create(CsharpFilePath);
+            File.Create(CSharpFilePath);
             Game.DisplayNotification("~g~Text file was cleared. Save file was created.");
         }
 
         internal static void CopyFile()
         {
-            string defaultCopyFilePath = $@"{CsharpFileDirectory}FileCopy-{DateTime.Now.Millisecond}.txt";
-            string text  = File.ReadAllText(CsharpFilePath);
+            string defaultCopyFilePath = $@"{CSharpFileDirectory}FileCopy-{DateTime.Now.Millisecond}.txt";
+            string text  = File.ReadAllText(CSharpFilePath);
             File.WriteAllText(defaultCopyFilePath, text);
             Game.DisplayNotification("~g~Text file was copied.");
         }
@@ -143,8 +144,9 @@ namespace VectorGrabber
 
         internal static void DeleteFile()
         {
-            File.Delete(CsharpFilePath);
+            File.Delete(CSharpFilePath);
         }
+
         internal static void UpdateTextFile()
         {
             Menu.ToggleAccessToLocations();
@@ -152,7 +154,7 @@ namespace VectorGrabber
             foreach (SavedLocation s in VectorsRead)
             {
                 string str = HelperMethods.GetCoordsAndFormat(s);
-                AppendToFile(str, CsharpFilePath);
+                AppendToFile(str, CSharpFilePath);
             }
             Menu.ToggleAccessToLocations();
         }

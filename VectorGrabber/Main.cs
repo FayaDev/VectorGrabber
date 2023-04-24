@@ -22,13 +22,13 @@ namespace VectorGrabber
             VersionChecker.CheckForUpdates();
             Settings.Initialize();
 
-            if (!Directory.Exists(CsharpFileDirectory)) { Directory.CreateDirectory(CsharpFileDirectory); }
+            if (!Directory.Exists(CSharpFileDirectory)) { Directory.CreateDirectory(CSharpFileDirectory); }
 
-            using (FileStream fs = new FileStream(CsharpFilePath, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.ReadWrite))
+            using (FileStream fs = new FileStream(CSharpFilePath, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.ReadWrite))
             {
-                if (!File.Exists(CsharpFilePath))
+                if (!File.Exists(CSharpFilePath))
                 {
-                    File.Create(CsharpFilePath);
+                    File.Create(CSharpFilePath);
                 }
                 else FileHelper.ReadFile();
             }
@@ -40,6 +40,7 @@ namespace VectorGrabber
                 if (Player.IsValid() && Game.IsKeyDown(Settings.SaveKey) && HelperMethods.CheckModifierKey())
                 {
                     FileHelper.AppendToFile(HelperMethods.GetCoordsAndFormat(out string locationTitle,Player),CsharpFilePath);
+                        FileHelper.AppendToFile(HelperMethods.GetCoordsAndFormat(out string locationTitle, Player), CSharpFilePath);
                     FileHelper.AddVectorAndHeadingToList(locationTitle, Player);
                     Game.DisplayNotification("Coordinates were saved to text file.");
                 }
