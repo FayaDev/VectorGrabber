@@ -157,6 +157,8 @@ namespace VectorGrabber
                 AppendToFile(str, CSharpFilePath);
             }
             Menu.ToggleAccessToLocations();
+
+            HelperMethods.Notify("~y~Updated", "Updated the text file.");
         }
 
         internal static void ValidateCustomNotation()
