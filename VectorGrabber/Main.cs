@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text.RegularExpressions;
-using System.Windows.Forms;
+﻿using System.IO;
 using Rage;
-using Rage.Native;
-using RAGENativeUI.Elements;
 using static VectorGrabber.FileHelper;
 
 [assembly: Rage.Attributes.Plugin("VectorGrabber", Description = "Helps developers find locations for callouts/ambient events", Author = "Roheat", PrefersSingleInstance = true)]
@@ -40,44 +33,45 @@ namespace VectorGrabber
                 if (Player.IsValid() && HelperMethods.CheckModifierKey())
                 {
                     if (Game.IsKeyDown(Settings.SaveKey))
-                {
+                    {
                         FileHelper.AppendToFile(HelperMethods.GetCoordsAndFormat(out string locationTitle, Player), CSharpFilePath);
-                    FileHelper.AddVectorAndHeadingToList(locationTitle, Player);
-                    Game.DisplayNotification("Coordinates were saved to text file.");
-                }
+                        FileHelper.AddVectorAndHeadingToList(locationTitle, Player);
+                        Game.DisplayNotification("Coordinates were saved to text file.");
+                    }
 
                     if (Game.IsKeyDown(Settings.TeleportNextKey))
-                {
-                    TeleportHelper.HandleArrow(TeleportHelper.Direction.RIGHT);
-                }
+                    {
+                        TeleportHelper.HandleArrow(TeleportHelper.Direction.RIGHT);
+                    }
 
                     if (Game.IsKeyDown(Settings.TeleportBackKey))
-                {
-                    TeleportHelper.HandleArrow(TeleportHelper.Direction.LEFT);
-                }
+                    {
+                        TeleportHelper.HandleArrow(TeleportHelper.Direction.LEFT);
+                    }
 
                     if (Game.IsKeyDown(Settings.TeleportKey))
-                {
-                    TeleportHelper.TeleportToSpecificCoordinate(Player);
-                }
+                    {
+                        TeleportHelper.TeleportToSpecificCoordinate(Player);
+                    }
 
                     if (Game.IsKeyDown(Settings.RereadFile))
-                {
-                   FileHelper.RereadFile();
-                }
+                    {
+                        FileHelper.RereadFile();
+                    }
 
                     if (Game.IsKeyDown(Settings.ClipboardKey))
-                {
-                    FileHelper.CopyCurrCoordToClipboard();
+                    {
+                        FileHelper.CopyCurrCoordToClipboard();
+                    }
                 }
             }
-        }
         }
 
         internal static void OnUnload(bool Exit)
         {
             Menu.DeleteBlips();
             Settings.UpdateINI();
+            HelperMethods.Notify("~y~Unloaded", "Vector Grabber was unloaded.");
             Game.LogTrivial("Vector Grabber Unloaded.");
         }
     }

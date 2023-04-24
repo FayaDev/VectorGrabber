@@ -9,6 +9,11 @@ namespace VectorGrabber
 {
     public class HelperMethods
     {
+        internal static void Notify(string subtitle, string description)
+        {
+            Game.DisplayNotification("commonmenu", "shop_tick_icon", "Vector Grabber", subtitle, description);
+        }
+
         internal static string OpenTextInput(string windowTitle, string defaultText, int maxLength)
         {
             NativeFunction.Natives.DISABLE_ALL_CONTROL_ACTIONS(2);
