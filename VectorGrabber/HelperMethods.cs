@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Windows.Forms;
 using Rage;
 using Rage.Native;
@@ -63,6 +64,22 @@ namespace VectorGrabber
                 str += $"  // {s.Title}";
             }
             return str;
+        }
+        
+        /// <summary>
+        /// Check if a certain plugin is installed
+        /// </summary>
+        /// <param name="fileName">The name of the file you want to check (e.g. "RAGENativeUI.dll")</param>
+        internal static bool IsPluginInstalled(string fileName)
+        {
+            if (File.Exists(fileName))
+            {
+                Game.LogTrivial($"File {fileName} is not installed in user's directory");
+                return false;
+            }
+
+            Game.LogTrivial($"File {fileName} installed in user's directory");
+            return true;
         }
     }
 }

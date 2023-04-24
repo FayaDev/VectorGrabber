@@ -60,7 +60,6 @@
   <ItemGroup>
     <Compile Include="HelperMethods.cs" />
     <Compile Include="Main.cs" />
-    <Compile Include="PluginChecker.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RNUIMenu\DeleteLocations.cs" />
     <Compile Include="RNUIMenu\Locations.cs" />
