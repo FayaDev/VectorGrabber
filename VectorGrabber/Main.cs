@@ -46,12 +46,12 @@ namespace VectorGrabber
 
                 if (Player.IsValid() && Game.IsKeyDown(Settings.TeleportNextKey) && HelperMethods.CheckModifierKey())
                 {
-                    TeleportHelper.HandleArrow(TeleportHelper.direction.RIGHT);
+                    TeleportHelper.HandleArrow(TeleportHelper.Direction.RIGHT);
                 }
 
                 if (Player.IsValid() && Game.IsKeyDown(Settings.TeleportBackKey) && HelperMethods.CheckModifierKey())
                 {
-                    TeleportHelper.HandleArrow(TeleportHelper.direction.LEFT);
+                    TeleportHelper.HandleArrow(TeleportHelper.Direction.LEFT);
                 }
 
                 if (Player.IsValid() && Game.IsKeyDown(Settings.TeleportKey) && HelperMethods.CheckModifierKey())

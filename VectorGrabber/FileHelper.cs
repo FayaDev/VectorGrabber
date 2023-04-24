@@ -152,7 +152,7 @@ namespace VectorGrabber
             DeleteFile();
             foreach (SavedLocation s in VectorsRead)
             {
-                string str = HelperMethods.getCoordsAndFormat(s);
+                string str = HelperMethods.GetCoordsAndFormat(s);
                 AppendToFile(str,CsharpFilePath);
             }
             Menu.ToggleAccessToLocations();
@@ -177,7 +177,7 @@ namespace VectorGrabber
         
         internal static void CopyCurrCoordToClipboard()
         {
-            Game.SetClipboardText(HelperMethods.getCoordsAndFormat(out _,EntryPoint.Player));
+            Game.SetClipboardText(HelperMethods.GetCoordsAndFormat(out _,EntryPoint.Player));
             Game.DisplayNotification("~g~Coordinates were copied to computer clipboard.");
         }
     }

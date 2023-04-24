@@ -23,7 +23,7 @@ namespace VectorGrabber
             return NativeFunction.Natives.GET_ONSCREEN_KEYBOARD_RESULT<string>() ?? "";
         }
 
-        internal static bool isInputValid(string input)
+        internal static bool IsInputValid(string input)
         {
             foreach (char c in input)
             {
@@ -39,7 +39,7 @@ namespace VectorGrabber
         
         internal static bool CheckModifierKey() => Settings.ModifierKey == Keys.None ? true : Game.IsKeyDownRightNow(Settings.ModifierKey);
         
-        internal static string getCoordsAndFormat(out string title, Ped Player)
+        internal static string GetCoordsAndFormat(out string title, Ped Player)
         {
             string str = "";
             Localization.SetText("TITLE","Enter title for save location");
@@ -54,7 +54,7 @@ namespace VectorGrabber
             return str;
         }
 
-        internal static string getCoordsAndFormat(SavedLocation s)
+        internal static string GetCoordsAndFormat(SavedLocation s)
         {
             string str = "";
             //str += $"(new Vector3({Player.Position.X}f, {Player.Position.Y}f, {Player.Position.Z}f), {Player.Heading}f);";
