@@ -37,39 +37,41 @@ namespace VectorGrabber
             {
                 GameFiber.Yield();
 
-                if (Player.IsValid() && Game.IsKeyDown(Settings.SaveKey) && HelperMethods.CheckModifierKey())
+                if (Player.IsValid() && HelperMethods.CheckModifierKey())
                 {
-                    FileHelper.AppendToFile(HelperMethods.GetCoordsAndFormat(out string locationTitle,Player),CsharpFilePath);
+                    if (Game.IsKeyDown(Settings.SaveKey))
+                {
                         FileHelper.AppendToFile(HelperMethods.GetCoordsAndFormat(out string locationTitle, Player), CSharpFilePath);
                     FileHelper.AddVectorAndHeadingToList(locationTitle, Player);
                     Game.DisplayNotification("Coordinates were saved to text file.");
                 }
 
-                if (Player.IsValid() && Game.IsKeyDown(Settings.TeleportNextKey) && HelperMethods.CheckModifierKey())
+                    if (Game.IsKeyDown(Settings.TeleportNextKey))
                 {
                     TeleportHelper.HandleArrow(TeleportHelper.Direction.RIGHT);
                 }
 
-                if (Player.IsValid() && Game.IsKeyDown(Settings.TeleportBackKey) && HelperMethods.CheckModifierKey())
+                    if (Game.IsKeyDown(Settings.TeleportBackKey))
                 {
                     TeleportHelper.HandleArrow(TeleportHelper.Direction.LEFT);
                 }
 
-                if (Player.IsValid() && Game.IsKeyDown(Settings.TeleportKey) && HelperMethods.CheckModifierKey())
+                    if (Game.IsKeyDown(Settings.TeleportKey))
                 {
                     TeleportHelper.TeleportToSpecificCoordinate(Player);
                 }
 
-                if (Player.IsValid() && Game.IsKeyDown(Settings.RereadFile) && HelperMethods.CheckModifierKey())
+                    if (Game.IsKeyDown(Settings.RereadFile))
                 {
                    FileHelper.RereadFile();
                 }
 
-                if (Player.IsValid() && Game.IsKeyDown(Settings.ClipboardKey) && HelperMethods.CheckModifierKey())
+                    if (Game.IsKeyDown(Settings.ClipboardKey))
                 {
                     FileHelper.CopyCurrCoordToClipboard();
                 }
             }
+        }
         }
 
         internal static void OnUnload(bool Exit)
