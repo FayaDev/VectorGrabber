@@ -53,27 +53,27 @@ namespace VectorGrabber
             {
                 if (selectedItem.Equals(RereadFile))
                 {
-                    FileHelper.RereadFile();
+                    RereadFile();
                 }
                 else if (selectedItem.Equals(CopyClipboard))
                 {
-                    FileHelper.CopyCurrCoordToClipboard();
+                    CopyCurrCoordToClipboard();
                 }
                 else if (selectedItem.Equals(AddLocation))
                 {
-                    FileHelper.AddLocation();
+                    AddLocation();
                 }
                 else if (selectedItem.Equals(ClearFile))
                 {
-                    FileHelper.ClearFile();
+                    ClearFile();
                 }
                 else if (selectedItem.Equals(UpdateTextFile))
                 {
-                    FileHelper.UpdateTextFile();
+                    UpdateTextFile();
                 }
                 else if (selectedItem.Equals(MakeCopyOfFile))
                 {
-                    FileHelper.CopyFile();
+                    CopyFile();
                 }
             }
             catch (Exception ex)
@@ -112,14 +112,13 @@ namespace VectorGrabber
 
         internal static void AddBlips()
         {
-            foreach (SavedLocation s in FileHelper.VectorsRead)
+            foreach (SavedLocation s in VectorsRead)
             {
                 Blip newBlip = new Blip(new Vector3(s.X, s.Y, s.Z));
                 newBlip.Color = Color.Green; 
                 newBlip.Name = s.Title;
 
-                FileHelper.Blips.Add(newBlip);
-                blipList.Add((newBlip, new Vector3(s.X, s.Y, s.Z)));
+                Blips.Add(newBlip);
             }
         }
 
@@ -129,13 +128,12 @@ namespace VectorGrabber
             newBlip.Color = Color.Green; 
             newBlip.Name = s.Title;
 
-            FileHelper.Blips.Add(newBlip);
-            blipList.Add((newBlip, new Vector3(s.X, s.Y, s.Z)));
+            Blips.Add(newBlip);
         }
 
         internal static void DeleteBlips()
         {
-            foreach (Blip blip in FileHelper.Blips)
+            foreach (Blip blip in Blips)
             {
                 if (blip.Exists())
                 {

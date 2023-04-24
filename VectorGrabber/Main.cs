@@ -25,6 +25,13 @@ namespace VectorGrabber
                 }
                 else FileHelper.ReadFile();
             }
+            using (FileStream fs = new FileStream(DeletedVectors, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.ReadWrite))
+            {
+                if (!File.Exists(DeletedVectors))
+                {
+                    File.Create(DeletedVectors);
+                }
+            }
 
             while (true)
             {

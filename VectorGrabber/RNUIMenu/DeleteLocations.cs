@@ -7,6 +7,7 @@ using Rage.Native;
 using RAGENativeUI;
 using RAGENativeUI.Elements;
 using RAGENativeUI.PauseMenu;
+using static VectorGrabber.FileHelper;
 
 namespace VectorGrabber
 {
@@ -29,7 +30,7 @@ namespace VectorGrabber
 
         internal static void AddItems()
         {
-            foreach (SavedLocation s in FileHelper.VectorsRead)
+            foreach (SavedLocation s in VectorsRead)
             {
                 DeleteLocationMenu.AddItem(new UIMenuItem($"{s.Title}",$"x: {s.X} | y: {s.Y} | z: {s.Z} | heading: {s.Heading}")); 
             }
@@ -59,9 +60,10 @@ namespace VectorGrabber
                     DeleteLocationMenu.RemoveItemAt(index);
                     Locations.LocationMenu.RemoveItemAt(index);
                 }
-
-                FileHelper.VectorsRead.Remove(FileHelper.VectorsRead[index]);
-                FileHelper.blipList.RemoveAt(index);
+                
+                AppendToFile(HelperMethods.GetCoordsAndFormat(VectorsRead[index]),DeletedVectors);
+                VectorsRead.RemoveAt(index);
+                Blips.RemoveAt(index);
 
                 Menu.DeleteBlips();
                 Menu.AddBlips();
