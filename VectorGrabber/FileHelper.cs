@@ -151,6 +151,7 @@ namespace VectorGrabber
         {
             Menu.ToggleAccessToLocations();
             DeleteFile();
+            File.Create(CSharpFilePath);
             foreach (SavedLocation s in VectorsRead)
             {
                 string str = HelperMethods.GetCoordsAndFormat(s);
