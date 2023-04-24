@@ -38,7 +38,7 @@ namespace VectorGrabber
             mainMenu.AllowCameraMovement = true;
             mainMenu.MouseControlsEnabled = false;
             
-            mainMenu.OnItemSelect += mainMenuItemSelect;
+            mainMenu.OnItemSelect += MainMenuItemSelect;
             EnableBlips.CheckboxEvent += OnBlipCheckboxEvent;
             pool.Add(mainMenu);
             Locations.setupLocationMenu();
@@ -47,7 +47,7 @@ namespace VectorGrabber
             GameFiber.StartNew(ProcessMenus);
         }
 
-        internal static void mainMenuItemSelect(UIMenu sender, UIMenuItem selectedItem, int index)
+        internal static void MainMenuItemSelect(UIMenu sender, UIMenuItem selectedItem, int index)
         {
             try
             {
