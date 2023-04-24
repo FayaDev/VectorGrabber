@@ -20,12 +20,10 @@ namespace VectorGrabber
         
         internal static void AddLocation()
         {
-            string locationTitle;
-            AppendToFile(HelperMethods.getCoordsAndFormat(out locationTitle,EntryPoint.Player), CsharpFilePath);
-            AddVectorAndHeadingToList(locationTitle,EntryPoint.Player);
+            AppendToFile(HelperMethods.GetCoordsAndFormat(out string locationTitle, EntryPoint.Player), CsharpFilePath);
+            AddVectorAndHeadingToList(locationTitle, EntryPoint.Player);
             Game.DisplayNotification("~g~Coordinates were saved to text file.");
         }
-        
         
         internal static void AppendToFile(string str, string path)
         {
