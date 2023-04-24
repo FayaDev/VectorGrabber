@@ -1,4 +1,3 @@
-using System.Runtime.CompilerServices;
 using Rage;
 using System.Windows.Forms;
 
@@ -38,7 +37,7 @@ namespace VectorGrabber
                 TeleportNotification = iniFile.ReadBoolean("Customization", "TeleportNotification", TeleportNotification);
                 CustomNotation = iniFile.ReadString("Customization", "CustomNotation", CustomNotation);
             }
-            catch(System.Exception e)
+            catch (System.Exception e)
             {
                 string error = e.ToString();
                 Game.LogTrivial("Vector Grabber: ERROR IN 'Settings.cs, Initialize()': " + error);
@@ -58,4 +57,4 @@ namespace VectorGrabber
             }
         }
     }
-};
+}

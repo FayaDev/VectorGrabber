@@ -94,7 +94,6 @@ namespace VectorGrabber
                 Game.DisplayNotification("~r~Error occurred while reading the file. ~w~Blame yourself. ~g~git gud kid. jk");
                 Game.LogTrivial($"Error occurred while reading the file: {e}");
             }
-            
         }
         
         internal static void RereadFile()
@@ -153,7 +152,7 @@ namespace VectorGrabber
             foreach (SavedLocation s in VectorsRead)
             {
                 string str = HelperMethods.GetCoordsAndFormat(s);
-                AppendToFile(str,CsharpFilePath);
+                AppendToFile(str, CsharpFilePath);
             }
             Menu.ToggleAccessToLocations();
         }
