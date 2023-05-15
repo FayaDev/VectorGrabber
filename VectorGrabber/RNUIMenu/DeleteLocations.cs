@@ -1,12 +1,7 @@
 using System;
-using System.Drawing;
-using System.IO;
-using System.Windows.Forms;
 using Rage;
-using Rage.Native;
 using RAGENativeUI;
 using RAGENativeUI.Elements;
-using RAGENativeUI.PauseMenu;
 using static VectorGrabber.FileHelper;
 
 namespace VectorGrabber
