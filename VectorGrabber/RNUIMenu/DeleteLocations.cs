@@ -19,7 +19,7 @@ namespace VectorGrabber
         internal static void SetupDeleteLocationMenu()
         {
             Menu.mainMenu.AddItem(LocationsThatCanBeDeleted);
-            Menu.mainMenu.BindMenuToItem(DeleteLocationMenu,LocationsThatCanBeDeleted);
+            Menu.mainMenu.BindMenuToItem(DeleteLocationMenu, LocationsThatCanBeDeleted);
             DeleteLocationMenu.ParentMenu = Menu.mainMenu;
             Menu.menuPool.Add(DeleteLocationMenu);
                 
