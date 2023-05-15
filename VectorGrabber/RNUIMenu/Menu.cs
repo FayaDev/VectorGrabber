@@ -16,6 +16,7 @@ namespace VectorGrabber
     {
         private static readonly string versionState = VersionChecker.PluginUpToDate ? "(~g~Latest~s~)" : "(~r~Outdated~s~)";
 
+        internal static MenuPool menuPool;
         internal static UIMenu mainMenu;
         internal static UIMenuItem ClearFile = new UIMenuItem("Clear File", "Clears files of all vectors");
         internal static UIMenuItem UpdateTextFile = new UIMenuItem("~y~Update Text File",
@@ -31,10 +32,11 @@ namespace VectorGrabber
 
         internal static void CreateMainMenu()
         {
-            pool = new MenuPool();
+            menuPool = new MenuPool();
             mainMenu = new UIMenu("VectorGrabber", $"Main Menu - ~y~v{VersionChecker.CurrentVersion}~s~ {versionState}");
 
             mainMenu.AddItems(EnableBlips, RereadFile, MakeCopyOfFile, ClearFile, CopyClipboard, AddLocation);
+            menuPool.Add(mainMenu);
 
             mainMenu.AllowCameraMovement = true;
             mainMenu.MouseControlsEnabled = false;

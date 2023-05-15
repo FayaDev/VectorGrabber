@@ -21,7 +21,7 @@ namespace VectorGrabber
             Menu.mainMenu.AddItem(LocationsThatCanBeDeleted);
             Menu.mainMenu.BindMenuToItem(DeleteLocationMenu,LocationsThatCanBeDeleted);
             DeleteLocationMenu.ParentMenu = Menu.mainMenu;
-            Menu.pool.Add(DeleteLocationMenu);
+            Menu.menuPool.Add(DeleteLocationMenu);
                 
             DeleteLocationMenu.OnItemSelect += OnDeleteLocationSelect;
             DeleteLocationMenu.MouseControlsEnabled = false;

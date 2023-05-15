@@ -19,7 +19,7 @@ namespace VectorGrabber
             Menu.mainMenu.AddItem(ShowAllLocations);
             Menu.mainMenu.BindMenuToItem(LocationMenu,ShowAllLocations);
             LocationMenu.ParentMenu = Menu.mainMenu;
-            Menu.pool.Add(LocationMenu);
+            Menu.menuPool.Add(LocationMenu);
             
 
             LocationMenu.OnItemSelect += OnLocationSelect;
