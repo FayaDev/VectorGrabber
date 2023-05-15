@@ -7,12 +7,13 @@ namespace VectorGrabber
     internal static class VersionChecker
     {
         internal static string CurrentVersion => Assembly.GetExecutingAssembly().GetName().Version.ToString(3);
+        internal static bool PluginUpToDate;
 
         internal static void CheckForUpdates()
         {
             var webClient = new WebClient();
-            var pluginUpToDate = false;
             var webSuccess = false;
+
             try
             {
                 var receivedVersion = webClient
@@ -21,7 +22,7 @@ namespace VectorGrabber
                     .Trim();
                 Game.LogTrivial(
                     $"Vector Grabber: Online Version: {receivedVersion} | Local VectorGrabber Version: {CurrentVersion}");
-                pluginUpToDate = receivedVersion == CurrentVersion;
+                PluginUpToDate = receivedVersion == CurrentVersion;
                 webSuccess = true;
             }
             catch (WebException)
@@ -32,8 +33,8 @@ namespace VectorGrabber
             finally
             {
                 HelperMethods.Notify(
-                    $"~y~{CurrentVersion}~s~ by Roheat", $"Version is {(webSuccess ? pluginUpToDate ? "~g~Up To Date" : "~r~Out Of Date" : "~o~Version Check Failed")}");
-                if (!pluginUpToDate)
+                    $"~y~{CurrentVersion}~s~ by Roheat", $"Version is {(webSuccess ? PluginUpToDate ? "~g~Up To Date" : "~r~Out Of Date" : "~o~Version Check Failed")}");
+                if (!PluginUpToDate)
                 {
                     Game.LogTrivial(
                         "Vector Grabber: [VERSION OUTDATED] Please update to latest version here: https://www.lcpdfr.com/downloads/gta5mods/scripts/43016-vectorgrabber/");
