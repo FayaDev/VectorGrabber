@@ -28,24 +28,6 @@ namespace VectorGrabber
             DeleteLocationMenu.AllowCameraMovement = true;
         }
 
-        internal static void AddItems()
-        {
-            foreach (SavedLocation s in VectorsRead)
-            {
-                DeleteLocationMenu.AddItem(new UIMenuItem($"{s.Title}",$"x: {s.X} | y: {s.Y} | z: {s.Z} | heading: {s.Heading}")); 
-            }
-
-            if (Settings.EnableVectorBlips)
-            {
-                Menu.AddBlips();
-            }
-        }
-        
-        internal static void AddItem(SavedLocation s)
-        {
-            DeleteLocationMenu.AddItem(new UIMenuItem($"{s.Title}", $"x: {s.X} | y: {s.Y} | z: {s.Z} | heading: {s.Heading}"));
-        }
-
         internal static void OnDeleteLocationSelect(UIMenu sender, UIMenuItem selectedItem, int index)
         {
             try

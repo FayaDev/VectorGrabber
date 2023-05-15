@@ -27,24 +27,6 @@ namespace VectorGrabber
             LocationMenu.AllowCameraMovement = true;
         }
 
-        internal static void AddItems()
-        {
-            foreach (SavedLocation s in FileHelper.VectorsRead)
-            {
-                LocationMenu.AddItem(new UIMenuItem($"{s.Title}",$"x: {s.X} | y: {s.Y} | z: {s.Z} | heading: {s.Heading}")); 
-            }
-
-            if (Settings.EnableVectorBlips)
-            {
-                Menu.AddBlips();
-            }
-        }
-        
-        internal static void AddItem(SavedLocation s)
-        {
-            LocationMenu.AddItem(new UIMenuItem($"{s.Title}",$"x: {s.X} | y: {s.Y} | z: {s.Z} | heading: {s.Heading}"));
-        }
-
         internal static void OnLocationSelect(UIMenu sender, UIMenuItem selectedItem, int index)
         {
             TeleportHelper.TeleportBasedOnIndexAndDisplay(index,EntryPoint.Player);

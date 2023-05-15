@@ -87,8 +87,8 @@ namespace VectorGrabber
                     }
                 }
 
-                Locations.AddItems();
-                DeleteLocations.AddItems();
+                HelperMethods.AddItems(Locations.LocationMenu);
+                HelperMethods.AddItems(DeleteLocations.DeleteLocationMenu);
             }
             catch (Exception e)
             {
@@ -137,8 +137,10 @@ namespace VectorGrabber
             SavedLocation s =
                 new SavedLocation(Player.Position.X, Player.Position.Y, Player.Position.Z, Player.Heading,title);
             VectorsRead.Add(s);
-            Locations.AddItem(s);
-            DeleteLocations.AddItem(s);
+
+            HelperMethods.AddItem(Locations.LocationMenu, s);
+            HelperMethods.AddItem(DeleteLocations.DeleteLocationMenu, s);
+            
             Menu.AddBlip(s);
         }
 

@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using Rage;
 using Rage.Native;
 using RAGENativeUI;
+using RAGENativeUI.Elements;
 
 namespace VectorGrabber
 {
@@ -26,6 +27,24 @@ namespace VectorGrabber
 
             NativeFunction.Natives.ENABLE_ALL_CONTROL_ACTIONS(2);
             return NativeFunction.Natives.GET_ONSCREEN_KEYBOARD_RESULT<string>() ?? "";
+        }
+
+        internal static void AddItems(UIMenu menu)
+        {
+            foreach (SavedLocation s in FileHelper.VectorsRead)
+            {
+                menu.AddItem(new UIMenuItem($"{s.Title}", $"x: {s.X} | y: {s.Y} | z: {s.Z} | heading: {s.Heading}"));
+            }
+
+            if (Settings.EnableVectorBlips)
+            {
+                Menu.AddBlips();
+            }
+        }
+
+        internal static void AddItem(UIMenu menu, SavedLocation s)
+        {
+            menu.AddItem(new UIMenuItem($"{s.Title}", $"x: {s.X} | y: {s.Y} | z: {s.Z} | heading: {s.Heading}"));
         }
 
         internal static bool IsInputValid(string input)
