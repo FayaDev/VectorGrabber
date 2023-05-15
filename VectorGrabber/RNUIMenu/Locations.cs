@@ -1,11 +1,5 @@
-using System;
-using System.Drawing;
-using System.Windows.Forms;
-using Rage;
-using Rage.Native;
 using RAGENativeUI;
 using RAGENativeUI.Elements;
-using RAGENativeUI.PauseMenu;
 
 namespace VectorGrabber
 {
@@ -14,7 +8,7 @@ namespace VectorGrabber
         internal static UIMenu LocationMenu = new UIMenu("Locations", "Select Option");
         internal static UIMenuItem ShowAllLocations = new UIMenuItem("Teleport to location", "Teleport to any of your saved locations");
        
-        internal static void setupLocationMenu()
+        internal static void SetupLocationMenu()
         {
             Menu.mainMenu.AddItem(ShowAllLocations, 3);
             Menu.mainMenu.BindMenuToItem(LocationMenu, ShowAllLocations);

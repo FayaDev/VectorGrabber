@@ -56,7 +56,7 @@ namespace VectorGrabber
 
             };
 
-            Locations.setupLocationMenu();
+            Locations.SetupLocationMenu();
             DeleteLocations.SetupDeleteLocationMenu();
 
             GameFiber.StartNew(ProcessMenus);
