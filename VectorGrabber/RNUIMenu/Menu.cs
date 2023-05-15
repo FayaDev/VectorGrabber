@@ -118,6 +118,8 @@ namespace VectorGrabber
                 newBlip.Color = Color.Green; 
                 newBlip.Name = s.Title;
 
+                if (!EnableBlips.Checked) { newBlip.Alpha = 0f; }
+
                 Blips.Add(newBlip);
             }
         }
@@ -127,6 +129,8 @@ namespace VectorGrabber
             Blip newBlip = new Blip(new Vector3(s.X, s.Y, s.Z));
             newBlip.Color = Color.Green; 
             newBlip.Name = s.Title;
+
+            if (!EnableBlips.Checked) { newBlip.Alpha = 0f; }
 
             Blips.Add(newBlip);
         }
