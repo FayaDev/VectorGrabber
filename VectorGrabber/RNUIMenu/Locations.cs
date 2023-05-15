@@ -17,7 +17,7 @@ namespace VectorGrabber
         internal static void setupLocationMenu()
         {
             Menu.mainMenu.AddItem(ShowAllLocations);
-            Menu.mainMenu.BindMenuToItem(LocationMenu,ShowAllLocations);
+            Menu.mainMenu.BindMenuToItem(LocationMenu, ShowAllLocations);
             LocationMenu.ParentMenu = Menu.mainMenu;
             Menu.menuPool.Add(LocationMenu);
             

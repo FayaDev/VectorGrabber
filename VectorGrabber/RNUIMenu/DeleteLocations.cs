@@ -14,7 +14,7 @@ namespace VectorGrabber
     public class DeleteLocations
     {
         internal static UIMenu DeleteLocationMenu = new UIMenu("Locations", "Select Option");
-        internal static UIMenuItem LocationsThatCanBeDeleted = new UIMenuItem("~r~Delete location", "Delete any of your saved locations");
+        internal static UIMenuItem LocationsThatCanBeDeleted = new UIMenuItem("~r~Delete a location", "Delete any of your saved locations");
         
         internal static void SetupDeleteLocationMenu()
         {
