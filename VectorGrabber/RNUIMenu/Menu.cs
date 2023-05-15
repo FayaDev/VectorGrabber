@@ -154,11 +154,11 @@ namespace VectorGrabber
             {
                 GameFiber.Yield();
 
-                pool.ProcessMenus();
+                menuPool.ProcessMenus();
 
-                if (Game.IsKeyDown(Settings.MenuKey) && HelperMethods.CheckModifierKey() && !UIMenu.IsAnyMenuVisible && !TabView.IsAnyPauseMenuVisible)
+                if (HelperMethods.CheckModifierKey() && Game.IsKeyDown(Settings.MenuKey) && !TabView.IsAnyPauseMenuVisible)
                 {
-                    mainMenu.Visible = true;
+                    mainMenu.Visible = !mainMenu.Visible;
                 }
             }
         }
