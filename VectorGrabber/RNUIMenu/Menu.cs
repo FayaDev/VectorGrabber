@@ -19,15 +19,11 @@ namespace VectorGrabber
         internal static MenuPool menuPool;
         internal static UIMenu mainMenu;
         internal static UIMenuItem ClearFile = new UIMenuItem("Clear File", "Clears files of all vectors");
-        internal static UIMenuItem UpdateTextFile = new UIMenuItem("~y~Update Text File",
-            "Updates text file. Should be used after making a lot of deletions");
+        internal static UIMenuItem UpdateTextFile = new UIMenuItem("~y~Update Text File", "Updates text file. Should be used after making a lot of deletions");
         internal static UIMenuItem RereadFile = new UIMenuItem("Reread file", "Rereads file and updates menu"); 
-        internal static UIMenuCheckboxItem EnableBlips = new UIMenuCheckboxItem("Enable Blips", Settings.EnableVectorBlips,"Enables blips for all saved vectors");
-        internal static UIMenuItem CopyClipboard = new UIMenuItem("Copy Coordinates",
-            "Copies current player's coordinate to user's computer clipboard");
-        internal static UIMenuItem AddLocation =
-            new UIMenuItem("Add Location", "Adds current location to saved locations");
-
+        internal static UIMenuCheckboxItem EnableBlips = new UIMenuCheckboxItem("Enable Blips", Settings.EnableVectorBlips, "Enables blips for all saved vectors");
+        internal static UIMenuItem CopyClipboard = new UIMenuItem("Copy Coordinates", "Copies current player's coordinate to user's computer clipboard");
+        internal static UIMenuItem AddLocation = new UIMenuItem("Add Location", "Adds current location to saved locations");
         internal static UIMenuItem MakeCopyOfFile = new UIMenuItem("Make Copy", "Makes copy of text file");
 
         internal static void CreateMainMenu()
@@ -35,7 +31,7 @@ namespace VectorGrabber
             menuPool = new MenuPool();
             mainMenu = new UIMenu("VectorGrabber", $"Main Menu - ~y~v{VersionChecker.CurrentVersion}~s~ {versionState}");
 
-            mainMenu.AddItems(EnableBlips, RereadFile, MakeCopyOfFile, ClearFile, CopyClipboard, AddLocation);
+            mainMenu.AddItems(EnableBlips, RereadFile, MakeCopyOfFile, ClearFile, CopyClipboard, AddLocation, UpdateTextFile);
             menuPool.Add(mainMenu);
 
             mainMenu.AllowCameraMovement = true;
@@ -43,10 +39,10 @@ namespace VectorGrabber
             
             mainMenu.OnItemSelect += MainMenuItemSelect;
             EnableBlips.CheckboxEvent += OnBlipCheckboxEvent;
-            pool.Add(mainMenu);
+
             Locations.setupLocationMenu();
             DeleteLocations.SetupDeleteLocationMenu();
-            mainMenu.AddItem(UpdateTextFile);
+
             GameFiber.StartNew(ProcessMenus);
         }
 
