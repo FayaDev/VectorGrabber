@@ -43,7 +43,7 @@ namespace VectorGrabber
         
         internal static void AddItem(SavedLocation s)
         {
-            DeleteLocationMenu.AddItem(new UIMenuItem($"{s.Title}",$"x: {s.X} | y: {s.Y} | z: {s.Z} | heading: {s.Heading}"));
+            DeleteLocationMenu.AddItem(new UIMenuItem($"{s.Title}", $"x: {s.X} | y: {s.Y} | z: {s.Z} | heading: {s.Heading}"));
         }
 
         internal static void OnDeleteLocationSelect(UIMenu sender, UIMenuItem selectedItem, int index)
@@ -61,7 +61,7 @@ namespace VectorGrabber
                     Locations.LocationMenu.RemoveItemAt(index);
                 }
                 
-                AppendToFile(HelperMethods.GetCoordsAndFormat(VectorsRead[index]),DeletedVectors);
+                AppendToFile(HelperMethods.GetCoordsAndFormat(VectorsRead[index]), DeletedVectors);
                 VectorsRead.RemoveAt(index);
                 Blips.RemoveAt(index);
 

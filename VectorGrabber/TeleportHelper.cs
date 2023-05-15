@@ -48,7 +48,7 @@ namespace VectorGrabber
         
         internal static void TeleportToSpecificCoordinate(Ped Player)
         {
-            Localization.SetText("TITLE","Enter Line Number that you want to be teleported to");
+            Localization.SetText("TITLE", "Enter Line Number that you want to be teleported to");
             string input = HelperMethods.OpenTextInput("TITLE", "", 10);
             if (input.Equals(""))
             {
@@ -79,7 +79,7 @@ namespace VectorGrabber
             {
                 if (GlobalIndexForArray == 0)
                 {
-                    Game.LogTrivial($"Vector Grabber:Back Key pressed when index was 0.");
+                    Game.LogTrivial($"Vector Grabber: Back Key pressed when index was 0.");
                     Game.DisplayNotification("~y~No More Vectors!");
                 }
                 else
@@ -94,7 +94,7 @@ namespace VectorGrabber
                 int lastIndex = FileHelper.VectorsRead.Count - 1;
                 if (GlobalIndexForArray >= lastIndex)
                 {
-                    Game.LogTrivial($"Vector Grabber:Next Key pressed when array was at its end.");
+                    Game.LogTrivial($"Vector Grabber: Next Key pressed when array was at its end.");
                     Game.DisplayNotification("~y~No More Vectors!");
                 }
                 else

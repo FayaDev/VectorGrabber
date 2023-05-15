@@ -159,7 +159,7 @@ namespace VectorGrabber
             }
             Menu.ToggleAccessToLocations();
 
-            HelperMethods.Notify("~y~Updated", "Updated the text file.");
+            HelperMethods.Notify("~y~Updated", "~g~Updated the text file.");
         }
 
         internal static void ValidateCustomNotation()

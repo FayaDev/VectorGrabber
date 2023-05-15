@@ -47,14 +47,16 @@ namespace VectorGrabber
         internal static string GetCoordsAndFormat(out string title, Ped Player)
         {
             string str = "";
+
             Localization.SetText("TITLE","Enter title for save location");
-            title = OpenTextInput("TITLE", "",100);
-            //str += $"(new Vector3({Player.Position.X}f, {Player.Position.Y}f, {Player.Position.Z}f), {Player.Heading}f);";
-            str += String.Format(Settings.CustomNotation, Player.Position.X,Player.Position.Y,Player.Position.Z, Player.Heading);
+            title = OpenTextInput("TITLE", "", 100);
+
+            str += String.Format(Settings.CustomNotation, Player.Position.X, Player.Position.Y, Player.Position.Z, Player.Heading);
             if (!title.Equals(""))
             {
                 str += $"  // {title}";
             }
+
             Game.LogTrivial($"The string is {str}");
             return str;
         }
@@ -62,8 +64,9 @@ namespace VectorGrabber
         internal static string GetCoordsAndFormat(SavedLocation s)
         {
             string str = "";
-            //str += $"(new Vector3({Player.Position.X}f, {Player.Position.Y}f, {Player.Position.Z}f), {Player.Heading}f);";
+
             str += String.Format(Settings.CustomNotation, s.X,s.Y,s.Z, s.Heading);
+
             if (!s.Title.Equals(""))
             {
                 str += $"  // {s.Title}";
