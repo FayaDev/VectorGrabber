@@ -1,10 +1,6 @@
 using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Imaging;
-using System.Windows.Forms;
 using Rage;
-using Rage.Native;
 using RAGENativeUI;
 using RAGENativeUI.Elements;
 using RAGENativeUI.PauseMenu;
@@ -18,27 +14,47 @@ namespace VectorGrabber
 
         internal static MenuPool menuPool;
         internal static UIMenu mainMenu;
-        internal static UIMenuItem ClearFile = new UIMenuItem("Clear File", "Clears files of all vectors");
-        internal static UIMenuItem UpdateTextFile = new UIMenuItem("~y~Update Text File", "Updates text file. Should be used after making a lot of deletions");
-        internal static UIMenuItem RereadFile = new UIMenuItem("Reread file", "Rereads file and updates menu"); 
+
+        internal static UIMenuListScrollerItem<string> FileActions = new UIMenuListScrollerItem<string>("~y~File Actions", "", new[] { "~g~Save Changes", "~p~Re-read", "~r~Clear File", "~o~Make Backup" });
         internal static UIMenuCheckboxItem EnableBlips = new UIMenuCheckboxItem("Enable Blips", Settings.EnableVectorBlips, "Enables blips for all saved vectors");
         internal static UIMenuItem CopyClipboard = new UIMenuItem("Copy Coordinates", "Copies current player's coordinate to user's computer clipboard");
         internal static UIMenuItem AddLocation = new UIMenuItem("Add Location", "Adds current location to saved locations");
-        internal static UIMenuItem MakeCopyOfFile = new UIMenuItem("Make Copy", "Makes copy of text file");
 
         internal static void CreateMainMenu()
         {
             menuPool = new MenuPool();
             mainMenu = new UIMenu("VectorGrabber", $"Main Menu - ~y~v{VersionChecker.CurrentVersion}~s~ {versionState}");
 
-            mainMenu.AddItems(EnableBlips, RereadFile, MakeCopyOfFile, ClearFile, CopyClipboard, AddLocation, UpdateTextFile);
             menuPool.Add(mainMenu);
+            mainMenu.AddItems(EnableBlips, CopyClipboard, AddLocation, FileActions);
 
             mainMenu.AllowCameraMovement = true;
             mainMenu.MouseControlsEnabled = false;
-            
+            FileActions.Description = "Should be used after making a lot of deletions.";
+
             mainMenu.OnItemSelect += MainMenuItemSelect;
+            FileActions.Activated += FileActionsItemActivated;
             EnableBlips.CheckboxEvent += OnBlipCheckboxEvent;
+
+            FileActions.IndexChanged += (sender, menu, item) =>
+            {
+                switch (FileActions.SelectedItem.Remove(0, 3))
+                {
+                    case "Save Changes":
+                        FileActions.Description = "Should be used after making a lot of deletions.";
+                        break;
+                    case "Re-read":
+                        FileActions.Description = "Rereads file and updates menu.";
+                        break;
+                    case "Clear File":
+                        FileActions.Description = "Clears files of all vectors.";
+                        break;
+                    case "Make Backup":
+                        FileActions.Description = "Makes a backup of the file.";
+                        break;
+                };
+
+            };
 
             Locations.setupLocationMenu();
             DeleteLocations.SetupDeleteLocationMenu();
@@ -49,12 +65,8 @@ namespace VectorGrabber
         internal static void MainMenuItemSelect(UIMenu sender, UIMenuItem selectedItem, int index)
         {
             try
-            {
-                if (selectedItem.Equals(RereadFile))
-                {
-                    RereadFile();
-                }
-                else if (selectedItem.Equals(CopyClipboard))
+            {                
+                if (selectedItem.Equals(CopyClipboard))
                 {
                     CopyCurrCoordToClipboard();
                 }
@@ -62,17 +74,31 @@ namespace VectorGrabber
                 {
                     AddLocation();
                 }
-                else if (selectedItem.Equals(ClearFile))
+            }
+            catch (Exception ex)
+            {
+                Game.LogTrivial(ex.ToString());
+            }
+        }
+
+        internal static void FileActionsItemActivated(UIMenu sender, UIMenuItem selectedItem)
+        {
+            try
+            {
+                switch (FileActions.SelectedItem.Remove(0, 3))
                 {
-                    ClearFile();
-                }
-                else if (selectedItem.Equals(UpdateTextFile))
-                {
-                    UpdateTextFile();
-                }
-                else if (selectedItem.Equals(MakeCopyOfFile))
-                {
-                    CopyFile();
+                    case "Save Changes":
+                        UpdateTextFile();
+                        break;
+                    case "Re-read":
+                        RereadFile();
+                        break;
+                    case "Clear File":
+                        ClearFile();
+                        break;
+                    case "Make Backup":
+                        CopyFile();
+                        break;
                 }
             }
             catch (Exception ex)
@@ -80,7 +106,7 @@ namespace VectorGrabber
                 Game.LogTrivial(ex.ToString());
             }
         }
-        
+
         internal static void OnBlipCheckboxEvent(UIMenuCheckboxItem sender, bool IsChecked)
         {
             if (IsChecked)
