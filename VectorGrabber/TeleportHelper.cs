@@ -8,11 +8,7 @@ namespace VectorGrabber
     {
         internal static int GlobalIndexForArray = 0;
 
-        internal enum Direction
-        {
-            LEFT,
-            RIGHT
-        }
+        internal enum Direction { LEFT, RIGHT }
 
         internal static void TeleportAndDisplay(Ped Player)
         {
