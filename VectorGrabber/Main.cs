@@ -79,7 +79,7 @@ namespace VectorGrabber
             Menu.DeleteBlips();
             Settings.UpdateINI();
             HelperMethods.Notify("~y~Unloaded", "Vector Grabber was unloaded.");
-            Game.LogTrivial("Vector Grabber Unloaded.");
+            Game.LogTrivial("Plugin was stopped or unloaded");
         }
     }
 }
